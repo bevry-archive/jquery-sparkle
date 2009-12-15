@@ -243,7 +243,8 @@
 		},
 		configure: function(config){
 			var Me = this;
-			Me.config = $.extend({},Me.config,config||{});
+			Me.config = Me.config||{};
+			Me.config = $.extend({},Me.config,config||{}); // we want to clone
 			return Me;
 		},
 		addConfig: function(name, config){
@@ -264,6 +265,7 @@
 		},
 		applyConfig: function(name,config){
 			var Me = this;
+			Me.config[name] = Me.config[name]||{};
 			$.extend(Me.config[name],config||{});
 			return Me;
 		},
@@ -285,7 +287,7 @@
 			if ( typeof config !== 'object' ) {
 				config = {};
 			}
-			return $.extend({}, Me.config[name]||{}, config||{});
+			return $.extend({}, Me.config[name]||{}, config||{}); // clone
 		},
 		getConfigWithDefault: function(name,config){
 			var Me = this;

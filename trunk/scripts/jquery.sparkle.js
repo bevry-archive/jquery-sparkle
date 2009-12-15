@@ -461,21 +461,26 @@
 			},
 			extension: function(Sparkle, config) {
 				var $this = $(this);
+				// Fetch
 				var $switches = $this.findAndSelf(config.selectorSwitch);
 				var $panels = $this.findAndSelf(config.selectorPanel);
-				var panelswitch = function() {
-					var $switch = $(this);
-					var $panel = $switch.siblings(config.selectorPanel).filter(':first');
-					var value = $switch.val();
-					var show = $switch.is(':checked,:selected') && !(!value || value === 0 || value === '0' || value === 'false' || value === false || value === 'no' || value === 'off');
-					if (show) {
-						$panel.fadeIn(config.inSpeed);
-					}
-					else {
-						$panel.fadeOut(config.outSpeed);
+				// Events
+				var events = {
+					clickEvent: function(event) {
+						var $switch = $(this);
+						var $panel = $switch.siblings(config.selectorPanel).filter(':first');
+						var value = $switch.val();
+						var show = $switch.is(':checked,:selected') && !(!value || value === 0 || value === '0' || value === 'false' || value === false || value === 'no' || value === 'off');
+						if (show) {
+							$panel.fadeIn(config.inSpeed);
+						}
+						else {
+							$panel.fadeOut(config.outSpeed);
+						}
 					}
 				};
-				$switches.click(panelswitch);
+				// Apply
+				$switches.one('click',events.clickEvent);
 				$panels.hide();
 				// Done
 				return true;
@@ -487,7 +492,9 @@
 			},
 			extension: function(Sparkle, config){
 				var $this = $(this);
+				// Fetch
 				var $els = $this.findAndSelf(config.selector);
+				// Apply
 				if ( $els.length ) {
 					if (typeof $.fn.autogrow === 'undefined') {
 						console.warn('Autogrow has failed to load.');
@@ -495,6 +502,7 @@
 					}
 					$els.autogrow();
 				}
+				// Done
 				return true;
 			}
 		},
@@ -504,10 +512,9 @@
 			},
 			extension: function(Sparkle, config) {
 				var $this = $(this);
-				// Apply Action
-				$(function() {
-					// Apply
-					$this.findAndSelf(config.selector).click(function(event) {
+				// Events
+				var events = {
+					clickEvent: function(event) {
 						if ( typeof GSFN_feedback_widget === 'undefined' ) {
 							console.warn('GSFN has failed to load.');
 							return true;
@@ -516,57 +523,97 @@
 						//event.stopPropagation();
 						event.preventDefault();
 						return false;
-					});
+					}
+				};
+				// Apply
+				$(function() {
+					$this.findAndSelf(config.selector).one('click',events.clickEvent);
 				});
 				// Done
-				return $this;
+				return true;
 			}
 		},
 		'hint': {
 			config: {
 				selector: '.form-input-tip,.sparkle-hint,.sparkle-hint-has',
 				hasClass: 'sparkle-hint-has',
-				hintedClass: 'sparkle-hint-hinted',
-				
+				hintedClass: 'sparkle-hint-hinted'
 			},
 			extension: function(Sparkle, config) {
 				var $this = $(this);
-				// Events
-				var focus = function(){
-					var $input = $(this);
-					var tip = $input.attr('title');
-					var val = $input.val();
-					// Handle
-					if (tip === val) {
-						$input.val('').removeClass(config.hintedClass);
-					}
-					// Done
-					return true;
-				}
-				var blur = function(){
-					var $input = $(this);
-					var tip = $input.attr('title');
-					var val = $input.val();
-					// Handle
-					if (tip === val || !val) {
-						$input.val('').addClass(config.hintedClass).val(tip);
-					}
-					// Done
-					return true;
-				}
 				// Fetch
 				var $inputs = $this.findAndSelf(config.selector).addClass(config.hasClass);
+				// Events
+				var events = {
+					focusEvent: function(){
+						var $input = $(this);
+						var tip = $input.attr('title');
+						var val = $input.val();
+						// Handle
+						if (tip === val) {
+							$input.val('').removeClass(config.hintedClass);
+						}
+						// Done
+						return true;
+					},
+					blurEvent: function(){
+						var $input = $(this);
+						var tip = $input.attr('title');
+						var val = $input.val();
+						// Handle
+						if (tip === val || !val) {
+							$input.val('').addClass(config.hintedClass).val(tip);
+						}
+						// Done
+						return true;
+					},
+					submitEvent: function(){
+						$inputs.trigger('focus');
+					}
+				};
+				// Apply
 				$inputs.each(function(){
 					var $input = $(this);
-					$input.focus(focus).blur(blur).trigger('blur');
+					$input.one('focus',events.focusEvent).one('blur',events.blurEvent).trigger('blur');
 				});
-				$this.find('form').one('submit',function(){
-					$inputs.trigger('focus');
-				});
+				$this.find('form').one('submit',events.submitEvent);
 				// Done
 				return $this;
 			}
-		}
+		},
+		'hint': {
+			config: {
+				selector: '.sparkle-debug',
+				hasClass: 'sparkle-debug-has',
+				hintedClass: 'sparkle-hint-hinted'
+			},
+			extension: function(Sparkle, config) {
+				var $this = $(this); var Sparkle = $.Sparkle;
+				// Events
+				var events = {
+					clickEvent: function(event){
+						var $this = $(this);
+						var $parent = $this.parent();
+						var show = !$parent.data('sparkle-debug-show');
+						$parent.data('sparkle-debug-show', show);
+						$this.siblings('.value').toggle(show);
+					},
+					dblclickEvent: function(event){
+						var $this = $(this);
+						var $parent = $this.parent();
+						var show = !$parent.data('sparkle-debug-show');
+						$parent.data('sparkle-debug-show', show);
+						$parent.find('.value').toggle(show);
+					}
+				};
+				// Fetch
+				var $debug = $this.findAndSelf(config.selector);
+				$debug.addClass(config.hasClass).find('.value:has(.var)').hide().siblings('.name,.type').addClass('link').one('click',events.clickEvent).one('dblclick',events.dblclickEvent);
+				// Done
+				return $this;
+			}
+		},
+	
 	});
 	
 })(jQuery);

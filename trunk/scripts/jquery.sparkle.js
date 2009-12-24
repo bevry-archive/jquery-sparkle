@@ -48,23 +48,23 @@
 	// Prototypes
 	Number.prototype.padLeft = String.prototype.padLeft = String.prototype.padLeft ||function(ch, num){
 		var val = String(this);
-	    var re = new RegExp(".{" + num + "}$");
-	    var pad = "";
-        if ( !ch && ch !== 0 ) ch = " ";
-	    do  {
-	        pad += ch;
-	    } while(pad.length < num);
-	    return re.exec(pad + val)[0];
+		var re = new RegExp(".{" + num + "}$");
+		var pad = "";
+		if ( !ch && ch !== 0 ) ch = " ";
+		do  {
+			pad += ch;
+		} while(pad.length < num);
+		return re.exec(pad + val)[0];
 	};
 	Number.prototype.padRight = String.prototype.padRight = String.prototype.padRight ||function(ch, num){
 		var val = String(this);
-        var re = new RegExp("^.{" + num + "}");
-        var pad = "";
-        if ( !ch && ch !== 0 ) ch = " ";
-        do {
-            pad += ch;
-        } while (pad.length < num);
-        return re.exec(val + pad)[0];
+		var re = new RegExp("^.{" + num + "}");
+		var pad = "";
+		if ( !ch && ch !== 0 ) ch = " ";
+		do {
+			pad += ch;
+		} while (pad.length < num);
+		return re.exec(val + pad)[0];
 	};
 	Date.prototype.setDatetimestr = Date.prototype.setDatetimestr || function(timestamp){
 		var pieces = timestamp.split(/[\-\s\:]/g);
@@ -123,19 +123,62 @@
 		return $this.find(selector).andSelf().filter(selector);
 	};
 	$.fn.value = function(value){
-		var $input = $(this).firstInput();
+		var $input = $(this).firstInput(), result;
 		if ( value ) {
 			$input.val(value);
 			if ( $input.is('select') ) {
 				$input.find('option[value=' + value + ']:first').attr('selected', 'selected');
 			}
-			return $input;
+			result = $input;
 		} else {
 			var val = $input.val();
 			if ( $input.is('select') ) {
 				val = $input.find('option:selected').text();
 			}
-			return val;
+			result = val;
+		}
+		return result;
+	};
+	$.fn.once = $.fn.once || function(event, data, callback){
+		var $this = $(this);
+		// Handle
+		if ( (callback||false) ) {
+			$this.unbind(event, callback);
+			$this.bind(event, data, callback);
+		} else {
+			callback = data;
+			$this.unbind(event, callback);
+			$this.bind(event, callback);
+		}
+		// Chain
+		return $this;
+	};
+	
+	// jQuery Events
+	$.event.special.singleclick = $.event.special.singleclick || {
+		setup: function( data, namespaces ) {
+			$(this).bind('click', $.event.special.singleclick.handler);
+		},
+		teardown: function( namespaces ) {
+			$(this).unbind('click', $.event.special.singleclick.handler);
+		},
+		handler: function( event ) {
+			// Prepare
+			var $el = $(this);
+			// Setup
+			$el.data('clicking', $el.data('clicking')||'no');
+			if ( $el.data('clicking') === 'yes' ) {
+				return;
+			} else {
+				$el.data('clicking', 'yes');
+				setTimeout(function(){
+					$el.data('clicking', 'no');
+				},	500);
+			}
+			// Fire
+			event.type = 'singleclick';
+			$.event.handle.apply(this, arguments);
+			return true;
 		}
 	};
 	
@@ -442,8 +485,8 @@
 			},
 			extension: function(Sparkle, config) {
 				var $this = $(this);
-				var $suble = $this.findAndSelf(config.selector);
-				return $suble.css(config.css).css(config.start).hover(function() {
+				var $subtle = $this.findAndSelf(config.selector);
+				return $subtle.css(config.css).hover(function() {
 					// Over
 					$(this).stop(true, false).animate(config.inCss, config.inSpeed);
 				}, function() {
@@ -480,7 +523,7 @@
 					}
 				};
 				// Apply
-				$switches.one('click',events.clickEvent);
+				$switches.once('click',events.clickEvent);
 				$panels.hide();
 				// Done
 				return true;
@@ -527,7 +570,7 @@
 				};
 				// Apply
 				$(function() {
-					$this.findAndSelf(config.selector).one('click',events.clickEvent);
+					$this.findAndSelf(config.selector).once('click',events.clickEvent);
 				});
 				// Done
 				return true;
@@ -574,9 +617,9 @@
 				// Apply
 				$inputs.each(function(){
 					var $input = $(this);
-					$input.one('focus',events.focusEvent).one('blur',events.blurEvent).trigger('blur');
+					$input.once('focus',events.focusEvent).once('blur',events.blurEvent).trigger('blur');
 				});
-				$this.find('form').one('submit',events.submitEvent);
+				$this.find('form').once('submit',events.submitEvent);
 				// Done
 				return $this;
 			}
@@ -602,14 +645,14 @@
 					dblclickEvent: function(event){
 						var $this = $(this);
 						var $parent = $this.parent();
-						var show = !$parent.data(config.showVar);
+						var show = $parent.data(config.showVar); // first click will set this off
 						$parent.data(config.showVar, show);
 						$parent.find('.value').toggle(show);
 					}
 				};
 				// Fetch
 				var $debug = $this.findAndSelf(config.selector);
-				$debug.addClass(config.hasClass).find('.value:has(.var)').hide().siblings('.name,.type').addClass('link').one('click',events.clickEvent).one('dblclick',events.dblclickEvent);
+				$debug.addClass(config.hasClass).find('.value:has(.var)').hide().siblings('.name,.type').addClass('link').once('singleclick',events.clickEvent).once('dblclick',events.dblclickEvent);
 				// Done
 				return $this;
 			}

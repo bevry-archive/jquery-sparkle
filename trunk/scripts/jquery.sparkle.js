@@ -581,11 +581,12 @@
 				return $this;
 			}
 		},
-		'hint': {
+		'debug': {
 			config: {
 				selector: '.sparkle-debug',
 				hasClass: 'sparkle-debug-has',
-				hintedClass: 'sparkle-hint-hinted'
+				hintedClass: 'sparkle-debug-hinted',
+				showVar: 'sparkle-debug-show'
 			},
 			extension: function(Sparkle, config) {
 				var $this = $(this); var Sparkle = $.Sparkle;
@@ -594,15 +595,15 @@
 					clickEvent: function(event){
 						var $this = $(this);
 						var $parent = $this.parent();
-						var show = !$parent.data('sparkle-debug-show');
-						$parent.data('sparkle-debug-show', show);
+						var show = !$parent.data(config.showVar);
+						$parent.data(config.showVar, show);
 						$this.siblings('.value').toggle(show);
 					},
 					dblclickEvent: function(event){
 						var $this = $(this);
 						var $parent = $this.parent();
-						var show = !$parent.data('sparkle-debug-show');
-						$parent.data('sparkle-debug-show', show);
+						var show = !$parent.data(config.showVar);
+						$parent.data(config.showVar, show);
 						$parent.find('.value').toggle(show);
 					}
 				};

@@ -657,6 +657,28 @@
 				return $this;
 			}
 		},
+		'submit': {
+			config: {
+				selector: '.sparkle-submit'
+			},
+			extension: function(Sparkle, config) {
+				var $this = $(this); var Sparkle = $.Sparkle;
+				// Events
+				var events = {
+					clickEvent: function(event){
+						var $this = $(this);
+						var $form = $this.parents('form:first');
+						$form.trigger('submit');
+						return true;
+					}
+				};
+				// Fetch
+				var $submit = $this.findAndSelf(config.selector);
+				$submit.once('singleclick',events.clickEvent);
+				// Done
+				return $this;
+			}
+		}
 	
 	});
 	

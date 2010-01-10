@@ -1,7 +1,7 @@
 /**
  * jQuery Sparkle (balupton edition) - Simple Rich Effects
  * Copyright (C) 2009 Benjamin Arthur Lupton
- * http://jquery.com/plugins/project/jquerylightbox_bal
+ * http://www.balupton.com/projects/jquery-sparkle
  *
  * This file is part of jQuery Sparkle (balupton edition).
  * 
@@ -26,7 +26,7 @@
  * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
  * @copyright (c) 2009 Benjamin Arthur Lupton {@link http://www.balupton.com}
  * @license GNU Affero General Public License - {@link http://www.gnu.org/licenses/agpl.html}
- * @example Visit {@link http://jquery.com/plugins/project/jquerylightbox_bal} for more information.
+ * @example Visit {@link http://www.balupton.com/projects/jquery-sparkle} for more information.
  */
 
 (function($){
@@ -411,7 +411,7 @@
 	$.Sparkle = new $.SparkleClass({
 		'date': {
 			config: {
-				selector: '.jquery-date',
+				selector: '.sparkle-date',
 				dateformat: 'yy-mm-dd'
 			},
 			extension: function(Sparkle, config){
@@ -424,7 +424,7 @@
 		},
 		'time': {
 			config: {
-				selector: '.jquery-time',
+				selector: '.sparkle-time',
 				timeconvention: 24
 			},
 			extension: function(Sparkle, config){
@@ -437,7 +437,7 @@
 		},
 		'datetime': {
 			config: {
-				selector: '.jquery-datetime',
+				selector: '.sparkle-datetime',
 				dateformat: 'yy-mm-dd',
 				timeconvention: 24
 			},
@@ -452,7 +452,7 @@
 		},
 		'hide-if-empty': {
 			config: {
-				selector: '.jquery-hide-if-empty:empty'
+				selector: '.sparkle-hide-if-empty:empty'
 			},
 			extension: function(Sparkle, config) {
 				var $this = $(this);
@@ -461,7 +461,7 @@
 		},
 		'hide': {
 			config: {
-				selector: '.jquery-hide'
+				selector: '.sparkle-hide'
 			},
 			extension: function(Sparkle, config) {
 				var $this = $(this);
@@ -470,7 +470,7 @@
 		},
 		'subtle': {
 			config: {
-				selector: '.jquery-subtle',
+				selector: '.sparkle-subtle',
 				css: {
 					'font-size': '80%'
 				},
@@ -497,8 +497,8 @@
 		},
 		'panelshower': {
 			config: {
-				selectorSwitch: '.jquery-panelshower-switch',
-				selectorPanel: '.jquery-panelshower-panel',
+				selectorSwitch: '.sparkle-panelshower-switch',
+				selectorPanel: '.sparkle-panelshower-panel',
 				inSpeed: 200,
 				outSpeed: 200
 			},

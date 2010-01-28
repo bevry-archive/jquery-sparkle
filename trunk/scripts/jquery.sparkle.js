@@ -298,9 +298,10 @@
 	$.fn.ajaxCalendar = function(options){
 		// Prepare
 		options = options||{};
+		options.ajaxList = options.ajaxList||"entries";
 		options.ajaxUrl = options.ajaxUrl||'/ajax-calendar';
 		options.ajaxData = options.ajaxData||{};
-		options.dayEventClass = options.dayEventClass||'has-event';
+		options.dayEntryClass = options.dayEntryClass||'has-entry';
 		options.domEvents = options.domEvents||{};
 		var $calendar = $(this);
 		
@@ -326,10 +327,10 @@
 						var $days = $calendar.find('table > tbody > tr > td').unbind().find('a').removeAttr('href');
 						
 						// Cycle
-						var events = data.events||[];
-						$.each(events, function(eventIndex,event){
-							var startDay = event.start.match(/([0-9]+)\s/)[1].strip('0'),
-								finishDay = event.finish.match(/([0-9]+)\s/)[1].strip('0');
+						var entries = data[options.ajaxList]||[];
+						$.each(entries, function(entryIndex,entry){
+							var startDay = entry.start.match(/([0-9]+)\s/)[1].strip('0'),
+								finishDay = entry.finish.match(/([0-9]+)\s/)[1].strip('0');
 							var $startDay = $days.filter(':contains('+startDay+'):first'),
 								$finishDay = $days.filter(':contains('+finishDay+'):first');
 								
@@ -338,43 +339,43 @@
 								finish = $days.index($finishDay);
 								
 							// Betweens
-							var $eventDays = $days.filter(':gt('+(start-1)+'):lt('+(finish)+')'); // jQuery is WEIRD!
+							var $entryDays = $days.filter(':gt('+(start-1)+'):lt('+(finish)+')'); // jQuery is WEIRD!
 							
-							// Add the Event to These Days
-							$eventDays.addClass(options.dayEventclass).each(function(dayIndex,dayElement){
+							// Add the Entry to These Days
+							$entryDays.addClass(options.dayEntryClass).each(function(dayIndex,dayElement){
 								var $day = $(dayElement);
 								var day = $day.text().trim();
-								var dayEventsIds = $day.data('dayEventsIds');
+								var dayEntriesIds = $day.data('dayEntriesIds');
 								
 								// Handle
-								if ( typeof dayEventsIds === 'undefined' ) {
-									dayEventsIds = eventIndex;
+								if ( typeof dayEntriesIds === 'undefined' ) {
+									dayEntriesIds = entryIndex;
 								} else {
-									dayEventsIds = String(dayEventsIds).split(/,/g);
-									dayEventsIds.push(eventIndex);
-									dayEventsIds = dayEventsIds.join(',');
+									dayEntriesIds = String(dayEntriesIds).split(/,/g);
+									dayEntriesIds.push(entryIndex);
+									dayEntriesIds = dayEntriesIds.join(',');
 								}
 								
 								// Apply
-								$day.data('dayEventsIds',dayEventsIds);
+								$day.data('dayEntriesIds',dayEntriesIds);
 								
-								// Bind Events
+								// Bind Entries
 								$.each(options.domEvents,function(domEventName,domEventHandler){
 									$day.unbind(domEventName).bind(domEventName,function(domEvent){
 										// Prepare
 										var $day = $(this);
 										var day = $day.text().trim();
-										var dayEventsIds = String($day.data('dayEventsIds')).split(/,/g);
+										var dayEntriesIds = String($day.data('dayEntriesIds')).split(/,/g);
 				
-										// Events
-										var dayEvents = []
-										$.each(dayEventsIds,function(i,eventIndex){
-											var dayEvent = events[eventIndex];
-											dayEvents.push(dayEvent);
+										// Entries
+										var dayEntries = []
+										$.each(dayEntriesIds,function(i,entryIndex){
+											var dayEntry = entries[entryIndex];
+											dayEntries.push(dayEntry);
 										});
 										
 										// Fire
-										domEventHandler.apply(this, [domEvent, day, dayEvents, events]);
+										domEventHandler.apply(this, [domEvent, day, dayEntries, entries]);
 										
 										// Done
 										return true;

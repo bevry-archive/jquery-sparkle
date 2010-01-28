@@ -298,6 +298,7 @@
 	$.fn.ajaxCalendar = function(options){
 		// Prepare
 		options = options||{};
+		options.ajaxUrl = options.ajaxUrl||'/ajax-calendar';
 		options.ajaxData = options.ajaxData||{};
 		options.dayEventClass = options.dayEventClass||'has-event';
 		options.domEvents = options.domEvents||{};
@@ -308,7 +309,7 @@
 			onChangeMonthYear: function(year, month, inst) {
 				// Prepare
 				var $dp = $(inst.dpDiv[0]),
-					url = '/projects/burn/ajax-calendar',
+					url = options.ajaxUrl,
 					data = $.extend({},{
 						year: year,
 						month: month

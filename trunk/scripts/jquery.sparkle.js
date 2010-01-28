@@ -45,6 +45,28 @@
 	console.profile		= console.profile		|| console.log;
 	console.profileEnd	= console.profileEnd	|| console.log;
 	
+	/**
+	 * String.prototype.trim - Trim space off the front or back
+	 * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+	 */
+	if ( typeof String.prototype.trim  === 'undefined' ) {
+		String.prototype.trim = function() {
+			return this.replace(/^\s+|\s+$/g, '');
+		};
+	}
+	
+	/**
+	 * String.prototype.strip - Strip a value off the front and back
+	 * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+	 */
+	if (typeof String.prototype.strip === 'undefined') {
+		String.prototype.strip = function(value){
+			value = String(value);
+			var str = this.replace(eval('/^'+value+'+|'+value+'+$/g'), '');
+			return String(str);
+		}
+	}
+	
 	// Prototypes
 	Number.prototype.padLeft = String.prototype.padLeft = String.prototype.padLeft ||function(ch, num){
 		var val = String(this);
@@ -271,6 +293,146 @@
 			return $input;
 		});
 	};
+	
+	// ajaxCalendar
+	$.fn.ajaxCalendar = function(options){
+		// Prepare
+		options = options||{};
+		options.ajaxData = options.ajaxData||{};
+		options.dayEventClass = options.dayEventClass||'has-event';
+		options.domEvents = options.domEvents||{};
+		var $calendar = $(this);
+		
+		// Apply
+		$calendar.datepicker({
+			onChangeMonthYear: function(year, month, inst) {
+				// Prepare
+				var $dp = $(inst.dpDiv[0]),
+					url = '/projects/burn/ajax-calendar',
+					data = $.extend({},{
+						year: year,
+						month: month
+					},options.ajaxData);
+					
+				// Ajax
+				$.ajax({
+					url:  url,
+					method: 'post',
+					dataType: 'json',
+					data: data,
+					success: function(data, status){
+						// Find
+						var $days = $calendar.find('table > tbody > tr > td').unbind().find('a').removeAttr('href');
+						
+						// Cycle
+						var events = data.events||[];
+						$.each(events, function(eventIndex,event){
+							var startDay = event.start.match(/([0-9]+)\s/)[1].strip('0'),
+								finishDay = event.finish.match(/([0-9]+)\s/)[1].strip('0');
+							var $startDay = $days.filter(':contains('+startDay+'):first'),
+								$finishDay = $days.filter(':contains('+finishDay+'):first');
+								
+							// Indexes
+							var start = $days.index($startDay),
+								finish = $days.index($finishDay);
+								
+							// Betweens
+							var $eventDays = $days.filter(':gt('+(start-1)+'):lt('+(finish)+')'); // jQuery is WEIRD!
+							
+							// Add the Event to These Days
+							$eventDays.addClass(options.dayEventclass).each(function(dayIndex,dayElement){
+								var $day = $(dayElement);
+								var day = $day.text().trim();
+								var dayEventsIds = $day.data('dayEventsIds');
+								
+								// Handle
+								if ( typeof dayEventsIds === 'undefined' ) {
+									dayEventsIds = eventIndex;
+								} else {
+									dayEventsIds = String(dayEventsIds).split(/,/g);
+									dayEventsIds.push(eventIndex);
+									dayEventsIds = dayEventsIds.join(',');
+								}
+								
+								// Apply
+								$day.data('dayEventsIds',dayEventsIds);
+								
+								// Bind Events
+								$.each(options.domEvents,function(domEventName,domEventHandler){
+									$day.unbind(domEventName).bind(domEventName,function(domEvent){
+										// Prepare
+										var $day = $(this);
+										var day = $day.text().trim();
+										var dayEventsIds = String($day.data('dayEventsIds')).split(/,/g);
+				
+										// Events
+										var dayEvents = []
+										$.each(dayEventsIds,function(i,eventIndex){
+											var dayEvent = events[eventIndex];
+											dayEvents.push(dayEvent);
+										});
+										
+										// Fire
+										domEventHandler.apply(this, [domEvent, day, dayEvents, events]);
+										
+										// Done
+										return true;
+									});
+								});
+								
+								// Done
+							});
+						});
+					}
+				});
+			}
+		});
+		
+		// Chain
+		return $calendar;
+	};
+	
+	// Forms
+	$.fn.choose = $.fn.choose||function(value){
+		var $this = $(this);
+		switch ( true ) {
+			case $this.is('option'):
+				$this.parents(':select:first').choose(value);
+				break;
+			case $this.is(':checkbox'):
+				$this.attr('checked', true);
+				break;
+			case $this.is(':radio'):
+				$this.attr('checked', true);
+				break;
+			case $this.is('select'):
+				$this.val(value);
+				break;
+			default:
+				break;
+		}
+		return this;
+	}
+	$.fn.unchoose = $.fn.unchoose||function(){
+		var $this = $(this);
+		switch ( true ) {
+			case $this.is('option'):
+				$this.parents(':select:first').unchoose();
+				break;
+			case $this.is(':checkbox'):
+				$this.attr('checked', false);
+				break;
+			case $this.is(':radio'):
+				$this.attr('checked', false);
+				break;
+			case $this.is('select'):
+				$this.val($this.find('option:first').val());
+				break;
+			default:
+				break;
+		}
+		return this;
+	}
 	
 	// BalClass
 	$.BalClass = $.BalClass || function(config){
@@ -681,5 +843,6 @@
 		}
 	
 	});
+	
 	
 })(jQuery);

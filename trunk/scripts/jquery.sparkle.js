@@ -339,7 +339,14 @@
 								finish = $days.index($finishDay);
 								
 							// Betweens
-							var $entryDays = $days.filter(':gt('+(start-1)+'):lt('+(finish)+')'); // jQuery is WEIRD!
+							var $entryDays = [];
+							if ( start == finish ) {
+								$entryDays = $startDay;
+							} else if ( start == finish-1 ) {
+								$entryDays = $startDay.add($finishDay);
+							} else {
+								$entryDays = $days.filter(':gt('+(start-1)+'):lt('+(finish)+')'); // jQuery is WEIRD!
+							}
 							
 							// Add the Entry to These Days
 							$entryDays.addClass(options.dayEntryClass).each(function(dayIndex,dayElement){

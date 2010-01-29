@@ -49,22 +49,38 @@
 	 * String.prototype.trim - Trim space off the front or back
 	 * @copyright Benjamin "balupton" Lupton (MIT Licenced)
 	 */
-	if ( typeof String.prototype.trim  === 'undefined' ) {
-		String.prototype.trim = function() {
-			return this.replace(/^\s+|\s+$/g, '');
-		};
-	}
+	String.prototype.trim = String.prototype.trim || function() {
+		return this.replace(/^\s+|\s+$/g, '');
+	};
 	
 	/**
 	 * String.prototype.strip - Strip a value off the front and back
 	 * @copyright Benjamin "balupton" Lupton (MIT Licenced)
 	 */
-	if (typeof String.prototype.strip === 'undefined') {
-		String.prototype.strip = function(value){
-			value = String(value);
-			var str = this.replace(eval('/^'+value+'+|'+value+'+$/g'), '');
-			return String(str);
-		}
+	String.prototype.strip = String.prototype.strip || function(value){
+		value = String(value);
+		var str = this.replace(eval('/^'+value+'+|'+value+'+$/g'), '');
+		return String(str);
+	}
+	
+	/**
+	 * String.prototype.stripLeft - Strip a value off the front
+	 * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+	 */
+	String.prototype.stripLeft = String.prototype.stripLeft || function(value){
+		value = String(value);
+		var str = this.replace(eval('/^'+value+'+/g'), '');
+		return String(str);
+	}
+	
+	/**
+	 * String.prototype.stripRight - Strip a value off the front
+	 * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+	 */
+	String.prototype.stripRight = String.prototype.stripRight || function(value){
+		value = String(value);
+		var str = this.replace(eval('/'+value+'+$/g'), '');
+		return String(str);
 	}
 	
 	// Prototypes
@@ -329,8 +345,8 @@
 						// Cycle
 						var entries = data[options.ajaxList]||[];
 						$.each(entries, function(entryIndex,entry){
-							var startDay = entry.start.match(/([0-9]+)\s/)[1].strip('0'),
-								finishDay = entry.finish.match(/([0-9]+)\s/)[1].strip('0');
+							var startDay = entry.start.match(/([0-9]+)\s/)[1].stripLeft('0'),
+								finishDay = entry.finish.match(/([0-9]+)\s/)[1].stripLeft('0');
 							var $startDay = $days.filter(':contains('+startDay+'):first'),
 								$finishDay = $days.filter(':contains('+finishDay+'):first');
 								

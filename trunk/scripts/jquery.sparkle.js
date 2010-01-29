@@ -319,10 +319,11 @@
 		options.ajaxData = options.ajaxData||{};
 		options.dayEntryClass = options.dayEntryClass||'has-entry';
 		options.domEvents = options.domEvents||{};
+		options.calendarOptions = options.calendarOptions||{};
 		var $calendar = $(this);
 		
-		// Apply
-		$calendar.datepicker({
+		// Calendar Options
+		var calendarOptions = $.extend({}, options.calendarOptions, {
 			onChangeMonthYear: function(year, month, inst) {
 				// Prepare
 				var $dp = $(inst.dpDiv[0]),
@@ -423,6 +424,9 @@
 				});
 			}
 		});
+		
+		// Apply
+		$calendar.datepicker(calendarOptions);
 		
 		// Chain
 		return $calendar;

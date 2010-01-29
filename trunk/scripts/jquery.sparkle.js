@@ -346,14 +346,16 @@
 						// Cycle
 						var entries = data[options.ajaxList]||[];
 						$.each(entries, function(entryIndex,entry){
-							var startDay = entry.start.match(/([0-9]+)\s/)[1].stripLeft('0'),
+							var startMonth = entry.start.match(/-([0-9]+)-/)[1].stripLeft('0'),
+							 	finishMonth = entry.finish.match(/-([0-9]+)-/)[1].stripLeft('0'),
+								startDay = entry.start.match(/([0-9]+)\s/)[1].stripLeft('0'),
 								finishDay = entry.finish.match(/([0-9]+)\s/)[1].stripLeft('0');
-							var $startDay = $days.filter(':contains('+startDay+'):first'),
-								$finishDay = $days.filter(':contains('+finishDay+'):first');
-								
+							var $startDay = startMonth == month ? $days.filter(':contains('+startDay+'):first') : $days.filter(':first'),
+								$finishDay = finishMonth == month ? $days.filter(':contains('+finishDay+'):first') : $days.filter(':last');
+							
 							// Indexes
-							var start = $days.index($startDay),
-								finish = $days.index($finishDay),
+							var start = startMonth == month ? $days.index($startDay) : 0,
+								finish = finishMonth == month ? $days.index($finishDay) : $days.length-1,
 								duration = finish-start+1; // +1 to be inclusive
 							
 							// Betweens
@@ -363,10 +365,9 @@
 							} else if ( start == finish-1 ) {
 								$entryDays = $startDay.add($finishDay);
 							} else {
-								$entryDays = $days.filter(':lt('+(finish+1)+')').filter(':gt('+(start-1)+')');
+								$entryDays = $startDay.add($days.filter(':lt('+(finish)+')').filter(':gt('+(start)+')')).add($finishDay);
 							}
 							
-							/*
 							console.log(
 								'Entry: '+entry.id,
 								[startDay,finishDay],
@@ -374,7 +375,6 @@
 								[$startDay.text().trim(),$finishDay.text().trim()],
 								[$entryDays.filter(':first').text().trim(),$entryDays.filter(':last').text().trim(),$entryDays.length]
 							);
-							*/
 							
 							// Add the Entry to These Days
 							$entryDays.addClass(options.dayEntryClass).each(function(dayIndex,dayElement){

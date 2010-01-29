@@ -336,8 +336,9 @@
 								
 							// Indexes
 							var start = $days.index($startDay),
-								finish = $days.index($finishDay);
-								
+								finish = $days.index($finishDay),
+								duration = finish-start+1; // +1 to be inclusive
+							
 							// Betweens
 							var $entryDays = [];
 							if ( start == finish ) {
@@ -345,8 +346,18 @@
 							} else if ( start == finish-1 ) {
 								$entryDays = $startDay.add($finishDay);
 							} else {
-								$entryDays = $days.filter(':gt('+(start-1)+'):lt('+(finish)+')'); // jQuery is WEIRD!
+								$entryDays = $days.filter(':lt('+(finish+1)+')').filter(':gt('+(start-1)+')');
 							}
+							
+							/*
+							console.log(
+								'Entry: '+entry.id,
+								[startDay,finishDay],
+								[start,finish,duration],
+								[$startDay.text().trim(),$finishDay.text().trim()],
+								[$entryDays.filter(':first').text().trim(),$entryDays.filter(':last').text().trim(),$entryDays.length]
+							);
+							*/
 							
 							// Add the Entry to These Days
 							$entryDays.addClass(options.dayEntryClass).each(function(dayIndex,dayElement){

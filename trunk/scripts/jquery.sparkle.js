@@ -320,112 +320,171 @@
 		options.dayEntryClass = options.dayEntryClass||'has-entry';
 		options.domEvents = options.domEvents||{};
 		options.calendarOptions = options.calendarOptions||{};
+		options.useCache = typeof options.useCache === 'undefined' ? true : options.useCache;
 		var $calendar = $(this);
+		
+		// Calendar Entries Setup/Fetch
+		var calendarEntries = {};//$calendar.data('calendarEntries')||{};
+		
+		// Our Checker
+		var calendarEntriesExist = function(year,month) {
+			return typeof calendarEntries[year+'-'+month] !== 'undefined';
+		};
+		
+		// Our Getter
+		var calendarEntriesGet = function(year,month) {
+			return calendarEntries[year+'-'+month]||[];
+		};
+		
+		// Our Setter
+		var calendarEntriesSet = function(year,month,entries){
+			calendarEntries[year+'-'+month] = entries||[];
+			return true;
+		};
+		
+		// Our Store
+		var calendarEntriesStore = function(){
+			//$calendar.data('calendarEntries',calendarEntries);
+			return true;
+		}
+		
+		// Our Extender Event
+		var calendarEntriesRender = function(year,month) {
+			// Fetch the Entries
+			var entries = calendarEntriesGet(year,month);
+			
+			// Reset the Render
+			var $days = $calendar.find('table > tbody > tr > td').unbind().find('a').removeAttr('href');
+			
+			// Cycle Through Entries
+			$.each(entries, function(entryIndex,entry){
+				var startMonth = entry.start.match(/-([0-9]+)-/)[1].stripLeft('0'),
+				 	finishMonth = entry.finish.match(/-([0-9]+)-/)[1].stripLeft('0'),
+					startDay = entry.start.match(/([0-9]+)\s/)[1].stripLeft('0'),
+					finishDay = entry.finish.match(/([0-9]+)\s/)[1].stripLeft('0');
+				var $startDay = startMonth == month ? $days.filter(':contains('+startDay+'):first') : $days.filter(':first'),
+					$finishDay = finishMonth == month ? $days.filter(':contains('+finishDay+'):first') : $days.filter(':last');
+				
+				// Indexes
+				var start = startMonth == month ? $days.index($startDay) : 0,
+					finish = finishMonth == month ? $days.index($finishDay) : $days.length-1,
+					duration = finish-start+1; // +1 to be inclusive
+				
+				// Betweens
+				var $entryDays = [];
+				if ( start == finish ) {
+					$entryDays = $startDay;
+				} else if ( start == finish-1 ) {
+					$entryDays = $startDay.add($finishDay);
+				} else {
+					$entryDays = $startDay.add($days.filter(':lt('+(finish)+')').filter(':gt('+(start)+')')).add($finishDay);
+				}
+				
+				/*
+				console.log(
+					'Entry: '+entry.id,
+					[startDay,finishDay],
+					[start,finish,duration],
+					[$startDay.text().trim(),$finishDay.text().trim()],
+					[$entryDays.filter(':first').text().trim(),$entryDays.filter(':last').text().trim(),$entryDays.length]
+				);
+				*/
+				
+				// Add the Entry to These Days
+				$entryDays.addClass(options.dayEntryClass).each(function(dayIndex,dayElement){
+					var $day = $(dayElement);
+					var day = $day.text().trim();
+					var dayEntriesIds = $day.data('dayEntriesIds');
+					
+					// Handle
+					if ( typeof dayEntriesIds === 'undefined' ) {
+						dayEntriesIds = entryIndex;
+					} else {
+						dayEntriesIds = String(dayEntriesIds).split(/,/g);
+						dayEntriesIds.push(entryIndex);
+						dayEntriesIds = dayEntriesIds.join(',');
+					}
+					
+					// Apply
+					$day.data('dayEntriesIds',dayEntriesIds);
+					
+					// Bind Entries
+					$.each(options.domEvents,function(domEventName,domEventHandler){
+						$day.unbind(domEventName).bind(domEventName,function(domEvent){
+							// Prepare
+							var $day = $(this);
+							var day = $day.text().trim();
+							var dayEntriesIds = String($day.data('dayEntriesIds')).split(/,/g);
+	
+							// Entries
+							var dayEntries = []
+							$.each(dayEntriesIds,function(i,entryIndex){
+								var dayEntry = entries[entryIndex];
+								dayEntries.push(dayEntry);
+							});
+							
+							// Fire
+							domEventHandler.apply(this, [domEvent, day, dayEntries, entries]);
+							
+							// Done
+							return true;
+						});
+					});
+					
+					// Done
+				});
+			});
+			
+			// Done
+			return true;
+		};
 		
 		// Calendar Options
 		var calendarOptions = $.extend({}, options.calendarOptions, {
 			onChangeMonthYear: function(year, month, inst) {
 				// Prepare
-				var $dp = $(inst.dpDiv[0]),
-					url = options.ajaxUrl,
+				var url = options.ajaxUrl,
 					data = $.extend({},{
-						year: year,
-						month: month
-					},options.ajaxData);
+							year: year,
+							month: month
+						},
+						options.ajaxData
+					);
 					
-				// Ajax
-				$.ajax({
-					url:  url,
-					method: 'post',
-					dataType: 'json',
-					data: data,
-					success: function(data, status){
-						// Find
-						var $days = $calendar.find('table > tbody > tr > td').unbind().find('a').removeAttr('href');
+				// Check
+				if ( options.useCache && calendarEntriesExist(year,month) ) {
+					// Use the cache
+					setTimeout(function(){
+						calendarEntriesRender(year,month)
+					},50);
+				}
+				else {
+					// Fetch into the cache
+					$.ajax({
+						url:  url,
+						method: 'post',
+						dataType: 'json',
+						data: data,
+						success: function(data, status){
+							// Cycle
+							var entries = data[options.ajaxList]||[];
 						
-						// Cycle
-						var entries = data[options.ajaxList]||[];
-						$.each(entries, function(entryIndex,entry){
-							var startMonth = entry.start.match(/-([0-9]+)-/)[1].stripLeft('0'),
-							 	finishMonth = entry.finish.match(/-([0-9]+)-/)[1].stripLeft('0'),
-								startDay = entry.start.match(/([0-9]+)\s/)[1].stripLeft('0'),
-								finishDay = entry.finish.match(/([0-9]+)\s/)[1].stripLeft('0');
-							var $startDay = startMonth == month ? $days.filter(':contains('+startDay+'):first') : $days.filter(':first'),
-								$finishDay = finishMonth == month ? $days.filter(':contains('+finishDay+'):first') : $days.filter(':last');
-							
-							// Indexes
-							var start = startMonth == month ? $days.index($startDay) : 0,
-								finish = finishMonth == month ? $days.index($finishDay) : $days.length-1,
-								duration = finish-start+1; // +1 to be inclusive
-							
-							// Betweens
-							var $entryDays = [];
-							if ( start == finish ) {
-								$entryDays = $startDay;
-							} else if ( start == finish-1 ) {
-								$entryDays = $startDay.add($finishDay);
-							} else {
-								$entryDays = $startDay.add($days.filter(':lt('+(finish)+')').filter(':gt('+(start)+')')).add($finishDay);
-							}
-							
-							console.log(
-								'Entry: '+entry.id,
-								[startDay,finishDay],
-								[start,finish,duration],
-								[$startDay.text().trim(),$finishDay.text().trim()],
-								[$entryDays.filter(':first').text().trim(),$entryDays.filter(':last').text().trim(),$entryDays.length]
-							);
-							
-							// Add the Entry to These Days
-							$entryDays.addClass(options.dayEntryClass).each(function(dayIndex,dayElement){
-								var $day = $(dayElement);
-								var day = $day.text().trim();
-								var dayEntriesIds = $day.data('dayEntriesIds');
-								
-								// Handle
-								if ( typeof dayEntriesIds === 'undefined' ) {
-									dayEntriesIds = entryIndex;
-								} else {
-									dayEntriesIds = String(dayEntriesIds).split(/,/g);
-									dayEntriesIds.push(entryIndex);
-									dayEntriesIds = dayEntriesIds.join(',');
-								}
-								
-								// Apply
-								$day.data('dayEntriesIds',dayEntriesIds);
-								
-								// Bind Entries
-								$.each(options.domEvents,function(domEventName,domEventHandler){
-									$day.unbind(domEventName).bind(domEventName,function(domEvent){
-										// Prepare
-										var $day = $(this);
-										var day = $day.text().trim();
-										var dayEntriesIds = String($day.data('dayEntriesIds')).split(/,/g);
+							// Store the Entries in the Calendar Data
+							calendarEntriesSet(year,month,entries);
+							calendarEntriesStore();
+						
+							// Apply the Entries
+							calendarEntriesRender(year,month);
+						}
+					});
+				}
 				
-										// Entries
-										var dayEntries = []
-										$.each(dayEntriesIds,function(i,entryIndex){
-											var dayEntry = entries[entryIndex];
-											dayEntries.push(dayEntry);
-										});
-										
-										// Fire
-										domEventHandler.apply(this, [domEvent, day, dayEntries, entries]);
-										
-										// Done
-										return true;
-									});
-								});
-								
-								// Done
-							});
-						});
-					}
-				});
+				// Done Change
+				return true;
 			}
 		});
 		
-		// Apply
+		// Apply Options so we can hook into the events
 		$calendar.datepicker(calendarOptions);
 		
 		// Chain

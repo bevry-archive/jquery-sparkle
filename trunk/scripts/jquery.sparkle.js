@@ -160,6 +160,10 @@
 		var $this = $(this);
 		return $this.find(selector).andSelf().filter(selector);
 	};
+	$.fn.firstInput = $.fn.firstInput || function(selector){
+		var $this = $(this);
+		return $this.findAndSelf(':input').filter(':first');
+	};
 	$.fn.value = function(value){
 		var $input = $(this).firstInput(), result;
 		if ( value ) {
@@ -188,6 +192,13 @@
 			$this.unbind(event, callback);
 			$this.bind(event, callback);
 		}
+		// Chain
+		return $this;
+	};
+	$.fn.submitForm = $.fn.submitForm || function(){
+		var $this = $(this);
+		// Handle
+		var $form = $this.parents('form:first').trigger('submit');
 		// Chain
 		return $this;
 	};
@@ -927,9 +938,7 @@
 				// Events
 				var events = {
 					clickEvent: function(event){
-						var $this = $(this);
-						var $form = $this.parents('form:first');
-						$form.trigger('submit');
+						var $this = $(this).submitForm();
 						return true;
 					}
 				};

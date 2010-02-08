@@ -154,6 +154,16 @@
 		var seconds = date.getUTCSeconds().padLeft(0,2);
 		return hours+':'+minutes+':'+seconds;
 	}
+	Array.prototype.has = Array.prototype.has||function(value){
+		var has = false;
+		for ( var i=0, n=this.length; i<n; ++i ) {
+			if ( value == this[i] ) {
+				has = true;
+				break;
+			}
+		}
+		return has;
+	};
 	
 	// Prototypes
 	$.fn.findAndSelf = $.fn.findAndSelf || function(selector){
@@ -945,6 +955,33 @@
 				// Fetch
 				var $submit = $this.findAndSelf(config.selector);
 				$submit.once('singleclick',events.clickEvent);
+				// Done
+				return $this;
+			}
+		},
+		'highlight-values': {
+			config: {
+				selector: '.sparkle-highlight-values',
+				innerSelector: 'td',
+				empty: ['',false,null,'false','null',0,'-'],
+				emptyClass: 'sparkle-highlight-values-empty',
+				notemptyClass: 'sparkle-highlight-values-notempty'
+			},
+			extension: function(Sparkle, config) {
+				var $this = $(this); var Sparkle = $.Sparkle;
+				// Fetch
+				var $container = $this.findAndSelf(config.selector);
+				var $inner = $container.findAndSelf(config.innerSelector);
+				$inner.each(function(){
+					var $this = $(this);
+					var value = $this.text().trim();
+					var empty = config.empty.has(value);
+					if ( empty ) {
+						$this.addClass(config.emptyClass);
+					} else {
+						$this.addClass(config.notemptyClass);
+					}
+				});
 				// Done
 				return $this;
 			}

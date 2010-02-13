@@ -31,7 +31,10 @@
 
 (function($){
 	
-	// Debug
+	/**
+	 * Ensure Console
+	 * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+	 */
 	if (typeof console === 'undefined') {
 		console = typeof window.console !== 'undefined' ? window.console : {};
 	}
@@ -45,66 +48,94 @@
 	console.profile		= console.profile		|| console.log;
 	console.profileEnd	= console.profileEnd	|| console.log;
 	
+	
 	/**
-	 * String.prototype.trim - Trim space off the front or back
+	 * String Prototypes
 	 * @copyright Benjamin "balupton" Lupton (MIT Licenced)
 	 */
 	String.prototype.trim = String.prototype.trim || function() {
+		// Trim off any whitespace from the front and back
 		return this.replace(/^\s+|\s+$/g, '');
 	};
-	
-	/**
-	 * String.prototype.strip - Strip a value off the front and back
-	 * @copyright Benjamin "balupton" Lupton (MIT Licenced)
-	 */
 	String.prototype.strip = String.prototype.strip || function(value){
+		// Strip a value from left and right
 		value = String(value);
 		var str = this.replace(eval('/^'+value+'+|'+value+'+$/g'), '');
 		return String(str);
 	}
-	
-	/**
-	 * String.prototype.stripLeft - Strip a value off the front
-	 * @copyright Benjamin "balupton" Lupton (MIT Licenced)
-	 */
 	String.prototype.stripLeft = String.prototype.stripLeft || function(value){
+		// Strip a value from the left
 		value = String(value);
 		var str = this.replace(eval('/^'+value+'+/g'), '');
 		return String(str);
 	}
-	
-	/**
-	 * String.prototype.stripRight - Strip a value off the front
-	 * @copyright Benjamin "balupton" Lupton (MIT Licenced)
-	 */
 	String.prototype.stripRight = String.prototype.stripRight || function(value){
+		// Strip a value from the right
 		value = String(value);
 		var str = this.replace(eval('/'+value+'+$/g'), '');
 		return String(str);
 	}
+	String.prototype.toInt = String.prototype.toInt || function(){
+		// Convert to a Integer
+		return parseInt(this,10);
+	};
+	String.prototype.wrap = String.prototype.wrap || function(start,end){
+		// Wrap the string
+		return start+this+end;
+	};
+	String.prototype.wrapSelection = String.prototype.wrapSelection || function(start,end,a,z){
+		// Wrap the selection
+		if ( typeof a === 'undefined' || a === null ) a = this.length;
+		if ( typeof z === 'undefined' || z === null ) z = this.length;
+		return this.substring(0,a)+start+this.substring(a,z)+end+this.substring(z);
+	};
+	String.prototype.toSlug = String.prototype.toSlug || function(){
+		// Convert a string to a slug
+		return this.toLowerCase().replace(/[\s_]/g, '-').replace(/[^-a-z0-9]/g, '').replace(/--+/g, '-');
+	}
 	
-	// Prototypes
+	/**
+	 * Number Prototypes
+	 * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+	 */
+	Number.prototype.zeroise = String.prototype.zeroise = String.prototype.zeroise ||function(threshold){
+		// Add zeroes correctly to the front of a number, given the threshold
+		var number = this,
+			str = number.toString();
+		if (number < 0) { str = str.substr(1, str.length) }
+		while (str.length < threshold) { str = '0' + str }
+		if (number < 0) { str = '-' + str }
+		return str;
+	};
 	Number.prototype.padLeft = String.prototype.padLeft = String.prototype.padLeft ||function(ch, num){
+		// Pad the Number/String left with ch, num times
 		var val = String(this);
-		var re = new RegExp(".{" + num + "}$");
-		var pad = "";
-		if ( !ch && ch !== 0 ) ch = " ";
+		var re = new RegExp('.{' + num + '}$');
+		var pad = '';
+		if ( !ch && ch !== 0 ) ch = ' ';
 		do  {
 			pad += ch;
 		} while(pad.length < num);
 		return re.exec(pad + val)[0];
 	};
 	Number.prototype.padRight = String.prototype.padRight = String.prototype.padRight ||function(ch, num){
+		// Pad the Number/String right with ch, num times
 		var val = String(this);
-		var re = new RegExp("^.{" + num + "}");
-		var pad = "";
-		if ( !ch && ch !== 0 ) ch = " ";
+		var re = new RegExp('^.{' + num + '}');
+		var pad = '';
+		if ( !ch && ch !== 0 ) ch = ' ';
 		do {
 			pad += ch;
 		} while (pad.length < num);
 		return re.exec(val + pad)[0];
 	};
+	
+	/**
+	 * Date Prototypes
+	 * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+	 */
 	Date.prototype.setDatetimestr = Date.prototype.setDatetimestr || function(timestamp){
+		// Set the datetime from a string
 		var pieces = timestamp.split(/[\-\s\:]/g);
 		var year = pieces[0];
 		var month = pieces[1];
@@ -119,6 +150,7 @@
 		return this;
 	};
 	Date.prototype.setDatestr = Date.prototype.setDatestr || function(timestamp){
+		// Set the date from a string
 		var pieces = timestamp.split(/[\-\s\:]/g);
 		var year = pieces[0]||1978;
 		var month = pieces[1]||0;
@@ -127,6 +159,7 @@
 		return this;
 	};
 	Date.prototype.setTimestr = Date.prototype.setTimestr || function(timestamp){
+		// Set the time from a string
 		var pieces = timestamp.split(/[\-\s\:]/g);
 		var hour = pieces[0]||0;
 		var min = pieces[1]||0;
@@ -137,24 +170,39 @@
 		return this;
 	};
 	Date.prototype.getDatetimestr = Date.prototype.getDatetimestr || function() {
+		// Get the datetime as a string
 		var date = this;
 		return date.getDatestr()+' '+date.getTimestr();
-	}
+	};
 	Date.prototype.getDatestr = Date.prototype.getDatestr || function() {
+		// Get the date as a string
 		var date = this;
 		var year = date.getUTCFullYear();
 		var month = (this.getUTCMonth() + 1).padLeft(0,2);
 		var date = this.getUTCDate().padLeft(0,2);
 		return year+'-'+month+'-'+date;
-	}
+	};
 	Date.prototype.getTimestr = Date.prototype.getTimestr || function(){
+		// Get the time as a string
 		var date = this;
 		var hours = date.getUTCHours().padLeft(0,2);
 		var minutes = date.getUTCMinutes().padLeft(0,2);
 		var seconds = date.getUTCSeconds().padLeft(0,2);
 		return hours+':'+minutes+':'+seconds;
-	}
+	};
+	Date.prototype.getDatetime = String.prototype.getDatetime || function(){
+		// Get a ISO 8601 date
+		var now = this;
+		var datetime = now.getUTCFullYear() + '-' +
+			(now.getUTCMonth()+1).zeroise(2) + '-' +
+			now.getUTCDate().zeroise(2) + 'T' +
+			now.getUTCHours().zeroise(2) + ':' +
+			now.getUTCMinutes().zeroise(2) + ':' +
+			now.getUTCSeconds().zeroise(2) + '+00:00';
+		return datetime;
+	};
 	Array.prototype.has = Array.prototype.has||function(value){
+		// Is the value in the array?
 		var has = false;
 		for ( var i=0, n=this.length; i<n; ++i ) {
 			if ( value == this[i] ) {
@@ -165,21 +213,74 @@
 		return has;
 	};
 	
-	// Prototypes
+	/**
+	 * jQuery Prototypes
+	 * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+	 */
+	$.fn.choose = $.fn.choose||function(value){
+		// Select a value
+		var $this = $(this);
+		switch ( true ) {
+			case $this.is('option'):
+				$this.parents(':select:first').choose(value);
+				break;
+			case $this.is(':checkbox'):
+				$this.attr('checked', true);
+				break;
+			case $this.is(':radio'):
+				$this.attr('checked', true);
+				break;
+			case $this.is('select'):
+				$this.val(value);
+				break;
+			default:
+				break;
+		}
+		return this;
+	};
+	$.fn.unchoose = $.fn.unchoose||function(){
+		// Unselect a value
+		var $this = $(this);
+		switch ( true ) {
+			case $this.is('option'):
+				$this.parents(':select:first').unchoose();
+				break;
+			case $this.is(':checkbox'):
+				$this.attr('checked', false);
+				break;
+			case $this.is(':radio'):
+				$this.attr('checked', false);
+				break;
+			case $this.is('select'):
+				$this.val($this.find('option:first').val());
+				break;
+			default:
+				break;
+		}
+		return this;
+	};
+	$.fn.parentsAndSelf = $.fn.parentsAndSelf || function(selector){
+		// Find all occurences of the selector from parents and also include ourself in the search
+		var $this = $(this);
+		return $this.parents(selector).andSelf().filter(selector);
+	};
 	$.fn.findAndSelf = $.fn.findAndSelf || function(selector){
+		// Find all occurences of the selector and also include ourself in the search
 		var $this = $(this);
 		return $this.find(selector).andSelf().filter(selector);
 	};
-	$.fn.firstInput = $.fn.firstInput || function(selector){
+	$.fn.firstInput = $.fn.firstInput || function(){
+		// Get the first input including us in the search
 		var $this = $(this);
 		return $this.findAndSelf(':input').filter(':first');
 	};
 	$.fn.value = function(value){
+		// P
 		var $input = $(this).firstInput(), result;
 		if ( value ) {
 			$input.val(value);
 			if ( $input.is('select') ) {
-				$input.find('option[value=' + value + ']:first').attr('selected', 'selected');
+				$input.find('option[value='+value+']:first').attr('selected', 'selected');
 			}
 			result = $input;
 		} else {
@@ -191,7 +292,83 @@
 		}
 		return result;
 	};
+	$.fn.submitForm = $.fn.submitForm || function(){
+		// Submit the parent form or our form
+		var $this = $(this);
+		// Handle
+		var $form = $this.parentsAndSelf('form:first').trigger('submit');
+		// Chain
+		return $this;
+	};
+	$.fn.inDOM = function(){
+		// Check to see a element exists within the DOM
+		var $ancestor = $(this).parent().parent();
+		return $ancestor.size() && ($ancestor.height()||$ancestor.width());
+	};
+	$.fn.valWrap = function(start,end){
+		// Wrap a value
+		var $field = $(this);
+		return $field.val($field.val().wrap(start,end));
+	};
+	$.fn.valWrapSelection = function(start,end,a,z){
+		// Wrap the selected text
+		var $field = $(this);
+		var field = $field.get(0);
+		start = start||'';
+		end = end||'';
+		if ( a || z ) {
+			$field.val($field.val().wrapSelection(start,end,a,z));
+		}
+		else {
+			var a = field.selectionStart,
+				z = field.selectionEnd;
+			if ( document.selection) {
+				field.focus();
+				var sel = document.selection.createRange();
+				sel.text = start + sel.text + end;
+			}
+			else {
+				var scrollTop = field.scrollTop;
+				$field.val($field.val().wrapSelection(start,end,a,z));
+				field.focus();
+				field.selectionStart = a+start.length;
+				field.selectionEnd = z+start.length;
+				field.scrollTop = scrollTop;
+			}
+		}
+		return $field;
+	};
+	$.fn.giveFocus = function(){
+		// Give focus to the current element
+		var $this = $(this);
+		var selector = ':input:visible:first';
+		$this.findAndSelf(selector).focus();
+		return this;
+	};
+	$.fn.highlight = function(){
+		// Perform the Highlight Effect
+		return $(this).effect('highlight', {}, 3000);
+	};
+	
+	/**
+	 * jQuery Events
+	 * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+	 */
+	$.fn.binder = $.fn.binder || function(event, data, callback){
+		// Help us bind events properly
+		var $this = $(this);
+		// Handle
+		if ( (callback||false) ) {
+			$this.bind(event, data, callback);
+		} else {
+			callback = data;
+			$this.bind(event, callback);
+		}
+		// Chain
+		return $this;
+	};
 	$.fn.once = $.fn.once || function(event, data, callback){
+		// Only apply a event handler once
 		var $this = $(this);
 		// Handle
 		if ( (callback||false) ) {
@@ -205,15 +382,55 @@
 		// Chain
 		return $this;
 	};
-	$.fn.submitForm = $.fn.submitForm || function(){
-		var $this = $(this);
-		// Handle
-		var $form = $this.parents('form:first').trigger('submit');
-		// Chain
-		return $this;
+	$.fn.enter = $.fn.enter || function(data,callback){
+		return $(this).binder('enter',data,callback);
 	};
-	
-	// jQuery Events
+	$.event.special.enter = $.event.special.cancel || {
+		setup: function( data, namespaces ) {
+			$(this).bind('keypress', $.event.special.enter.handler);
+		},
+		teardown: function( namespaces ) {
+			$(this).unbind('keypress', $.event.special.enter.handler);
+		},
+		handler: function( event ) {
+			// Prepare
+			var $el = $(this);
+			// Setup
+			if ( event.keyCode !== 13 ) { // Enter
+				return;
+			}
+			// Fire
+			event.type = 'cancel';
+			$.event.handle.apply(this, arguments);
+			return true;
+		}
+	};
+	$.fn.cancel = $.fn.cancel || function(data,callback){
+		return $(this).binder('cancel',data,callback);
+	};
+	$.event.special.cancel = $.event.special.cancel || {
+		setup: function( data, namespaces ) {
+			$(this).bind('keypress', $.event.special.cancel.handler);
+		},
+		teardown: function( namespaces ) {
+			$(this).unbind('keypress', $.event.special.cancel.handler);
+		},
+		handler: function( event ) {
+			// Prepare
+			var $el = $(this);
+			// Setup
+			if ( event.keyCode !== 27 ) { // ESC
+				return;
+			}
+			// Fire
+			event.type = 'cancel';
+			$.event.handle.apply(this, arguments);
+			return true;
+		}
+	};
+	$.fn.singleclick = $.fn.singleclick || function(data,callback){
+		return $(this).binder('singleclick',data,callback);
+	};
 	$.event.special.singleclick = $.event.special.singleclick || {
 		setup: function( data, namespaces ) {
 			$(this).bind('click', $.event.special.singleclick.handler);
@@ -241,7 +458,9 @@
 		}
 	};
 	
-	// Timepicker
+	/**
+	 * Time Picker
+	 */
 	$.fn.timepicker = $.fn.timepicker || function(options){
 		return $(this).each(function(){
 			var $input = $(this);
@@ -295,6 +514,10 @@
 			return $input;
 		});
 	};
+	
+	/**
+	 * Date Time Picker
+	 */
 	$.fn.datetimepicker = $.fn.datetimepicker || function(){
 		return $(this).each(function(){
 			var $input = $(this);
@@ -331,7 +554,9 @@
 		});
 	};
 	
-	// ajaxCalendar
+	/**
+	 * Ajax Calendar
+	 */
 	$.fn.ajaxCalendar = function(options){
 		// Prepare
 		options = options||{};
@@ -512,49 +737,9 @@
 		return $calendar;
 	};
 	
-	// Forms
-	$.fn.choose = $.fn.choose||function(value){
-		var $this = $(this);
-		switch ( true ) {
-			case $this.is('option'):
-				$this.parents(':select:first').choose(value);
-				break;
-			case $this.is(':checkbox'):
-				$this.attr('checked', true);
-				break;
-			case $this.is(':radio'):
-				$this.attr('checked', true);
-				break;
-			case $this.is('select'):
-				$this.val(value);
-				break;
-			default:
-				break;
-		}
-		return this;
-	}
-	$.fn.unchoose = $.fn.unchoose||function(){
-		var $this = $(this);
-		switch ( true ) {
-			case $this.is('option'):
-				$this.parents(':select:first').unchoose();
-				break;
-			case $this.is(':checkbox'):
-				$this.attr('checked', false);
-				break;
-			case $this.is(':radio'):
-				$this.attr('checked', false);
-				break;
-			case $this.is('select'):
-				$this.val($this.find('option:first').val());
-				break;
-			default:
-				break;
-		}
-		return this;
-	}
-	
-	// BalClass
+	/**
+	 * BalClass
+	 */
 	$.BalClass = $.BalClass || function(config){
 		this.construct(config);
 	};
@@ -620,7 +805,9 @@
 		}
 	});
 	
-	// SparkleClass
+	/**
+	 * SparkleClass
+	 */
 	$.SparkleClass = function(config){
 		this.construct(config);
 	};
@@ -689,7 +876,9 @@
 		}
 	});
 	
-	// Sparkle
+	/**
+	 * Sparkle
+	 */
 	$.Sparkle = new $.SparkleClass({
 		'date': {
 			config: {

@@ -93,6 +93,150 @@
 		// Convert a string to a slug
 		return this.toLowerCase().replace(/[\s_]/g, '-').replace(/[^-a-z0-9]/g, '').replace(/--+/g, '-');
 	}
+	String.prototype.passwordStrength = String.prototype.passwordStrength || function(confirm,username){
+		/**
+		 * Checks the string as a password to identify it's strength
+		 * @copyright (c) Wordpress
+ 		 * @copyright (c) 2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+ 		 * @license GNU General Public License - {@link http://wordpress.org/about/gpl/}
+ 		 */
+	    var password = this.toString(), symbolSize = 0, natLog, score;
+		confirm = confirm||'';
+		username = username||'';
+		
+		// Short
+	    if ( password.length < 4 ) {
+			return "short";
+		};
+		
+	    // Username
+	    if ( username.length && password.toLowerCase() == username.toLowerCase()) {
+			return "username";
+		}
+		
+	    // Confirm
+	    if ( confirm.length && password != confirm ) {
+			return "mismatch";
+		}
+		
+		// Strength
+		if ( password.match(/[0-9]/) ) symbolSize +=10;
+		if ( password.match(/[a-z]/) ) symbolSize +=26;
+		if ( password.match(/[A-Z]/) ) symbolSize +=26;
+		if ( password.match(/[^a-zA-Z0-9]/) ) symbolSize +=31;
+		
+		// Score
+		natLog = Math.log( Math.pow(symbolSize,password.length) );
+		score = natLog / Math.LN2;
+		
+		// Check
+		if (score < 40 ) {
+			return "low";
+		}
+		else if (score < 56 ) {
+			return "medium";
+		}
+		
+		// Strong
+		return "high";
+	};
+	
+	/**
+	 * Array Prototypes
+	 * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+	 */
+	Array.prototype.remove = function(from, to) {
+		// Array Remove - By John Resig (MIT Licensed)
+		var rest = this.slice((to || from) + 1 || this.length);
+		this.length = from < 0 ? this.length + from : from;
+		return this.push.apply(this, rest);
+	};
+	Array.prototype.get = function(index, current) {
+		if ( index === 'first' ) index = 0;
+		else if ( index === 'last' ) index = this.length-1;
+		else if ( !index && index !== 0 ) index = this.index;
+		if ( current !== false ) this.setIndex(index);
+		return this[index] || undefined;
+	};
+	Array.prototype.each = function(fn){
+		for (var i = 0; i < this.length; ++i) {
+			if (fn(i, this[i], this) === false) 
+				break;
+		}
+		return this;
+	}
+	Array.prototype.setIndex = function(index){
+		if ( index < this.length && index >= 0 ) {
+			this.index = index;
+		} else {
+			this.index = null;
+		}
+		return this;
+	};
+	Array.prototype.current = function(index){
+		return this.get(index, true);
+	};
+	Array.prototype.isEmpty = function(){
+		return this.length === 0;
+	};
+	Array.prototype.isSingle = function(){
+		return this.length === 1;
+	};
+	Array.prototype.isMany = function(){
+		return this.length !== 0;
+	};
+	Array.prototype.isLast = function(index){
+		index = typeof index === 'undefined' ? this.index : index;
+		return !this.isEmpty() && index === this.length-1;
+	}
+	Array.prototype.isFirst = function(index){
+		index = typeof index === 'undefined' ? this.index : index;
+		return !this.isEmpty() && index === 0;
+	}
+	Array.prototype.clear = function(){
+		this.length = 0;
+	};
+	Array.prototype.next = function(update){
+		return this.get(this.index+1, update);
+	};
+	Array.prototype.prev = function(update){
+		return this.get(this.index-1, update);
+	};
+	Array.prototype.reset = function(){
+		this.index = null;
+		return this;
+	};
+	Array.prototype.set = function(index, item){
+		// We want to set the item
+		if ( index < this.length && index >= 0 ) {
+			this[index] = item;
+		} else {
+			$error('index above array length');
+			return false;
+		}
+		return this;
+	};
+	Array.prototype.loop = function(){
+		if ( !this.index && this.index !== 0 ) {
+			return this.current(0);
+		}
+		return this.next();
+	};
+	Array.prototype.add = function(){
+		this.push.apply(this,arguments);
+		return this;
+	};
+	Array.prototype.insert = function(index, item){
+		if ( typeof index !== 'number' ) {
+			index = this.length;
+		}
+		index = index<=this.length ? index : this.length;
+		var rest = this.slice(index);
+		this.length = index;
+		this.push(item);
+		this.push.apply(this, rest);
+		return this;
+	};
 	
 	/**
 	 * Number Prototypes
@@ -457,6 +601,87 @@
 			return true;
 		}
 	};
+	
+	/**
+	 * Password Strength
+	 */
+	$.fn.passwordStrength = $.fn.passwordStrength || function(options) {
+		// Prepare
+		var passwordStrength = $.fn.passwordStrength;
+		passwordStrength.config = passwordStrength.config || {
+			content: '<div id="pass-strength-result"></div><p class="description indicator-hint"></p>',
+			contentSelectors: {
+				result: '#pass-strength-result',
+				description: '.indicator-hint'
+			},
+			strengthCss: {
+				short: "invalid",
+				mismatch: "invalid",
+				username: "invalid",
+				low: "low",
+				medium: "medium",
+				high: "high",
+				empty: ""
+			},
+			il8n: {
+				hint: "Hint: The password should be have a strength of at least medium. To make it stronger, use upper and lower case letters, numbers and symbols like ! \" ? $ % ^ &amp; ).",
+				empty: "Strength indicator",
+				username: "Password should not be the same ",
+				mismatch: "Confirm password does not match",
+				short: "Password is too short",
+				low: "Weak",
+				medium: "Medium",
+				high: "Strongest"
+			}
+		};
+		var config = $.extend({}, passwordStrength.config);
+		
+		// Options
+		$.extend(config, options);
+		
+		// Fetch
+		var $this = $(this);
+		var $container = $this.html(config.content);
+		
+		// Implode
+		var $result = $container.find(config.contentSelectors.result);
+		var $description = $container.find(config.contentSelectors.description).html(config.il8n.hint);
+		
+		// Prepare
+		var classes = [
+			config.strengthCss.short,
+			config.strengthCss.mismatch,
+			config.strengthCss.username,
+			config.strengthCss.low,
+			config.strengthCss.medium,
+			config.strengthCss.high,
+			config.strengthCss.empty].join(' ');
+		
+		// Fetch
+		var $password = $(config.password),
+			$confirm = $(config.confirm||null),
+			$username = $(config.username||null);
+		
+		// Apply
+		var check = function(){
+			// Fetch
+			var password = $password.val(),
+				confirm  = $confirm.val(),
+				username = $username.val();
+		
+			// Strength
+			var strength = password ? password.passwordStrength(confirm,username) : "empty";
+		
+			// Apply
+			$result.removeClass(classes).addClass(config.strengthCss[strength]).html(config.il8n[strength]);
+		};
+		$password.keyup(function(){$confirm.val('')});
+		$password.add($confirm).add($username).keyup(check);
+		check();
+		
+		// Chain
+		return $this;
+	}
 	
 	/**
 	 * Time Picker

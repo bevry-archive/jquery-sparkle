@@ -770,7 +770,7 @@
 			// Defaults
 			var value = $input.val();
 			var date = new Date();
-			var datestr = timestr = '';
+			var datestr = '', timestr = '';
 			if ( value ) {
 				date.setDatetimestr(value);
 				datestr = date.getDatestr();
@@ -1094,7 +1094,7 @@
 		cycle: function(){
 			var $this = $(this); var Sparkle = $.Sparkle;
 			var Extensions = Sparkle.getConfig();
-			for ( extension in Extensions ) {
+			for ( var extension in Extensions ) {
 				Sparkle.trigger.apply($this, [extension]);
 			}
 			return $this;
@@ -1126,14 +1126,14 @@
 		'date': {
 			config: {
 				selector: '.sparkle-date',
-				dateformat: 'yy-mm-dd'
+				datepickerOptions: {
+					dateformat: 'yy-mm-dd'
+				}
 			},
 			extension: function(Sparkle, config){
 				var $this = $(this);
 				var $item = $this.findAndSelf(config.selector);
-				return typeof $item.datepicker === 'undefined' ? $item : $item.datepicker({
-					dateFormat: config.dateformat
-				});
+				return typeof $item.datepicker === 'undefined' ? $item : $item.datepicker(config.datepickerOptions);
 			}
 		},
 		'time': {

@@ -273,6 +273,13 @@
 		} while (pad.length < num);
 		return re.exec(val + pad)[0];
 	};
+	Number.prototype.roundTo = String.prototype.roundTo = String.prototype.roundTo || function(to){
+		// Round the number to the value
+		var val = String(parseInt(this,10));
+		val = parseInt(val.replace(/[1,2]$/, 0).replace(/[3,4]$/, 5),10);
+		return val;
+	};
+	
 	
 	/**
 	 * Date Prototypes
@@ -691,28 +698,33 @@
 			var $input = $(this);
 			$input.hide();
 			// Prepare
-			if ( $input.hasClass('jquery-time-has') ) return $input; // already done
-			$input.addClass('jquery-time').addClass('jquery-time-has');
+			if ( $input.hasClass('sparkle-time-has') ) return $input; // already done
+			$input.addClass('sparkle-time').addClass('sparkle-time-has');
 			// Generate
-			var $hours = $('<select class="jquery-time-hours" />');
+			var $hours = $('<select class="sparkle-time-hours" />');
 			for ( var hours=12,hour=1; hour<=hours; ++hour ) {
 				$hours.append('<option value="'+hour+'">'+hour.padLeft('0',2)+'</option>');
 			}
-			var $minutes = $('<select class="jquery-time-minutes" />');
-			for ( var mins=60,min=5; min<=mins; min+=5) {
+			var $minutes = $('<select class="sparkle-time-minutes" />');
+			for ( var mins=55,min=0; min<=mins; min+=5) {
 				$minutes.append('<option value="'+min+'">'+min.padLeft('0',2)+'</option>');
 			}
-			var $meridian = $('<select class="jquery-time-meridian" />');
+			var $meridian = $('<select class="sparkle-time-meridian" />');
 			$meridian.append('<option>am</option>');
 			$meridian.append('<option>pm</option>');
 			// Defaults
-			var value = $input.val();
-			var date = new Date(); date.setTimestr(value);
-			var hours = date.getUTCHours();
-			var minutes = date.getUTCMinutes();
-			var meridian = 'am';
-			if ( hours > 12 ) {
-				hours -= 12; meridian = 'pm';
+			var value = $input.val(),
+				date = new Date(),
+				hours = '12',
+				minutes = '0',
+				meridian = 'am';
+			if ( value ) {
+				date.setTimestr(value);
+				hours = date.getUTCHours();
+				minutes = date.getUTCMinutes();
+				if ( hours > 12 ) {
+					hours -= 12; meridian = 'pm';
+				}
 			}
 			// Append
 			$meridian.insertAfter($input);
@@ -721,7 +733,7 @@
 			// Apply
 			if ( hours > 12 && meridian == 'pm' ) hours -= 12;
 			$hours.value(hours);
-			$minutes.value(minutes);
+			$minutes.value(minutes.roundTo(5));
 			$meridian.value(meridian);
 			// Bind
 			var updateFunction = function(){
@@ -748,18 +760,24 @@
 			var $input = $(this);
 			$input.hide();
 			// Prepare
-			if ( $input.hasClass('jquery-datetime-has') ) return $input; // already done
-			$input.addClass('jquery-datetime').addClass('jquery-datetime-has');
+			if ( $input.hasClass('sparkle-datetime-has') ) return $input; // already done
+			$input.addClass('sparkle-datetime').addClass('sparkle-datetime-has');
 			// Create date part
-			var $date = $('<input type="text" class="jquery-date"/>');
-			var $sep = $('<span class="jquery-datetime-sep"> @ </span>');
-			var $time = $('<input type="text" class="jquery-time"/>');
+			var $date = $('<input type="text" class="sparkle-date"/>');
+			var $sep = $('<span class="sparkle-datetime-sep"> @ </span>');
+			var $time = $('<input type="text" class="sparkle-time"/>');
+			//var $empty = $('<label class="form-empty">or <input type="checkbox" value="true"/> empty</label>');
 			// Defaults
 			var value = $input.val();
-			var date = new Date(); date.setDatetimestr(value);
-			var datestr = date.getDatestr();
-			var timestr = date.getTimestr();
+			var date = new Date();
+			var datestr = timestr = '';
+			if ( value ) {
+				date.setDatetimestr(value);
+				datestr = date.getDatestr();
+				timestr = date.getTimestr();
+			}
 			// Append
+			//$empty.insertAfter($input);
 			$time.insertAfter($input);
 			$sep.insertAfter($input);
 			$date.insertAfter($input);

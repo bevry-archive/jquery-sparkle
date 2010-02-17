@@ -644,11 +644,11 @@
 		var config = $.extend({}, passwordStrength.config);
 		
 		// Options
-		$.extend(config, options);
+		$.extend(true, config, options);
 		
 		// Fetch
 		var $this = $(this);
-		var $container = $this.html(config.content);
+		var $container = $this.html(config.content).hide();
 		
 		// Implode
 		var $result = $container.find(config.contentSelectors.result);
@@ -682,7 +682,14 @@
 			// Apply
 			$result.removeClass(classes).addClass(config.strengthCss[strength]).html(config.il8n[strength]);
 		};
-		$password.keyup(function(){$confirm.val('')});
+		$password
+			.keyup(function(){
+				var $password = $(this);
+				$confirm.val('');
+				if ( $password.val() !== '' && !$container.data('shown') ) {
+					$container.animate({'height':'show','opacity':'show'},'slow').data('shown',true);
+				}
+			});
 		$password.add($confirm).add($username).keyup(check);
 		check();
 		

@@ -704,9 +704,11 @@
 		return $(this).each(function(){
 			var $input = $(this);
 			$input.hide();
+			
 			// Prepare
 			if ( $input.hasClass('sparkle-time-has') ) return $input; // already done
 			$input.addClass('sparkle-time').addClass('sparkle-time-has');
+			
 			// Generate
 			var $hours = $('<select class="sparkle-time-hours" />');
 			for ( var hours=12,hour=1; hour<=hours; ++hour ) {
@@ -719,6 +721,7 @@
 			var $meridian = $('<select class="sparkle-time-meridian" />');
 			$meridian.append('<option>am</option>');
 			$meridian.append('<option>pm</option>');
+			
 			// Defaults
 			var value = $input.val(),
 				date = new Date(),
@@ -733,15 +736,18 @@
 					hours -= 12; meridian = 'pm';
 				}
 			}
+			
 			// Append
 			$meridian.insertAfter($input);
 			$minutes.insertAfter($input);
 			$hours.insertAfter($input);
+			
 			// Apply
 			if ( hours > 12 && meridian == 'pm' ) hours -= 12;
 			$hours.value(hours);
 			$minutes.value(minutes.roundTo(5));
 			$meridian.value(meridian);
+			
 			// Bind
 			var updateFunction = function(){
 				var hours = parseInt($hours.val(),10);
@@ -754,6 +760,7 @@
 			};
 			$hours.add($minutes).add($meridian).change(updateFunction);
 			$input.parent('form:first').submit(updateFunction);
+			
 			// Done
 			return $input;
 		});
@@ -766,14 +773,17 @@
 		return $(this).each(function(){
 			var $input = $(this);
 			$input.hide();
+			
 			// Prepare
 			if ( $input.hasClass('sparkle-datetime-has') ) return $input; // already done
 			$input.addClass('sparkle-datetime').addClass('sparkle-datetime-has');
+		
 			// Create date part
 			var $date = $('<input type="text" class="sparkle-date"/>');
 			var $sep = $('<span class="sparkle-datetime-sep"> @ </span>');
 			var $time = $('<input type="text" class="sparkle-time"/>');
 			//var $empty = $('<label class="form-empty">or <input type="checkbox" value="true"/> empty</label>');
+		
 			// Defaults
 			var value = $input.val();
 			var date = new Date();
@@ -783,22 +793,27 @@
 				datestr = date.getDatestr();
 				timestr = date.getTimestr();
 			}
+			
 			// Append
 			//$empty.insertAfter($input);
 			$time.insertAfter($input);
 			$sep.insertAfter($input);
 			$date.insertAfter($input);
+			
 			// Apply
 			$date.value(datestr);
 			$time.value(timestr);
+			
 			// Bind
 			var updateFunction = function(){
 				var value = $date.val()+' '+$time.val();
 				$input.val(value).trigger('change');
 			};
 			$date.add($time).change(updateFunction);
+			
 			// Sparkle
 			$date.add($time).sparkle();
+			
 			// Done
 			return $input;
 		});
@@ -1134,7 +1149,7 @@
 			config: {
 				selector: '.sparkle-date',
 				datepickerOptions: {
-					dateformat: 'yy-mm-dd'
+					dateFormat: 'yy-mm-dd'
 				}
 			},
 			extension: function(Sparkle, config){
@@ -1146,28 +1161,32 @@
 		'time': {
 			config: {
 				selector: '.sparkle-time',
-				timeconvention: 24
+				timepickerOptions: {
+					timeConvention: 24
+				}
 			},
 			extension: function(Sparkle, config){
 				var $this = $(this);
 				var $item = $this.findAndSelf(config.selector);
-				return typeof $item.timepicker === 'undefined' ? $item : $item.timepicker({
-					convention: config.timeconvention
-				});
+				return typeof $item.timepicker === 'undefined' ? $item : $item.timepicker(config.timepickerOptions);
 			}
 		},
 		'datetime': {
 			config: {
 				selector: '.sparkle-datetime',
-				dateformat: 'yy-mm-dd',
-				timeconvention: 24
+				datepickerOptions: {
+					dateformat: 'yy-mm-dd'
+				},
+				timepickerOptions: {
+					timeConvention: 24
+				}
 			},
 			extension: function(Sparkle, config){
 				var $this = $(this);
 				var $item = $this.findAndSelf(config.selector);
 				return typeof $item.datetimepicker === 'undefined' ? $item : $item.datetimepicker({
-					dateFormat: config.dateformat,
-					convention: config.timeconvention
+					datepickerOptions: config.datepickerOptions,
+					timepickerOptions: config.timepickerOptions
 				});
 			}
 		},

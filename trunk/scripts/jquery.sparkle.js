@@ -616,10 +616,10 @@
 		// Prepare
 		var passwordStrength = $.fn.passwordStrength;
 		passwordStrength.config = passwordStrength.config || {
-			content: '<div id="pass-strength-result"></div><p class="description indicator-hint"></p>',
+			content: '<div class="sparkle-passwordstrength-result"></div><div class="sparkle-passwordstrength-description"></div>',
 			contentSelectors: {
-				result: '#pass-strength-result',
-				description: '.indicator-hint'
+				result: '.sparkle-passwordstrength-result',
+				description: '.sparkle-passwordstrength-description'
 			},
 			strengthCss: {
 				short: "invalid",
@@ -631,9 +631,9 @@
 				empty: ""
 			},
 			il8n: {
-				hint: "Hint: The password should be have a strength of at least medium. To make it stronger, use upper and lower case letters, numbers and symbols like ! \" ? $ % ^ &amp; ).",
+				description: "Hint: The password should be have a strength of at least medium. To make it stronger, use upper and lower case letters, numbers and symbols like ! \" ? $ % ^ &amp; ).",
 				empty: "Strength indicator",
-				username: "Password should not be the same ",
+				username: "Password should not match username",
 				mismatch: "Confirm password does not match",
 				short: "Password is too short",
 				low: "Weak",
@@ -652,7 +652,10 @@
 		
 		// Implode
 		var $result = $container.find(config.contentSelectors.result);
-		var $description = $container.find(config.contentSelectors.description).html(config.il8n.hint);
+		var $description = $container.find(config.contentSelectors.description).html(config.il8n.description);
+		if ( !config.il8n.description ) {
+			$description.remove();
+		}
 		
 		// Prepare
 		var classes = [

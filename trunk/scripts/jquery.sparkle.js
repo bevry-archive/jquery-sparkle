@@ -365,15 +365,75 @@
 	};
 	
 	/**
+	 * jQuery Additions
+	 * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+	 */
+	/** $.appendStylesheet - Append a Stylesheet to the DOM */
+	$.appendStylesheet = $.appendStylesheet || function(url){
+		// Prepare
+		var bodyEl = document.getElementsByTagName($.browser.safari ? 'head' : 'body')[0];
+		
+		// Create
+		var linkEl = document.createElement('link');
+		linkEl.type = 'text/css';
+		linkEl.rel = 'stylesheet';
+		linkEl.media = 'screen';
+		linkEl.href = url;
+		linkEl.id = 'stylesheet-'+url.replace(/[^a-zA-Z0-9]/g, '');
+		$('#'+linkEl.id).remove();
+		bodyEl.appendChild(linkEl);
+		
+		// Chain
+		return $;
+	};
+	/** $.appendScript - Append a Script to the DOM */
+	$.appendScript = $.appendScript || function(url){
+		// Prepare
+		var bodyEl = document.getElementsByTagName($.browser.safari ? 'head' : 'body')[0];
+		
+		// Create
+		var scriptEl = document.createElement('script');
+		scriptEl.type = 'text/javascript';
+		scriptEl.src = url;
+		scriptEl.id = 'stylesheet-'+url.replace(/[^a-zA-Z0-9]/g, '');
+		$('#'+scriptEl.id).remove();
+		bodyEl.appendChild(scriptEl);
+		
+		// Chain
+		return $;
+	};
+	
+	/**
 	 * jQuery Prototypes
 	 * @copyright Benjamin "balupton" Lupton (MIT Licenced)
 	 */
-	$.fn.choose = $.fn.choose||function(value){
-		// Select a value
+	/** $.fn.parentsAndSelf - Find all occurences of the selector from parents and also include ourself in the search */
+	$.fn.parentsAndSelf = $.fn.parentsAndSelf || function(selector){
 		var $this = $(this);
+		return $this.parents(selector).andSelf().filter(selector);
+	};
+	/** $.fn.firstInput - Find all occurences of the selector and also include ourself in the search */
+	$.fn.findAndSelf = $.fn.findAndSelf || function(selector){
+		var $this = $(this);
+		return $this.find(selector).andSelf().filter(selector);
+	};
+	/** $.fn.firstInput - Get the first input including us in the search */
+	$.fn.firstInput = $.fn.firstInput || function(){
+		var $this = $(this);
+		return $this.findAndSelf(':input').filter(':first');
+	};
+	/** $.fn.choose - Select a value */
+	$.fn.choose = $.fn.choose||function(value){
+		var $this = $(this);
+		if ( typeof value === 'undefined' ) {
+			value = $this.val();
+		} else if ( $this.val() !== value ) {
+			// Return early, don't match
+			return this;
+		}
 		switch ( true ) {
-			case $this.is('option'):
-				$this.parents(':select:first').choose(value);
+			case this.is('option'):
+				$this.parents('select:first').choose(value);
 				break;
 			case $this.is(':checkbox'):
 				$this.attr('checked', true);
@@ -389,8 +449,8 @@
 		}
 		return this;
 	};
+	/** $.fn.unchoose - Unselect a value */
 	$.fn.unchoose = $.fn.unchoose||function(){
-		// Unselect a value
 		var $this = $(this);
 		switch ( true ) {
 			case $this.is('option'):
@@ -410,38 +470,40 @@
 		}
 		return this;
 	};
-	$.fn.parentsAndSelf = $.fn.parentsAndSelf || function(selector){
-		// Find all occurences of the selector from parents and also include ourself in the search
-		var $this = $(this);
-		return $this.parents(selector).andSelf().filter(selector);
-	};
-	$.fn.findAndSelf = $.fn.findAndSelf || function(selector){
-		// Find all occurences of the selector and also include ourself in the search
-		var $this = $(this);
-		return $this.find(selector).andSelf().filter(selector);
-	};
-	$.fn.firstInput = $.fn.firstInput || function(){
-		// Get the first input including us in the search
-		var $this = $(this);
-		return $this.findAndSelf(':input').filter(':first');
-	};
-	$.fn.value = function(value){
-		// P
-		var $input = $(this).firstInput(), result;
-		if ( value ) {
-			$input.val(value);
-			if ( $input.is('select') ) {
-				$input.find('option[value='+value+']:first').attr('selected', 'selected');
-			}
-			result = $input;
-		} else {
-			var val = $input.val();
-			if ( $input.is('select') ) {
-				val = $input.find('option:selected').text();
-			}
-			result = val;
+	/** $.fn.wouldSubmit - Check if the passed input element would submit */
+	$.fn.wouldSubmit = $.fn.wouldSubmit || function(){
+		var $input = $(this).findAndSelf(':input');
+		var result = true;
+		if ( !$input.length || !($input.attr('name')||false) || ($input.is(':radio,:checkbox') && !$input.is(':selected,:checked')) ) {
+			result = false;
 		}
 		return result;
+	};
+	/** $.fn.values - Get the form values */
+	$.fn.values = $.fn.values || function(){
+		var $inputs = $(this).findAndSelf(':input');
+		var values = {};
+		$inputs.each(function(){
+			var $input = $(this);
+			var name = $input.attr('name') || null;
+			var value = $input.val();
+			// Skip if wouldn't submit
+			if ( !$input.wouldSubmit() ) {
+				return true;
+			}
+			// Set value
+			if (name.indexOf('[]') !== -1) {
+				// We want an array
+				if (typeof values[name] === 'undefined') {
+					values[name] = [];
+				}
+				values[name].push(value);
+			}
+			else {
+				values[name] = value;
+			}
+		});
+		return values;
 	};
 	$.fn.submitForm = $.fn.submitForm || function(){
 		// Submit the parent form or our form
@@ -747,9 +809,9 @@
 			
 			// Apply
 			if ( hours > 12 && meridian == 'pm' ) hours -= 12;
-			$hours.value(hours);
-			$minutes.value(minutes.roundTo(5));
-			$meridian.value(meridian);
+			$hours.val(hours);
+			$minutes.val(minutes.roundTo(5));
+			$meridian.val(meridian);
 			
 			// Bind
 			var updateFunction = function(){
@@ -804,8 +866,8 @@
 			$date.insertAfter($input);
 			
 			// Apply
-			$date.value(datestr);
-			$time.value(timestr);
+			$date.val(datestr);
+			$time.val(timestr);
 			
 			// Bind
 			var updateFunction = function(){

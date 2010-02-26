@@ -1106,7 +1106,12 @@
 		applyConfig: function(name,config){
 			var Me = this;
 			Me.config[name] = Me.config[name]||{};
-			$.extend(Me.config[name],config||{});
+			$.extend(true,Me.config[name],config||{});
+			return Me;
+		},
+		setConfig: function(name,config){
+			var Me = this;
+			Me.config[name] = config||{};
 			return Me;
 		},
 		getConfig: function(name){
@@ -1142,12 +1147,12 @@
 		this.construct(config);
 	};
 	$.extend($.SparkleClass.prototype, $.BalClass.prototype, {
-		add: function(name, func, config) {
+		addExtension: function(name, func, config) {
 			var Sparkle = $.Sparkle;
 			if ( name === 'object' ) {
 				// Series
 				for ( var i in name ) {
-					Sparkle.add(i, name[i]);
+					Sparkle.addExtension(i, name[i]);
 				}
 			} else {
 				// Individual
@@ -1167,33 +1172,55 @@
 			}
 			return true;
 		},
-		fn: function(extension){
+		cycleExtensions: function(){
 			var $this = $(this); var Sparkle = $.Sparkle;
-			if ( extension ) {
-				// Individual
-				Sparkle.trigger.apply($this, [extension]);
-			} else {
-				// Series
-				Sparkle.cycle.apply($this, []);
+			var Extensions = Sparkle.getExtensions();
+			for ( var extension in Extensions ) {
+				Sparkle.triggerExtension.apply($this, [extension]);
 			}
 			return $this;
 		},
-		cycle: function(){
+		
+		getExtensions: function ( ) {
 			var $this = $(this); var Sparkle = $.Sparkle;
 			var Extensions = Sparkle.getConfig();
-			for ( var extension in Extensions ) {
-				Sparkle.trigger.apply($this, [extension]);
-			}
-			return $this;
+			return Extensions;
 		},
-		trigger: function(extension){
+		getExtension: function(extension) {
 			var $this = $(this); var Sparkle = $.Sparkle;
 			var Extension = Sparkle.getConfigWithDefault(extension);
+			return Extension;
+		},
+		getExtensionConfig: function(extension) {
+			var $this = $(this); var Sparkle = $.Sparkle;
+			var Extension = Sparkle.getExtension(extension);
+			return Extension.config||{};
+		},
+		configureExtension: function(extension, config) {
+			var $this = $(this); var Sparkle = $.Sparkle;
+			Sparkle.applyConfig(extension, {'config':config});
+			return this; // chain
+		},
+		
+		triggerExtension: function(extension){
+			var $this = $(this); var Sparkle = $.Sparkle;
+			var Extension = Sparkle.getExtension(extension);
 			if ( typeof Extension.extension !== 'undefined' ) {
 				// We are not just a config object but an actual extension
 				return Extension.extension.apply($this, [Sparkle, Extension.config, Extension]);
 			}
 			return false;
+		},
+		fn: function(extension){
+			var $this = $(this); var Sparkle = $.Sparkle;
+			if ( extension ) {
+				// Individual
+				Sparkle.triggerExtension.apply($this, [extension]);
+			} else {
+				// Series
+				Sparkle.cycleExtensions.apply($this, []);
+			}
+			return $this;
 		},
 		construct: function(config){
 			var Sparkle = this;
@@ -1238,20 +1265,14 @@
 		},
 		'datetime': {
 			config: {
-				selector: '.sparkle-datetime',
-				datepickerOptions: {
-					dateformat: 'yy-mm-dd'
-				},
-				timepickerOptions: {
-					timeConvention: 24
-				}
+				selector: '.sparkle-datetime'
 			},
 			extension: function(Sparkle, config){
 				var $this = $(this);
 				var $item = $this.findAndSelf(config.selector);
 				return typeof $item.datetimepicker === 'undefined' ? $item : $item.datetimepicker({
-					datepickerOptions: config.datepickerOptions,
-					timepickerOptions: config.timepickerOptions
+					datepickerOptions: Sparkle.getExtensionConfig('date').datepickerOptions,
+					timepickerOptions: Sparkle.getExtensionConfig('time').timepickerOptions
 				});
 			}
 		},

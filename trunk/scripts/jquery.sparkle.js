@@ -1014,49 +1014,61 @@
 			return true;
 		};
 		
+		// Change Month Year
+		var calendarChangeMonthYear = function(year, month, inst) {
+			// Prepare
+			var url = options.ajaxUrl,
+				data = $.extend({},{
+						year: year,
+						month: month
+					},
+					options.ajaxData
+				);
+			var datepicker = inst.dpDiv;
+			
+			console.debug(year,month,inst);
+				
+			// Check
+			if ( options.useCache && calendarEntriesExist(year,month) ) {
+				// Use the cache
+				setTimeout(function(){
+					calendarEntriesRender(datepicker, year,month)
+				},50);
+			}
+			else {
+				// Fetch into the cache
+				$.ajax({
+					url:  url,
+					method: 'post',
+					dataType: 'json',
+					data: data,
+					success: function(data, status){
+						// Cycle
+						var entries = data[options.ajaxList]||[];
+					
+						// Store the Entries in the Calendar Data
+						calendarEntriesSet(year,month,entries);
+						calendarEntriesStore();
+					
+						// Apply the Entries
+						calendarEntriesRender(datepicker, year,month);
+					}
+				});
+			}
+			
+			// Done Change
+			return true;
+		}
+		
 		// Calendar Options
 		var datepickerOptions = $.extend({}, options.datepickerOptions, {
 			onChangeMonthYear: function(year, month, inst) {
-				// Prepare
-				var url = options.ajaxUrl,
-					data = $.extend({},{
-							year: year,
-							month: month
-						},
-						options.ajaxData
-					);
-				var datepicker = inst.dpDiv;
-					
-				// Check
-				if ( options.useCache && calendarEntriesExist(year,month) ) {
-					// Use the cache
-					setTimeout(function(){
-						calendarEntriesRender(datepicker, year,month)
-					},50);
-				}
-				else {
-					// Fetch into the cache
-					$.ajax({
-						url:  url,
-						method: 'post',
-						dataType: 'json',
-						data: data,
-						success: function(data, status){
-							// Cycle
-							var entries = data[options.ajaxList]||[];
-						
-							// Store the Entries in the Calendar Data
-							calendarEntriesSet(year,month,entries);
-							calendarEntriesStore();
-						
-							// Apply the Entries
-							calendarEntriesRender(datepicker, year,month);
-						}
-					});
-				}
-				
-				// Done Change
-				return true;
+				return calendarChangeMonthYear(year,month,inst);
+			},
+			beforeShow: function(input, inst) {
+				setTimeout(function(){
+					return calendarChangeMonthYear(inst.currentYear,inst.currentMonth+1,inst);
+				},1000);
 			}
 		});
 		

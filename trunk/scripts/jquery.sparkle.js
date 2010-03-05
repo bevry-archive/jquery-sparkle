@@ -888,6 +888,15 @@
 	 * Ajax Calendar
 	 */
 	$.fn.ajaxCalendar = function(options){
+		// Group?
+		var $calendar = $(this);
+		if ( $calendar.length > 1 ) {
+			$calendar.each(function(){
+				$(this).ajaxCalendar(options);
+			});
+			return this;
+		}
+		
 		// Prepare
 		options = options||{};
 		options.ajaxList = options.ajaxList||"entries";
@@ -895,9 +904,8 @@
 		options.ajaxData = options.ajaxData||{};
 		options.dayEntryClass = options.dayEntryClass||'has-entry';
 		options.domEvents = options.domEvents||{};
-		options.calendarOptions = options.calendarOptions||{};
+		options.datepickerOptions = options.datepickerOptions||{};
 		options.useCache = typeof options.useCache === 'undefined' ? true : options.useCache;
-		var $calendar = $(this);
 		
 		// Calendar Entries Setup/Fetch
 		var calendarEntries = {};//$calendar.data('calendarEntries')||{};
@@ -925,12 +933,13 @@
 		}
 		
 		// Our Extender Event
-		var calendarEntriesRender = function(year,month) {
+		var calendarEntriesRender = function(datepicker, year, month) {
 			// Fetch the Entries
-			var entries = calendarEntriesGet(year,month);
+			var entries = calendarEntriesGet(year,month),
+				$datepicker = $(datepicker);
 			
 			// Reset the Render
-			var $days = $calendar.find('table > tbody > tr > td').unbind().find('a').removeAttr('href');
+			var $days = $datepicker.find('tbody td').unbind().find('a').removeAttr('href');
 			
 			// Cycle Through Entries
 			$.each(entries, function(entryIndex,entry){
@@ -955,16 +964,6 @@
 				} else {
 					$entryDays = $startDay.add($days.filter(':lt('+(finish)+')').filter(':gt('+(start)+')')).add($finishDay);
 				}
-				
-				/*
-				console.log(
-					'Entry: '+entry.id,
-					[startDay,finishDay],
-					[start,finish,duration],
-					[$startDay.text().trim(),$finishDay.text().trim()],
-					[$entryDays.filter(':first').text().trim(),$entryDays.filter(':last').text().trim(),$entryDays.length]
-				);
-				*/
 				
 				// Add the Entry to These Days
 				$entryDays.addClass(options.dayEntryClass).each(function(dayIndex,dayElement){
@@ -1016,7 +1015,7 @@
 		};
 		
 		// Calendar Options
-		var calendarOptions = $.extend({}, options.calendarOptions, {
+		var datepickerOptions = $.extend({}, options.datepickerOptions, {
 			onChangeMonthYear: function(year, month, inst) {
 				// Prepare
 				var url = options.ajaxUrl,
@@ -1026,12 +1025,13 @@
 						},
 						options.ajaxData
 					);
+				var datepicker = inst.dpDiv;
 					
 				// Check
 				if ( options.useCache && calendarEntriesExist(year,month) ) {
 					// Use the cache
 					setTimeout(function(){
-						calendarEntriesRender(year,month)
+						calendarEntriesRender(datepicker, year,month)
 					},50);
 				}
 				else {
@@ -1050,7 +1050,7 @@
 							calendarEntriesStore();
 						
 							// Apply the Entries
-							calendarEntriesRender(year,month);
+							calendarEntriesRender(datepicker, year,month);
 						}
 					});
 				}
@@ -1061,7 +1061,7 @@
 		});
 		
 		// Apply Options so we can hook into the events
-		$calendar.datepicker(calendarOptions);
+		$calendar.datepicker(datepickerOptions);
 		
 		// Chain
 		return $calendar;

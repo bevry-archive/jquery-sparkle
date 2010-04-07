@@ -906,6 +906,7 @@
 		options.domEvents = options.domEvents||{};
 		options.datepickerOptions = options.datepickerOptions||{};
 		options.useCache = typeof options.useCache === 'undefined' ? true : options.useCache;
+		options.disableClick = typeof options.disableClick === 'undefined' ? true : options.disableClick;
 		
 		// Calendar Entries Setup/Fetch
 		var calendarEntries = {};//$calendar.data('calendarEntries')||{};
@@ -939,7 +940,14 @@
 				$datepicker = $(datepicker);
 			
 			// Reset the Render
-			var $days = $datepicker.find('tbody td').unbind().find('a').removeAttr('href');
+			var $days_tds = $datepicker.find('tbody td');
+			var $days = $days_tds.find('a');
+			
+			// Disable Click
+			if ( options.disableClick ) {
+				$days_tds.unbind('click').removeAttr('onclick');
+				$days.removeAttr('href').css('cursor','default');
+			}
 			
 			// Cycle Through Entries
 			$.each(entries, function(entryIndex,entry){

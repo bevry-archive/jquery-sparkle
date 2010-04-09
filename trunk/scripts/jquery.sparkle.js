@@ -906,7 +906,7 @@
 		options.domEvents = options.domEvents||{};
 		options.datepickerOptions = options.datepickerOptions||{};
 		options.useCache = typeof options.useCache === 'undefined' ? true : options.useCache;
-		options.disableClick = typeof options.disableClick === 'undefined' ? true : options.disableClick;
+		options.disableClick = typeof options.disableClick === 'undefined' ? false : options.disableClick;
 		
 		// Calendar Entries Setup/Fetch
 		var calendarEntries = {};//$calendar.data('calendarEntries')||{};

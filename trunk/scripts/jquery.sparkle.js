@@ -1073,7 +1073,7 @@
 			},
 			beforeShow: function(input, inst) {
 				setTimeout(function(){
-					return calendarChangeMonthYear(inst.currentYear,inst.currentMonth+1,inst);
+					return calendarChangeMonthYear(inst.drawYear,inst.drawMonth+1,inst);
 				},1000);
 			}
 		});

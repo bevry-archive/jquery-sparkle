@@ -1034,8 +1034,6 @@
 				);
 			var datepicker = inst.dpDiv;
 			
-			console.debug(year,month,inst);
-				
 			// Check
 			if ( options.useCache && calendarEntriesExist(year,month) ) {
 				// Use the cache

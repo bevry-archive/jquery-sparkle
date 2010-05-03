@@ -1309,7 +1309,16 @@
 			},
 			extension: function(Sparkle, config) {
 				var $this = $(this);
-				return $this.findAndSelf(config.selector).hide();
+				return $this.findAndSelf(config.selector).removeClass(config.selector.replace('.','')).hide();
+			}
+		},
+		'show': {
+			config: {
+				selector: '.sparkle-show'
+			},
+			extension: function(Sparkle, config) {
+				var $this = $(this);
+				return $this.findAndSelf(config.selector).removeClass(config.selector.replace('.','')).show();
 			}
 		},
 		'subtle': {
@@ -1517,6 +1526,40 @@
 				// Fetch
 				var $submit = $this.findAndSelf(config.selector);
 				$submit.once('singleclick',events.clickEvent);
+				// Done
+				return $this;
+			}
+		},
+		'submitswap': {
+			config: {
+				selector: '.sparkle-submitswap'
+			},
+			extension: function(Sparkle, config) {
+				var $this = $(this); var Sparkle = $.Sparkle;
+				// Events
+				var events = {
+					clickEvent: function(event){
+						// Fetch
+						var $submit = $(this);
+						
+						// Put correct value back
+						$submit.val($submit.data('sparkle-submitswap-value'));
+						
+						// Continue with Form Submission
+						return true;
+					}
+				};
+				
+				// Fetch
+				var $submit = $this.findAndSelf(config.selector);
+				$submit.once('singleclick',events.clickEvent);
+				$submit.each(function(){
+					var $submit = $(this);
+					$submit.data('sparkle-submitswap-value', $submit.val());
+					$submit.val($submit.attr('title'));
+					$submit.removeAttr('title');
+				});
+				
 				// Done
 				return $this;
 			}

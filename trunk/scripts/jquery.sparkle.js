@@ -50,6 +50,11 @@
 	
 	
 	/**
+	 * Prepare Body
+	 */
+	$(document.body).addClass('js');
+	
+	/**
 	 * String Prototypes
 	 * @copyright Benjamin "balupton" Lupton (MIT Licenced)
 	 */
@@ -1402,9 +1407,9 @@
 				return true;
 			}
 		},
-		'gsfn': {
+		'gsfnwidget': {
 			config: {
-				selector: '.gsfn'
+				selector: '.gsfnwidget'
 			},
 			extension: function(Sparkle, config) {
 				var $this = $(this);

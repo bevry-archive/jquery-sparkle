@@ -1594,5 +1594,142 @@
 	
 	});
 	
+	/**
+	 * Bespin
+	 */
+	$.Bespin = new $.BalClass({
+		'default': {
+			"settings": {
+				"tabstop": 4
+			}
+		},
+		'rich': {
+			
+		},
+		'simple': {
+			
+		}
+	});
+	$.fn.Bespin = function(options) {
+		var Me = $.Bespin;
+		var config = Me.getConfigWithDefault(options,options);
+		var $this = $(this);
+		var $block = $this;
+		var $bespin = $block;
+		
+		// Check
+		if ( $block.is('textarea') ) {
+			$bespin = $('<div id="'+$this.attr('id')+'-bespin"/>').html($block.val()).css({
+				height: $this.css('height'),
+				width: $this.css('width')
+			});
+			$bespin.insertAfter($block);
+			$block.hide();
+		}
+		
+		// Apply
+	    var m_embedded = tiki.require('embedded');
+	    var node = $bespin.get(0);
+		var bespin = m_embedded.useBespin(node, config);
+		
+		// Event
+		if ( $block.is('textarea') ) {
+			var updateFunction = function(){
+				var val = bespin.getValue();
+				$block.val(val);
+			};
+			$bespin.parents('form:first').submit(updateFunction);
+		}
+		
+		// Return
+		return $this;
+	};
+	
+	/**
+	 * Tinymce
+	 */
+	$.Tinymce = new $.BalClass({
+		'default': {
+			// Location of TinyMCE script
+			script_url: '/scripts/tiny_mce/tiny_mce.js',
+			
+			// General options
+			theme: "advanced",
+			plugins: "autoresize,safari,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template",
+
+			// Theme options
+			theme_advanced_buttons1: "bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,styleselect,formatselect,fontselect,fontsizeselect,|,code,",
+			theme_advanced_buttons2: "cut,copy,paste,pastetext,pasteword,|,undo,redo,|,link,unlink,image,|,preview,|,forecolor,backcolor,|,bullist,numlist,|,outdent,indent,blockquote,|,fullscreen",
+			theme_advanced_buttons3: "tablecontrols,|,hr,removeformat,visualaid,|,sub,sup",
+			theme_advanced_toolbar_location: "top",
+			theme_advanced_toolbar_align: "left",
+			theme_advanced_statusbar_location: "bottom",
+			theme_advanced_path: false,
+			theme_advanced_resizing: false,
+			width: "100%",
+			
+			// Compat
+			//add_form_submit_trigger: false,
+			//submit_patch: false,
+			
+			// Example content CSS (should be your site CSS)
+			// content_css : "css/content.css",
+			
+			// Replace values for the template plugin
+			template_replace_values: {
+				
+			}
+		},
+		'rich': {
+		},
+		'simple': {
+			theme_advanced_buttons2: "",
+			theme_advanced_buttons3: ""
+		}
+	});
+	$.fn.Tinymce = function(options) {
+		var Me = $.Tinymce;
+		var config = Me.getConfigWithDefault(options,options);
+		var $this = $(this);
+		// Apply + Return
+		return $this.tinymce(config);
+	};
+	
+	/**
+	 * Help
+	 */
+	$.Help = new $.BalClass({
+		'default': {
+			// Elements
+			wrap: '<span class="help-wrap"/>',
+			icon: '<span class="help-icon"/>',
+			text: '<span class="help-text"/>',
+			parentClass: '',
+			title: ''
+		}
+	});
+	$.fn.help = function(options){
+		var Me = $.Help;
+		if ( typeof options === 'string' ) {
+			options = {
+				title: options
+			};
+		}
+		var config = Me.getConfigWithDefault(options,options);
+		// Fetch
+		var $this = $(this);
+		var $wrap = $(config.wrap);
+		var $icon = $(config.icon);
+		var $text = $(config.text);
+		var $parent = $this.parent().addClass(config.parentClass);
+		// Build
+		var $contents = $this.contents();
+		$this.append($wrap.append($text).append($icon));
+		$contents.appendTo($text);
+		$this.attr('title', config.title);
+		// Done
+		return $this;
+	}
+	
 	
 })(jQuery);

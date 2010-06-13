@@ -1155,7 +1155,9 @@
 			if ( typeof config !== 'object' ) {
 				config = {};
 			}
-			return $.extend({}, Me.config[name]||{}, config||{}); // clone
+			var result = {};
+			$.extend(true, result, Me.config[name]||{}, config||{});
+			return result;
 		},
 		getConfigWithDefault: function(name,config){
 			var Me = this;
@@ -1604,8 +1606,11 @@
 	 */
 	$.Bespin = new $.BalClass({
 		'default': {
-			"settings": {
-				"tabstop": 4
+			"content": null,
+			"bespin": {
+				"settings": {
+					"tabstop": 4
+				}
 			}
 		},
 		'rich': {
@@ -1615,16 +1620,17 @@
 			
 		}
 	});
-	$.fn.Bespin = function(options) {
+	$.fn.Bespin = function(mode,options) {
 		var Me = $.Bespin;
-		var config = Me.getConfigWithDefault(options,options);
+		var config = Me.getConfigWithDefault(mode,options);
 		var $this = $(this);
 		var $block = $this;
 		var $bespin = $block;
+		var id = $this.attr('id')+'-bespin';
 		
 		// Check
 		if ( $block.is('textarea') ) {
-			$bespin = $('<div id="'+$this.attr('id')+'-bespin"/>').html($block.val()).css({
+			$bespin = $('<div id="'+id+'"/>').html($block.val()).css({
 				height: $this.css('height'),
 				width: $this.css('width')
 			});
@@ -1635,7 +1641,7 @@
 		// Apply
 	    var m_embedded = tiki.require('embedded');
 	    var node = $bespin.get(0);
-		var bespin = m_embedded.useBespin(node, config);
+		var bespin = m_embedded.useBespin(node, config.bespin);
 		
 		// Event
 		if ( $block.is('textarea') ) {
@@ -1646,6 +1652,17 @@
 			$bespin.parents('form:first').submit(updateFunction);
 		}
 		
+		// Content
+		if ( config.content || config.content === '' ) {
+			window.onBespinLoad = function() {
+				// we must use this event, otherwise bespin hasn't been created yet
+				// and it needs to be created in order to get and set values!
+				// we couldn't use the initialContent property, as for some reason it just can't be set to an object
+				// perhaps a reserved keyword?
+				bespin.setValue(config.content);
+			};
+		}
+	
 		// Return
 		return $this;
 	};
@@ -1692,9 +1709,9 @@
 			theme_advanced_buttons3: ""
 		}
 	});
-	$.fn.Tinymce = function(options) {
+	$.fn.Tinymce = function(mode,options) {
 		var Me = $.Tinymce;
-		var config = Me.getConfigWithDefault(options,options);
+		var config = Me.getConfigWithDefault(mode,options);
 		var $this = $(this);
 		// Apply + Return
 		return $this.tinymce(config);
@@ -1720,7 +1737,7 @@
 				title: options
 			};
 		}
-		var config = Me.getConfigWithDefault(options,options);
+		var config = Me.getConfigWithDefault('default',options);
 		// Fetch
 		var $this = $(this);
 		var $wrap = $(config.wrap);

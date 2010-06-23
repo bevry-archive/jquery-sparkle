@@ -1614,7 +1614,9 @@
 			}
 		},
 		'rich': {
-			
+			"bespin": {
+				"syntax": "html"
+			}
 		},
 		'simple': {
 			
@@ -1624,45 +1626,48 @@
 		var Me = $.Bespin;
 		var config = Me.getConfigWithDefault(mode,options);
 		var $this = $(this);
-		var $block = $this;
-		var $bespin = $block;
+		var $editor = $this;
+		var $bespin = $editor;
 		var id = $this.attr('id')+'-bespin';
 		
 		// Check
-		if ( $block.is('textarea') ) {
-			$bespin = $('<div id="'+id+'"/>').html($block.val()).css({
+		if ( $editor.is('textarea') ) {
+			$bespin = $('<div id="'+id+'"/>').html($editor.val()).css({
 				height: $this.css('height'),
 				width: $this.css('width')
 			});
-			$bespin.insertAfter($block);
-			$block.hide();
+			$bespin.insertAfter($editor);
+			$editor.hide();
 		}
 		
-		// Apply
-	    var m_embedded = tiki.require('embedded');
-	    var node = $bespin.get(0);
-		var bespin = m_embedded.useBespin(node, config.bespin);
-		
-		// Event
-		if ( $block.is('textarea') ) {
-			var updateFunction = function(){
-				var val = bespin.getValue();
-				$block.val(val);
-			};
-			$bespin.parents('form:first').submit(updateFunction);
-		}
-		
-		// Content
-		if ( config.content || config.content === '' ) {
-			window.onBespinLoad = function() {
-				// we must use this event, otherwise bespin hasn't been created yet
-				// and it needs to be created in order to get and set values!
-				// we couldn't use the initialContent property, as for some reason it just can't be set to an object
-				// perhaps a reserved keyword?
-				bespin.setValue(config.content);
-			};
-		}
+		// Bespin
+		window.onBespinLoad = function(){
+			// Apply
+			bespin.useBespin(id,config.bespin).then(
+				function(env){
+					// Get the editor
+		    		var editor = env.editor;
 	
+					// Event
+					if ( $editor.is('textarea') ) {
+						var updateFunction = function(){
+							var val = editor.value;
+							$editor.val(val);
+						};
+						$editor.parents('form:first').submit(updateFunction);
+					}
+				
+		    		// Change the value
+					if ( config.content || config.content === '' ) {
+						editor.value = config.content;
+					}
+				},
+				function(error){
+					throw new Error("Launch failed: " + error);
+				}
+			);
+		}
+		
 		// Return
 		return $this;
 	};

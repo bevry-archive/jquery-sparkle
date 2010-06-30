@@ -12,14 +12,37 @@ YUIURL = http://yuilibrary.com/downloads/yuicompressor/yuicompressor-2.4.2.zip
 YUIDIR = $(BUILDDIR)/yui
 YUIFILE = $(YUIDIR)/yuicompressor-2.4.2/build/yuicompressor-2.4.2.jar
 
-INJS = ./scripts/jquery.sparkle.js
-OUTJS = ./scripts/jquery.sparkle.min.js
-INCSS = ./styles/jquery.sparkle.css
-OUTCSS = ./styles/jquery.sparkle.min.css
 
 all:
-	$(MAKE) build;
+	$(MAKE) pack;
 	$(MAKE) compress;
+	
+pack:
+	cat \
+		./scripts/core.array.js \
+		./scripts/core.string.js \
+		./scripts/core.date.js \
+		./scripts/core.number.js \
+		./scripts/jquery.ajaxcalendar.js \
+		./scripts/jquery.appendscriptstyle.js \
+		./scripts/jquery.extra.js \
+		./scripts/jquery.events.js \
+		./scripts/jquery.passwordstrength.js \
+		./scripts/jquery.balclass.js \
+		./scripts/jquery.balclass.datetimepicker.js \
+		./scripts/jquery.balclass.sparkle.js \
+		./scripts/jquery.balclass.bespin.js \
+		./scripts/jquery.balclass.timepicker.js \
+		./scripts/jquery.balclass.tinymce.js \
+		./scripts/jquery.balclass.help.js \
+		> ./scripts/compiled/all.js;
+		
+compress:
+	$(MAKE) build;
+	
+	java -jar $(CLOSUREFILE) --js_output_file=./scripts/compiled/all.min.js --js=./scripts/compiled/all.js;
+	java -jar $(YUIFILE) ./styles/all.css -o ./styles/compiled/all.min.css;
+	
 	$(MAKE) clean;
 
 build:
@@ -30,8 +53,4 @@ build:
 	
 clean:
 	rm -Rf ./build;
-	
-compress:
-	java -jar $(CLOSUREFILE) --js_output_file=$(OUTJS) --js=$(INJS);
-	java -jar $(YUIFILE) $(INCSS) -o $(OUTCSS);
 	

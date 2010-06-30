@@ -624,6 +624,7 @@ Number.prototype.roundTo = String.prototype.roundTo = String.prototype.roundTo |
 	 * Ajax Calendar
 	 * @version 1.0.0
 	 * @date June 30, 2010
+	 * @since 2009
  	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  	 * @license GNU Affero General Public License - {@link http://www.gnu.org/licenses/agpl.html}
 	 */

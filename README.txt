@@ -20,7 +20,7 @@
  *
  * @name jquery-sparkle:
  * @package jQuery Sparkle (balupton edition)
- * @version 1.1.0-dev
+ * @version 1.0.0-dev
  * @date July 01, 2010
  * @category jQuery plugin
  * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}

@@ -1609,24 +1609,28 @@
 	 * @copyright Benjamin "balupton" Lupton (MIT Licenced)
 	 */
 	$.Bespin = new $.BalClass({
-		'default': {
+		"default": {
 			"content": null,
 			"bespin": {
 				"settings": {
 					"tabstop": 4
 				}
 			},
-			"toolbar": false
-		},
-		'rich': {
-			"bespin": {
-				"syntax": "html"
-			},
 			"toolbar": {
 				"fullscreen": true
 			}
 		},
-		'simple': {
+		"rich": {
+			"bespin": {
+				"syntax": "html"
+			}
+		},
+		"html": {
+			"bespin": {
+				"syntax": "html"
+			}
+		},
+		"plain": {
 			"toolbar": false
 		}
 	});

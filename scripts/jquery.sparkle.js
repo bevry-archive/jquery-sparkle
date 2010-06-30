@@ -689,7 +689,7 @@
 				description: '.sparkle-passwordstrength-description'
 			},
 			strengthCss: {
-				short: "invalid",
+				"short": "invalid",
 				mismatch: "invalid",
 				username: "invalid",
 				low: "low",
@@ -702,7 +702,7 @@
 				empty: "Strength indicator",
 				username: "Password should not match username",
 				mismatch: "Confirm password does not match",
-				short: "Password is too short",
+				"short": "Password is too short",
 				low: "Weak",
 				medium: "Medium",
 				high: "Strongest"
@@ -726,13 +726,14 @@
 		
 		// Prepare
 		var classes = [
-			config.strengthCss.short,
+			config.strengthCss["short"],
 			config.strengthCss.mismatch,
 			config.strengthCss.username,
 			config.strengthCss.low,
 			config.strengthCss.medium,
 			config.strengthCss.high,
-			config.strengthCss.empty].join(' ');
+			config.strengthCss.empty
+		].join(' ');
 		
 		// Fetch
 		var $password = $(config.password),
@@ -748,9 +749,11 @@
 		
 			// Strength
 			var strength = password ? password.passwordStrength(confirm,username) : "empty";
+			var strength_css = config.strengthCss[strength];
+			var strength_text = config.il8n[strength];
 		
 			// Apply
-			$result.removeClass(classes).addClass(config.strengthCss[strength]).html(config.il8n[strength]);
+			$result.removeClass(classes).addClass(strength_css).html(strength_text);
 		};
 		$password
 			.keyup(function(){
@@ -1602,7 +1605,8 @@
 	});
 	
 	/**
-	 * Bespin
+	 * jQuery Bespin Extender
+	 * @copyright Benjamin "balupton" Lupton (MIT Licenced)
 	 */
 	$.Bespin = new $.BalClass({
 		'default': {
@@ -1622,58 +1626,133 @@
 			
 		}
 	});
-	$.fn.Bespin = function(mode,options) {
+	$.Bespin.fn = function(mode, options) {
+		// Prepare
 		var Me = $.Bespin;
 		var config = Me.getConfigWithDefault(mode,options);
-		var $this = $(this);
-		var $editor = $this;
-		var $bespin = $editor;
-		var id = $this.attr('id')+'-bespin';
 		
-		// Check
-		if ( $editor.is('textarea') ) {
-			$bespin = $('<div id="'+id+'"/>').html($editor.val()).css({
-				height: $this.css('height'),
-				width: $this.css('width')
-			});
-			$bespin.insertAfter($editor);
-			$editor.hide();
-		}
+		// Elements
+		var element = this;
 		
 		// Bespin
+		var onBespinLoad = function(){
+			// Use Bespin
+			Me.useBespin(element, config);
+		};
+		$(window).bind('onBespinLoad', onBespinLoad);
 		window.onBespinLoad = function(){
-			// Apply
-			bespin.useBespin(id,config.bespin).then(
-				function(env){
-					// Get the editor
-		    		var editor = env.editor;
-	
-					// Event
-					if ( $editor.is('textarea') ) {
-						var updateFunction = function(){
-							var val = editor.value;
-							$editor.val(val);
-						};
-						$editor.parents('form:first').submit(updateFunction);
-					}
-				
-		    		// Change the value
-					if ( config.content || config.content === '' ) {
-						editor.value = config.content;
-					}
-				},
-				function(error){
-					throw new Error("Launch failed: " + error);
-				}
-			);
+			$(window).trigger('onBespinLoad');
+		};
+		
+		// Chain
+		return this;
+	};
+	$.Bespin.useBespin = function(element, config) {
+		// Prepare
+		var Me = $.Bespin;
+		
+		// Elements
+		var $element = $(element),
+			$bespin,
+			bespin_id;
+		
+		// Check
+		if ( $element.is('textarea') ) {
+			// Editor is a textarea
+			// So we have to create a div to use as our bespin editor
+			// Update id
+			bespin_id = $element.attr('id')+'-bespin';
+			// Create div
+			$bespin = $('<div id="'+bespin_id+'"/>').html($element.val()).css({
+				height: $element.css('height'),
+				width: $element.css('width')
+			});
+			// Insert div
+			$bespin.insertAfter($element);
+			// Hide textarea
+			$element.hide();
+		}
+		else {
+			// Editor is likely a div
+			// So we can use that as our bespin editor
+			$bespin = $element;
+			bespin_id = $bespin.attr('id');
 		}
 		
-		// Return
-		return $this;
+		// Use Bespin
+		bespin.useBespin(bespin_id,config.bespin).then(
+			function(env){
+				// Success
+				Me.postBespin(bespin_id, env, config);
+			},
+			function(error){
+				// Error
+				throw new Error("Bespin Launch Failed: " + error);
+			}
+		);
+		
+		// Chain
+		return this;
+	};
+	$.Bespin.postBespin = function(bespin_id, env, config) {
+		// Prepare
+		var Me = $.Bespin;
+		
+		// Elements
+		var $bespin = $('#'+bespin_id);
+		var $textarea = $bespin.siblings('textarea');
+		var editor = env.editor;
+		
+		// Ensure overflow is set to hidden
+		// stops bespin from having text outside it's box in rare circumstances
+		$bespin.css('overflow','hidden');
+		
+		// Wrap our div
+		$bespin.wrap('<div class="bespin-wrap" />');
+		var $bespin_wrap = $bespin.parent();
+		
+		// Add our toolbar
+		$toolbar = $('<div class="bespin-toolbar"><span class="bespin-toolbar-fullscreen">Fullscreen</span></div>');
+		$toolbar.insertBefore($bespin);
+		
+		// Update Textarea on submit
+		if ( $textarea.length ) {
+			var updateFunction = function(){
+				var val = editor.value;
+				$textarea.val(val);
+			};
+			$textarea.parents('form:first').submit(updateFunction);
+		}
+		
+   		// Change the value
+		if ( config.content || config.content === '' ) {
+			editor.value = config.content;
+		}
+
+		// Toolbar: Fullscreen
+		$toolbar.find('.bespin-toolbar-fullscreen').click(function(){
+			if ( $bespin_wrap.hasClass('bespin-fullscreen') ) {
+				// Destroy fullscreen
+				$('body').add($bespin_wrap).removeClass('bespin-fullscreen');
+			}
+			else {
+				// Make fullscreen
+				$('body').add($bespin_wrap).addClass('bespin-fullscreen');
+			}
+			env.dimensionsChanged();
+		});
+		
+		// Chain
+		return this;
+	}
+	$.fn.Bespin = function(mode,options) {
+		// Alias
+		return $.Bespin.fn.apply(this,[mode,options]);
 	};
 	
 	/**
-	 * Tinymce
+	 * jQuery TinyMCE Extender
+	 * @copyright Benjamin "balupton" Lupton (MIT Licenced)
 	 */
 	$.Tinymce = new $.BalClass({
 		'default': {
@@ -1723,7 +1802,8 @@
 	};
 	
 	/**
-	 * Help
+	 * jQuery Help
+	 * @copyright Benjamin "balupton" Lupton (MIT Licenced)
 	 */
 	$.Help = new $.BalClass({
 		'default': {

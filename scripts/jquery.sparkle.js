@@ -1615,15 +1615,19 @@
 				"settings": {
 					"tabstop": 4
 				}
-			}
+			},
+			"toolbar": false
 		},
 		'rich': {
 			"bespin": {
 				"syntax": "html"
+			},
+			"toolbar": {
+				"fullscreen": true
 			}
 		},
 		'simple': {
-			
+			"toolbar": false
 		}
 	});
 	$.Bespin.fn = function(mode, options) {
@@ -1711,10 +1715,6 @@
 		$bespin.wrap('<div class="bespin-wrap" />');
 		var $bespin_wrap = $bespin.parent();
 		
-		// Add our toolbar
-		$toolbar = $('<div class="bespin-toolbar"><span class="bespin-toolbar-fullscreen">Fullscreen</span></div>');
-		$toolbar.insertBefore($bespin);
-		
 		// Update Textarea on submit
 		if ( $textarea.length ) {
 			var updateFunction = function(){
@@ -1728,19 +1728,29 @@
 		if ( config.content || config.content === '' ) {
 			editor.value = config.content;
 		}
-
-		// Toolbar: Fullscreen
-		$toolbar.find('.bespin-toolbar-fullscreen').click(function(){
-			if ( $bespin_wrap.hasClass('bespin-fullscreen') ) {
-				// Destroy fullscreen
-				$('body').add($bespin_wrap).removeClass('bespin-fullscreen');
+		
+		// Toolbar
+		if ( config.toolbar||false ) {
+			$toolbar = $('<div class="bespin-toolbar" />');
+			$toolbar.insertBefore($bespin);
+			
+			// Fullscreen
+			if (config.toolbar.fullscreen||false ) {
+				$fullscreen = $('<span class="bespin-toolbar-fullscreen">Fullscreen</span>');
+				$fullscreen.appendTo($toolbar);
+				$fullscreen.click(function(){
+					if ( $bespin_wrap.hasClass('bespin-fullscreen') ) {
+						// Destroy fullscreen
+						$('body').add($bespin_wrap).removeClass('bespin-fullscreen');
+					}
+					else {
+						// Make fullscreen
+						$('body').add($bespin_wrap).addClass('bespin-fullscreen');
+					}
+					env.dimensionsChanged();
+				});
 			}
-			else {
-				// Make fullscreen
-				$('body').add($bespin_wrap).addClass('bespin-fullscreen');
-			}
-			env.dimensionsChanged();
-		});
+		}
 		
 		// Chain
 		return this;

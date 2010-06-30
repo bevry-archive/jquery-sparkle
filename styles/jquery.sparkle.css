@@ -1,0 +1,104 @@
+
+/* Sparkle */
+
+	.sparkle-highlight-values-notempty {
+		font-weight:bold;
+		color:black;
+	}
+	.sparkle-highlight-values-empty {
+		font-weight:normal;
+		color:#555;
+	}
+
+
+	.sparkle-hint-has {
+	
+	}
+	.sparkle-hint-hinted {
+		font-size:11px;
+		color:#BBB;
+	}
+	
+	.sparkle-hide {
+		display: none;
+	}
+
+
+/* Password Strength */
+
+	.sparkle-passwordstrength {
+		width:100%;
+	}
+	.sparkle-passwordstrength-result {
+		width:100%;
+	
+		border-style: solid;
+		border-width: 1px;
+		float: left;
+		margin: 12px 5px 5px 1px;
+		padding: 3px 5px;
+		text-align: center;
+	
+		background-color: #eee;
+		border-color: #ddd !important;
+	}
+
+	.sparkle-passwordstrength-result.low {
+		background-color: #ffb78c;
+		border-color: #ff853c !important;
+	}
+
+	.sparkle-passwordstrength-result.medium {
+		background-color: #ffec8b;
+		border-color: #fc0 !important;
+	}
+
+	.sparkle-passwordstrength-result.invalid {
+		background-color: #ffa0a0;
+		border-color: #f04040 !important;
+	}
+
+	.sparkle-passwordstrength-result.high {
+		background-color: #c3ff88;
+		border-color: #8dff1c !important;
+	}
+
+	.sparkle-passwordstrength-description {
+		width:100%;
+	
+		font-family: 'Lucida Grande', Verdana, Arial, 'Bitstream Vera Sans', sans-serif;
+		font-size: 12px;
+		font-style: italic;
+		margin: 2px 0px 5px;
+		padding-top: 8px;
+		line-height: 140%;
+	}
+
+
+/* Bespin */
+	
+	div.bespin-wrap .bespin {
+	}
+	div.bespin-wrap .bespin-toolbar {
+		width:100%;
+		height:30px;
+		background:#4C4A41;
+		color:#D3B339;
+	}
+	
+	body.bespin-fullscreen {
+		overflow:hidden;
+	}
+	div.bespin-wrap.bespin-fullscreen .bespin {
+		position:absolute;
+		top:30px; right:0; bottom:0; left:0;
+		z-index:9999999;
+		
+		width:auto !IMPORTANT;
+		height:auto !IMPORTANT;
+	}
+	div.bespin-wrap.bespin-fullscreen .bespin-toolbar {
+		position:absolute;
+		top:0; right:0; left:0;
+		z-index:9999999;
+	}

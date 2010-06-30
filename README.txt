@@ -35,4 +35,4 @@ Installation:
 
 Todo:
 1. Make ajaxCalendar and passwordstrength use BalClass
-2. Add a pre-commit hook to make
+2. Add a pre-commit hook to perform make

@@ -1570,6 +1570,10 @@ Number.prototype.roundTo = String.prototype.roundTo = String.prototype.roundTo |
 			getConfigWithDefault: function(name,config){
 				var Me = this;
 				return Me.getConfigWith('default',Me.getConfigWith(name,config));
+			},
+			setDefaults: function(config){
+				var Me = this;
+				return Me.applyConfig('default',config);
 			}
 		});
 	}

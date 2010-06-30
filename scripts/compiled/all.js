@@ -628,204 +628,208 @@ Number.prototype.roundTo = String.prototype.roundTo = String.prototype.roundTo |
  	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  	 * @license GNU Affero General Public License - {@link http://www.gnu.org/licenses/agpl.html}
 	 */
-	$.fn.ajaxCalendar = function(options){
-		// Group?
-		var $calendar = $(this);
-		if ( $calendar.length > 1 ) {
-			$calendar.each(function(){
-				$(this).ajaxCalendar(options);
-			});
-			return this;
-		}
-	
-		// Prepare
-		options = options||{};
-		options.ajaxList = options.ajaxList||"entries";
-		options.ajaxUrl = options.ajaxUrl||'/ajax-calendar';
-		options.ajaxData = options.ajaxData||{};
-		options.dayEntryClass = options.dayEntryClass||'has-entry';
-		options.domEvents = options.domEvents||{};
-		options.datepickerOptions = options.datepickerOptions||{};
-		options.useCache = typeof options.useCache === 'undefined' ? true : options.useCache;
-		options.disableClick = typeof options.disableClick === 'undefined' ? false : options.disableClick;
-	
-		// Calendar Entries Setup/Fetch
-		var calendarEntries = {};//$calendar.data('calendarEntries')||{};
-	
-		// Our Checker
-		var calendarEntriesExist = function(year,month) {
-			return typeof calendarEntries[year+'-'+month] !== 'undefined';
-		};
-	
-		// Our Getter
-		var calendarEntriesGet = function(year,month) {
-			return calendarEntries[year+'-'+month]||[];
-		};
-	
-		// Our Setter
-		var calendarEntriesSet = function(year,month,entries){
-			calendarEntries[year+'-'+month] = entries||[];
-			return true;
-		};
-	
-		// Our Store
-		var calendarEntriesStore = function(){
-			//$calendar.data('calendarEntries',calendarEntries);
-			return true;
-		}
-	
-		// Our Extender Event
-		var calendarEntriesRender = function(datepicker, year, month) {
-			// Fetch the Entries
-			var entries = calendarEntriesGet(year,month),
-				$datepicker = $(datepicker);
-		
-			// Reset the Render
-			var $days_tds = $datepicker.find('tbody td');
-			var $days = $days_tds.find('a');
-		
-			// Disable Click
-			if ( options.disableClick ) {
-				$days_tds.unbind('click').removeAttr('onclick');
-				$days.removeAttr('href').css('cursor','default');
-			}
-		
-			// Cycle Through Entries
-			$.each(entries, function(entryIndex,entry){
-				var startMonth = entry.start.match(/-([0-9]+)-/)[1].stripLeft('0'),
-				 	finishMonth = entry.finish.match(/-([0-9]+)-/)[1].stripLeft('0'),
-					startDay = entry.start.match(/([0-9]+)\s/)[1].stripLeft('0'),
-					finishDay = entry.finish.match(/([0-9]+)\s/)[1].stripLeft('0');
-				var $startDay = startMonth == month ? $days.filter(':contains('+startDay+'):first') : $days.filter(':first'),
-					$finishDay = finishMonth == month ? $days.filter(':contains('+finishDay+'):first') : $days.filter(':last');
-			
-				// Indexes
-				var start = startMonth == month ? $days.index($startDay) : 0,
-					finish = finishMonth == month ? $days.index($finishDay) : $days.length-1,
-					duration = finish-start+1; // +1 to be inclusive
-			
-				// Betweens
-				var $entryDays = [];
-				if ( start == finish ) {
-					$entryDays = $startDay;
-				} else if ( start == finish-1 ) {
-					$entryDays = $startDay.add($finishDay);
-				} else {
-					$entryDays = $startDay.add($days.filter(':lt('+(finish)+')').filter(':gt('+(start)+')')).add($finishDay);
-				}
-			
-				// Add the Entry to These Days
-				$entryDays.addClass(options.dayEntryClass).each(function(dayIndex,dayElement){
-					var $day = $(dayElement);
-					var day = $day.text().trim();
-					var dayEntriesIds = $day.data('dayEntriesIds');
-				
-					// Handle
-					if ( typeof dayEntriesIds === 'undefined' ) {
-						dayEntriesIds = entryIndex;
-					} else {
-						dayEntriesIds = String(dayEntriesIds).split(/,/g);
-						dayEntriesIds.push(entryIndex);
-						dayEntriesIds = dayEntriesIds.join(',');
-					}
-				
-					// Apply
-					$day.data('dayEntriesIds',dayEntriesIds);
-				
-					// Bind Entries
-					$.each(options.domEvents,function(domEventName,domEventHandler){
-						$day.unbind(domEventName).bind(domEventName,function(domEvent){
-							// Prepare
-							var $day = $(this);
-							var day = $day.text().trim();
-							var dayEntriesIds = String($day.data('dayEntriesIds')).split(/,/g);
-
-							// Entries
-							var dayEntries = []
-							$.each(dayEntriesIds,function(i,entryIndex){
-								var dayEntry = entries[entryIndex];
-								dayEntries.push(dayEntry);
-							});
-						
-							// Fire
-							domEventHandler.apply(this, [domEvent, day, dayEntries, entries]);
-						
-							// Done
-							return true;
-						});
-					});
-				
-					// Done
+	if ( !($.fn.ajaxCalendar||false) ) {
+		$.fn.ajaxCalendar = $.fn.ajaxCalendar || function(options){
+			// Group?
+			var $calendar = $(this);
+			if ( $calendar.length > 1 ) {
+				$calendar.each(function(){
+					$(this).ajaxCalendar(options);
 				});
-			});
-		
-			// Done
-			return true;
-		};
+				return this;
+			}
 	
-		// Change Month Year
-		var calendarChangeMonthYear = function(year, month, inst) {
 			// Prepare
-			var url = options.ajaxUrl,
-				data = $.extend({},{
-						year: year,
-						month: month
-					},
-					options.ajaxData
-				);
-			var datepicker = inst.dpDiv;
-		
-			// Check
-			if ( options.useCache && calendarEntriesExist(year,month) ) {
-				// Use the cache
-				setTimeout(function(){
-					calendarEntriesRender(datepicker, year,month)
-				},50);
+			options = options||{};
+			options.ajaxList = options.ajaxList||"entries";
+			options.ajaxUrl = options.ajaxUrl||'/ajax-calendar';
+			options.ajaxData = options.ajaxData||{};
+			options.dayEntryClass = options.dayEntryClass||'has-entry';
+			options.domEvents = options.domEvents||{};
+			options.datepickerOptions = options.datepickerOptions||{};
+			options.useCache = typeof options.useCache === 'undefined' ? true : options.useCache;
+			options.disableClick = typeof options.disableClick === 'undefined' ? false : options.disableClick;
+	
+			// Calendar Entries Setup/Fetch
+			var calendarEntries = {};//$calendar.data('calendarEntries')||{};
+	
+			// Our Checker
+			var calendarEntriesExist = function(year,month) {
+				return typeof calendarEntries[year+'-'+month] !== 'undefined';
+			};
+	
+			// Our Getter
+			var calendarEntriesGet = function(year,month) {
+				return calendarEntries[year+'-'+month]||[];
+			};
+	
+			// Our Setter
+			var calendarEntriesSet = function(year,month,entries){
+				calendarEntries[year+'-'+month] = entries||[];
+				return true;
+			};
+	
+			// Our Store
+			var calendarEntriesStore = function(){
+				//$calendar.data('calendarEntries',calendarEntries);
+				return true;
 			}
-			else {
-				// Fetch into the cache
-				$.ajax({
-					url:  url,
-					method: 'post',
-					dataType: 'json',
-					data: data,
-					success: function(data, status){
-						// Cycle
-						var entries = data[options.ajaxList]||[];
-				
-						// Store the Entries in the Calendar Data
-						calendarEntriesSet(year,month,entries);
-						calendarEntriesStore();
-				
-						// Apply the Entries
-						calendarEntriesRender(datepicker, year,month);
+	
+			// Our Extender Event
+			var calendarEntriesRender = function(datepicker, year, month) {
+				// Fetch the Entries
+				var entries = calendarEntriesGet(year,month),
+					$datepicker = $(datepicker);
+		
+				// Reset the Render
+				var $days_tds = $datepicker.find('tbody td');
+				var $days = $days_tds.find('a');
+		
+				// Disable Click
+				if ( options.disableClick ) {
+					$days_tds.unbind('click').removeAttr('onclick');
+					$days.removeAttr('href').css('cursor','default');
+				}
+		
+				// Cycle Through Entries
+				$.each(entries, function(entryIndex,entry){
+					var startMonth = entry.start.match(/-([0-9]+)-/)[1].stripLeft('0'),
+					 	finishMonth = entry.finish.match(/-([0-9]+)-/)[1].stripLeft('0'),
+						startDay = entry.start.match(/([0-9]+)\s/)[1].stripLeft('0'),
+						finishDay = entry.finish.match(/([0-9]+)\s/)[1].stripLeft('0');
+					var $startDay = startMonth == month ? $days.filter(':contains('+startDay+'):first') : $days.filter(':first'),
+						$finishDay = finishMonth == month ? $days.filter(':contains('+finishDay+'):first') : $days.filter(':last');
+			
+					// Indexes
+					var start = startMonth == month ? $days.index($startDay) : 0,
+						finish = finishMonth == month ? $days.index($finishDay) : $days.length-1,
+						duration = finish-start+1; // +1 to be inclusive
+			
+					// Betweens
+					var $entryDays = [];
+					if ( start == finish ) {
+						$entryDays = $startDay;
+					} else if ( start == finish-1 ) {
+						$entryDays = $startDay.add($finishDay);
+					} else {
+						$entryDays = $startDay.add($days.filter(':lt('+(finish)+')').filter(':gt('+(start)+')')).add($finishDay);
 					}
-				});
-			}
-		
-			// Done Change
-			return true;
-		}
-	
-		// Calendar Options
-		var datepickerOptions = $.extend({}, options.datepickerOptions, {
-			onChangeMonthYear: function(year, month, inst) {
-				return calendarChangeMonthYear(year,month,inst);
-			},
-			beforeShow: function(input, inst) {
-				setTimeout(function(){
-					return calendarChangeMonthYear(inst.drawYear,inst.drawMonth+1,inst);
-				},1000);
-			}
-		});
-	
-		// Apply Options so we can hook into the events
-		$calendar.datepicker(datepickerOptions);
-	
-		// Chain
-		return $calendar;
-	};
+			
+					// Add the Entry to These Days
+					$entryDays.addClass(options.dayEntryClass).each(function(dayIndex,dayElement){
+						var $day = $(dayElement);
+						var day = $day.text().trim();
+						var dayEntriesIds = $day.data('dayEntriesIds');
+				
+						// Handle
+						if ( typeof dayEntriesIds === 'undefined' ) {
+							dayEntriesIds = entryIndex;
+						} else {
+							dayEntriesIds = String(dayEntriesIds).split(/,/g);
+							dayEntriesIds.push(entryIndex);
+							dayEntriesIds = dayEntriesIds.join(',');
+						}
+				
+						// Apply
+						$day.data('dayEntriesIds',dayEntriesIds);
+				
+						// Bind Entries
+						$.each(options.domEvents,function(domEventName,domEventHandler){
+							$day.unbind(domEventName).bind(domEventName,function(domEvent){
+								// Prepare
+								var $day = $(this);
+								var day = $day.text().trim();
+								var dayEntriesIds = String($day.data('dayEntriesIds')).split(/,/g);
 
+								// Entries
+								var dayEntries = []
+								$.each(dayEntriesIds,function(i,entryIndex){
+									var dayEntry = entries[entryIndex];
+									dayEntries.push(dayEntry);
+								});
+						
+								// Fire
+								domEventHandler.apply(this, [domEvent, day, dayEntries, entries]);
+						
+								// Done
+								return true;
+							});
+						});
+				
+						// Done
+					});
+				});
+		
+				// Done
+				return true;
+			};
+	
+			// Change Month Year
+			var calendarChangeMonthYear = function(year, month, inst) {
+				// Prepare
+				var url = options.ajaxUrl,
+					data = $.extend({},{
+							year: year,
+							month: month
+						},
+						options.ajaxData
+					);
+				var datepicker = inst.dpDiv;
+		
+				// Check
+				if ( options.useCache && calendarEntriesExist(year,month) ) {
+					// Use the cache
+					setTimeout(function(){
+						calendarEntriesRender(datepicker, year,month)
+					},50);
+				}
+				else {
+					// Fetch into the cache
+					$.ajax({
+						url:  url,
+						method: 'post',
+						dataType: 'json',
+						data: data,
+						success: function(data, status){
+							// Cycle
+							var entries = data[options.ajaxList]||[];
+				
+							// Store the Entries in the Calendar Data
+							calendarEntriesSet(year,month,entries);
+							calendarEntriesStore();
+				
+							// Apply the Entries
+							calendarEntriesRender(datepicker, year,month);
+						}
+					});
+				}
+		
+				// Done Change
+				return true;
+			}
+	
+			// Calendar Options
+			var datepickerOptions = $.extend({}, options.datepickerOptions, {
+				onChangeMonthYear: function(year, month, inst) {
+					return calendarChangeMonthYear(year,month,inst);
+				},
+				beforeShow: function(input, inst) {
+					setTimeout(function(){
+						return calendarChangeMonthYear(inst.drawYear,inst.drawMonth+1,inst);
+					},1000);
+				}
+			});
+	
+			// Apply Options so we can hook into the events
+			$calendar.datepicker(datepickerOptions);
+	
+			// Chain
+			return $calendar;
+		};
+	}
+	else {
+		console.warn("$.fn.ajaxCalendar has already been defined...");
+	}
 
 
 })(jQuery);/**
@@ -1328,7 +1332,7 @@ Number.prototype.roundTo = String.prototype.roundTo = String.prototype.roundTo |
  	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  	 * @license GNU Affero General Public License - {@link http://www.gnu.org/licenses/agpl.html}
 	 */
-	String.prototype.passwordStrength = String.prototype.passwordStrength || function(confirm,username){
+	String.prototype.passwordstrength = String.prototype.passwordstrength || function(confirm,username){
 		/**
 		 * Checks the string as a password to identify it's strength
 		 * @copyright (c) Wordpress
@@ -1383,95 +1387,100 @@ Number.prototype.roundTo = String.prototype.roundTo = String.prototype.roundTo |
  	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  	 * @license GNU Affero General Public License - {@link http://www.gnu.org/licenses/agpl.html}
 	 */
-	$.fn.passwordStrength = $.fn.passwordStrength || function(options) {
-		// Prepare
-		var passwordStrength = $.fn.passwordStrength;
-		passwordStrength.config = passwordStrength.config || {
-			content: '<div class="sparkle-passwordstrength-result"></div><div class="sparkle-passwordstrength-description"></div>',
-			contentSelectors: {
-				result: '.sparkle-passwordstrength-result',
-				description: '.sparkle-passwordstrength-description'
-			},
-			strengthCss: {
-				"short": "invalid",
-				mismatch: "invalid",
-				username: "invalid",
-				low: "low",
-				medium: "medium",
-				high: "high",
-				empty: ""
-			},
-			il8n: {
-				description: "Hint: The password should be have a strength of at least medium. To make it stronger, use upper and lower case letters, numbers and symbols like ! \" ? $ % ^ &amp; ).",
-				empty: "Strength indicator",
-				username: "Password should not match username",
-				mismatch: "Confirm password does not match",
-				"short": "Password is too short",
-				low: "Weak",
-				medium: "Medium",
-				high: "Strongest"
-			}
-		};
-		var config = $.extend({}, passwordStrength.config);
+	if ( !($.fn.passwordstrength||false) ) {
+		$.fn.passwordstrength = function(options) {
+			// Prepare
+			var passwordstrength = $.fn.passwordstrength;
+			passwordstrength.config = passwordstrength.config || {
+				content: '<div class="sparkle-passwordstrength-result"></div><div class="sparkle-passwordstrength-description"></div>',
+				contentSelectors: {
+					result: '.sparkle-passwordstrength-result',
+					description: '.sparkle-passwordstrength-description'
+				},
+				strengthCss: {
+					"short": "invalid",
+					mismatch: "invalid",
+					username: "invalid",
+					low: "low",
+					medium: "medium",
+					high: "high",
+					empty: ""
+				},
+				il8n: {
+					description: "Hint: The password should be have a strength of at least medium. To make it stronger, use upper and lower case letters, numbers and symbols like ! \" ? $ % ^ &amp; ).",
+					empty: "Strength indicator",
+					username: "Password should not match username",
+					mismatch: "Confirm password does not match",
+					"short": "Password is too short",
+					low: "Weak",
+					medium: "Medium",
+					high: "Strongest"
+				}
+			};
+			var config = $.extend({}, passwordstrength.config);
 	
-		// Options
-		$.extend(true, config, options);
+			// Options
+			$.extend(true, config, options);
 	
-		// Fetch
-		var $this = $(this);
-		var $container = $this.html(config.content).hide();
-	
-		// Implode
-		var $result = $container.find(config.contentSelectors.result);
-		var $description = $container.find(config.contentSelectors.description).html(config.il8n.description);
-		if ( !config.il8n.description ) {
-			$description.remove();
-		}
-	
-		// Prepare
-		var classes = [
-			config.strengthCss["short"],
-			config.strengthCss.mismatch,
-			config.strengthCss.username,
-			config.strengthCss.low,
-			config.strengthCss.medium,
-			config.strengthCss.high,
-			config.strengthCss.empty
-		].join(' ');
-	
-		// Fetch
-		var $password = $(config.password),
-			$confirm = $(config.confirm||null),
-			$username = $(config.username||null);
-	
-		// Apply
-		var check = function(){
 			// Fetch
-			var password = $password.val(),
-				confirm  = $confirm.val(),
-				username = $username.val();
+			var $this = $(this);
+			var $container = $this.html(config.content).hide();
 	
-			// Strength
-			var strength = password ? password.passwordStrength(confirm,username) : "empty";
-			var strength_css = config.strengthCss[strength];
-			var strength_text = config.il8n[strength];
+			// Implode
+			var $result = $container.find(config.contentSelectors.result);
+			var $description = $container.find(config.contentSelectors.description).html(config.il8n.description);
+			if ( !config.il8n.description ) {
+				$description.remove();
+			}
+	
+			// Prepare
+			var classes = [
+				config.strengthCss["short"],
+				config.strengthCss.mismatch,
+				config.strengthCss.username,
+				config.strengthCss.low,
+				config.strengthCss.medium,
+				config.strengthCss.high,
+				config.strengthCss.empty
+			].join(' ');
+	
+			// Fetch
+			var $password = $(config.password),
+				$confirm = $(config.confirm||null),
+				$username = $(config.username||null);
 	
 			// Apply
-			$result.removeClass(classes).addClass(strength_css).html(strength_text);
-		};
-		$password
-			.keyup(function(){
-				var $password = $(this);
-				$confirm.val('');
-				if ( $password.val() !== '' && !$container.data('shown') ) {
-					$container.animate({'height':'show','opacity':'show'},'slow').data('shown',true);
-				}
-			});
-		$password.add($confirm).add($username).keyup(check);
-		check();
+			var check = function(){
+				// Fetch
+				var password = $password.val(),
+					confirm  = $confirm.val(),
+					username = $username.val();
 	
-		// Chain
-		return $this;
+				// Strength
+				var strength = password ? password.passwordstrength(confirm,username) : "empty";
+				var strength_css = config.strengthCss[strength];
+				var strength_text = config.il8n[strength];
+	
+				// Apply
+				$result.removeClass(classes).addClass(strength_css).html(strength_text);
+			};
+			$password
+				.keyup(function(){
+					var $password = $(this);
+					$confirm.val('');
+					if ( $password.val() !== '' && !$container.data('shown') ) {
+						$container.animate({'height':'show','opacity':'show'},'slow').data('shown',true);
+					}
+				});
+			$password.add($confirm).add($username).keyup(check);
+			check();
+	
+			// Chain
+			return $this;
+		}
+	}
+	else {
+		console.warn("$.fn.passwordstrength has already been defined...");
 	}
 	
 
@@ -1564,6 +1573,9 @@ Number.prototype.roundTo = String.prototype.roundTo = String.prototype.roundTo |
 			}
 		});
 	}
+	else {
+		console.warn("$.BalClass has already been defined...");
+	}
 
 
 })(jQuery);/**
@@ -1582,78 +1594,83 @@ Number.prototype.roundTo = String.prototype.roundTo = String.prototype.roundTo |
  	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  	 * @license GNU Affero General Public License - {@link http://www.gnu.org/licenses/agpl.html}
 	 */
-	$.timepicker = new $.BalClass({
-		'default': {
-			datepickerOptions: {
+	if ( !($.Help||false) ) {
+		$.datetimepicker = new $.BalClass({
+			'default': {
+				datepickerOptions: {
+				},
+				timepickerOptions: {
+				}
 			},
-			timepickerOptions: {
+			'12hr': {
+				timepickerOptions: {
+					timeConvention: 12
+				}
+			},
+			'24hr': {
+				timepickerOptions: {
+					timeConvention: 24
+				}
 			}
-		},
-		'12hr': {
-			timepickerOptions: {
-				timeConvention: 12
-			}
-		},
-		'24hr': {
-			timepickerOptions: {
-				timeConvention: 24
-			}
-		}
-	});
-	$.fn.datetimepicker = $.fn.datetimepicker || function(){
-		// Prepare
-		var Me = $.timepicker;
-		var config = Me.getConfigWithDefault(mode,options);
-		// Handle
-		return $(this).each(function(){
-			var $input = $(this);
-			$input.hide();
-		
-			// Prepare
-			if ( $input.hasClass('sparkle-datetime-has') ) return $input; // already done
-			$input.addClass('sparkle-datetime').addClass('sparkle-datetime-has');
-	
-			// Create date part
-			var $date = $('<input type="text" class="sparkle-date"/>');
-			var $sep = $('<span class="sparkle-datetime-sep"> @ </span>');
-			var $time = $('<input type="text" class="sparkle-time"/>');
-			//var $empty = $('<label class="form-empty">or <input type="checkbox" value="true"/> empty</label>');
-	
-			// Defaults
-			var value = $input.val();
-			var date = new Date();
-			var datestr = '', timestr = '';
-			if ( value ) {
-				date.setDatetimestr(value);
-				datestr = date.getDatestr();
-				timestr = date.getTimestr();
-			}
-		
-			// Append
-			//$empty.insertAfter($input);
-			$time.insertAfter($input);
-			$sep.insertAfter($input);
-			$date.insertAfter($input);
-		
-			// Apply
-			$date.val(datestr);
-			$time.val(timestr);
-		
-			// Bind
-			var updateFunction = function(){
-				var value = $date.val()+' '+$time.val();
-				$input.val(value).trigger('change');
-			};
-			$date.add($time).change(updateFunction);
-		
-			// Instantiate
-			$date.datepicker(config.datepickerOptions);
-			$time.timepicker(config.timepickerOptions);
-		
-			// Chain
-			return $input;
 		});
-	};
+		$.fn.datetimepicker = function(mode,options){
+			// Prepare
+			var Me = $.timepicker;
+			var config = Me.getConfigWithDefault(mode,options);
+			// Handle
+			return $(this).each(function(){
+				var $input = $(this);
+				$input.hide();
+		
+				// Prepare
+				if ( $input.hasClass('sparkle-datetime-has') ) return $input; // already done
+				$input.addClass('sparkle-datetime').addClass('sparkle-datetime-has');
+	
+				// Create date part
+				var $date = $('<input type="text" class="sparkle-date"/>');
+				var $sep = $('<span class="sparkle-datetime-sep"> @ </span>');
+				var $time = $('<input type="text" class="sparkle-time"/>');
+				//var $empty = $('<label class="form-empty">or <input type="checkbox" value="true"/> empty</label>');
+	
+				// Defaults
+				var value = $input.val();
+				var date = new Date();
+				var datestr = '', timestr = '';
+				if ( value ) {
+					date.setDatetimestr(value);
+					datestr = date.getDatestr();
+					timestr = date.getTimestr();
+				}
+		
+				// Append
+				//$empty.insertAfter($input);
+				$time.insertAfter($input);
+				$sep.insertAfter($input);
+				$date.insertAfter($input);
+		
+				// Apply
+				$date.val(datestr);
+				$time.val(timestr);
+		
+				// Bind
+				var updateFunction = function(){
+					var value = $date.val()+' '+$time.val();
+					$input.val(value).trigger('change');
+				};
+				$date.add($time).change(updateFunction);
+		
+				// Instantiate
+				$date.datepicker(config.datepickerOptions);
+				$time.timepicker(config.timepickerOptions);
+		
+				// Chain
+				return $input;
+			});
+		};
+	}
+	else {
+		console.warn("$.datetimepicker has already been defined...");
+	}
 
 	
 })(jQuery);/**
@@ -1679,7 +1696,7 @@ Number.prototype.roundTo = String.prototype.roundTo = String.prototype.roundTo |
 	 */
 	if ( !($.SparkleClass||false) ) {
 		/**
-		 * Sparkle Class
+		 * $.SparkleClass
 		 */
 		$.SparkleClass = function(config){
 			this.construct(config);
@@ -1770,6 +1787,9 @@ Number.prototype.roundTo = String.prototype.roundTo = String.prototype.roundTo |
 				return true;
 			}
 		});
+		/**
+		 * $.Sparkle
+		 */
 		$.Sparkle = new $.SparkleClass({
 			'date': {
 				config: {
@@ -2111,10 +2131,10 @@ Number.prototype.roundTo = String.prototype.roundTo = String.prototype.roundTo |
 			}
 
 		});
-
+		
 	}
 	else {
-		console.warn("Sparkle Class has already been defined...")
+		console.warn("$.SparkleClass has already been defined...");
 	}
 
 })(jQuery);/**
@@ -2132,161 +2152,166 @@ Number.prototype.roundTo = String.prototype.roundTo = String.prototype.roundTo |
  	 * @copyright (c) 2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  	 * @license GNU Affero General Public License - {@link http://www.gnu.org/licenses/agpl.html}
 	 */
-	$.Bespin = new $.BalClass({
-		"default": {
-			"content": null,
-			"bespin": {
-				"settings": {
-					"tabstop": 4
+	if ( !($.Help||false) ) {
+		$.Bespin = new $.BalClass({
+			"default": {
+				"content": null,
+				"bespin": {
+					"settings": {
+						"tabstop": 4
+					}
+				},
+				"toolbar": {
+					"fullscreen": true
 				}
 			},
-			"toolbar": {
-				"fullscreen": true
-			}
-		},
-		"rich": {
-			"bespin": {
-				"syntax": "html"
-			}
-		},
-		"html": {
-			"bespin": {
-				"syntax": "html"
-			}
-		},
-		"plain": {
-			"toolbar": false
-		}
-	});
-	$.Bespin.fn = function(mode, options) {
-		// Prepare
-		var Me = $.Bespin;
-		var config = Me.getConfigWithDefault(mode,options);
-	
-		// Elements
-		var element = this;
-	
-		// Bespin
-		var onBespinLoad = function(){
-			// Use Bespin
-			Me.useBespin(element, config);
-		};
-		$(window).bind('onBespinLoad', onBespinLoad);
-		window.onBespinLoad = function(){
-			$(window).trigger('onBespinLoad');
-		};
-	
-		// Chain
-		return this;
-	};
-	$.Bespin.useBespin = function(element, config) {
-		// Prepare
-		var Me = $.Bespin;
-	
-		// Elements
-		var $element = $(element),
-			$bespin,
-			bespin_id;
-	
-		// Check
-		if ( $element.is('textarea') ) {
-			// Editor is a textarea
-			// So we have to create a div to use as our bespin editor
-			// Update id
-			bespin_id = $element.attr('id')+'-bespin';
-			// Create div
-			$bespin = $('<div id="'+bespin_id+'"/>').html($element.val()).css({
-				height: $element.css('height'),
-				width: $element.css('width')
-			});
-			// Insert div
-			$bespin.insertAfter($element);
-			// Hide textarea
-			$element.hide();
-		}
-		else {
-			// Editor is likely a div
-			// So we can use that as our bespin editor
-			$bespin = $element;
-			bespin_id = $bespin.attr('id');
-		}
-	
-		// Use Bespin
-		bespin.useBespin(bespin_id,config.bespin).then(
-			function(env){
-				// Success
-				Me.postBespin(bespin_id, env, config);
+			"rich": {
+				"bespin": {
+					"syntax": "html"
+				}
 			},
-			function(error){
-				// Error
-				throw new Error("Bespin Launch Failed: " + error);
+			"html": {
+				"bespin": {
+					"syntax": "html"
+				}
+			},
+			"plain": {
+				"toolbar": false
 			}
-		);
+		});
+		$.Bespin.fn = function(mode, options) {
+			// Prepare
+			var Me = $.Bespin;
+			var config = Me.getConfigWithDefault(mode,options);
 	
-		// Chain
-		return this;
-	};
-	$.Bespin.postBespin = function(bespin_id, env, config) {
-		// Prepare
-		var Me = $.Bespin;
+			// Elements
+			var element = this;
 	
-		// Elements
-		var $bespin = $('#'+bespin_id);
-		var $textarea = $bespin.siblings('textarea');
-		var editor = env.editor;
-	
-		// Ensure overflow is set to hidden
-		// stops bespin from having text outside it's box in rare circumstances
-		$bespin.css('overflow','hidden');
-	
-		// Wrap our div
-		$bespin.wrap('<div class="bespin-wrap" />');
-		var $bespin_wrap = $bespin.parent();
-	
-		// Update Textarea on submit
-		if ( $textarea.length ) {
-			var updateFunction = function(){
-				var val = editor.value;
-				$textarea.val(val);
+			// Bespin
+			var onBespinLoad = function(){
+				// Use Bespin
+				Me.useBespin(element, config);
 			};
-			$textarea.parents('form:first').submit(updateFunction);
-		}
+			$(window).bind('onBespinLoad', onBespinLoad);
+			window.onBespinLoad = function(){
+				$(window).trigger('onBespinLoad');
+			};
 	
-	  		// Change the value
-		if ( config.content || config.content === '' ) {
-			editor.value = config.content;
-		}
+			// Chain
+			return this;
+		};
+		$.Bespin.useBespin = function(element, config) {
+			// Prepare
+			var Me = $.Bespin;
 	
-		// Toolbar
-		if ( config.toolbar||false ) {
-			$toolbar = $('<div class="bespin-toolbar" />');
-			$toolbar.insertBefore($bespin);
-		
-			// Fullscreen
-			if (config.toolbar.fullscreen||false ) {
-				$fullscreen = $('<span class="bespin-toolbar-fullscreen">Fullscreen</span>');
-				$fullscreen.appendTo($toolbar);
-				$fullscreen.click(function(){
-					if ( $bespin_wrap.hasClass('bespin-fullscreen') ) {
-						// Destroy fullscreen
-						$('body').add($bespin_wrap).removeClass('bespin-fullscreen');
-					}
-					else {
-						// Make fullscreen
-						$('body').add($bespin_wrap).addClass('bespin-fullscreen');
-					}
-					env.dimensionsChanged();
+			// Elements
+			var $element = $(element),
+				$bespin,
+				bespin_id;
+	
+			// Check
+			if ( $element.is('textarea') ) {
+				// Editor is a textarea
+				// So we have to create a div to use as our bespin editor
+				// Update id
+				bespin_id = $element.attr('id')+'-bespin';
+				// Create div
+				$bespin = $('<div id="'+bespin_id+'"/>').html($element.val()).css({
+					height: $element.css('height'),
+					width: $element.css('width')
 				});
+				// Insert div
+				$bespin.insertAfter($element);
+				// Hide textarea
+				$element.hide();
 			}
-		}
+			else {
+				// Editor is likely a div
+				// So we can use that as our bespin editor
+				$bespin = $element;
+				bespin_id = $bespin.attr('id');
+			}
 	
-		// Chain
-		return this;
+			// Use Bespin
+			bespin.useBespin(bespin_id,config.bespin).then(
+				function(env){
+					// Success
+					Me.postBespin(bespin_id, env, config);
+				},
+				function(error){
+					// Error
+					throw new Error("Bespin Launch Failed: " + error);
+				}
+			);
+	
+			// Chain
+			return this;
+		};
+		$.Bespin.postBespin = function(bespin_id, env, config) {
+			// Prepare
+			var Me = $.Bespin;
+	
+			// Elements
+			var $bespin = $('#'+bespin_id);
+			var $textarea = $bespin.siblings('textarea');
+			var editor = env.editor;
+	
+			// Ensure overflow is set to hidden
+			// stops bespin from having text outside it's box in rare circumstances
+			$bespin.css('overflow','hidden');
+	
+			// Wrap our div
+			$bespin.wrap('<div class="bespin-wrap" />');
+			var $bespin_wrap = $bespin.parent();
+	
+			// Update Textarea on submit
+			if ( $textarea.length ) {
+				var updateFunction = function(){
+					var val = editor.value;
+					$textarea.val(val);
+				};
+				$textarea.parents('form:first').submit(updateFunction);
+			}
+	
+		  		// Change the value
+			if ( config.content || config.content === '' ) {
+				editor.value = config.content;
+			}
+	
+			// Toolbar
+			if ( config.toolbar||false ) {
+				$toolbar = $('<div class="bespin-toolbar" />');
+				$toolbar.insertBefore($bespin);
+		
+				// Fullscreen
+				if (config.toolbar.fullscreen||false ) {
+					$fullscreen = $('<span class="bespin-toolbar-fullscreen">Fullscreen</span>');
+					$fullscreen.appendTo($toolbar);
+					$fullscreen.click(function(){
+						if ( $bespin_wrap.hasClass('bespin-fullscreen') ) {
+							// Destroy fullscreen
+							$('body').add($bespin_wrap).removeClass('bespin-fullscreen');
+						}
+						else {
+							// Make fullscreen
+							$('body').add($bespin_wrap).addClass('bespin-fullscreen');
+						}
+						env.dimensionsChanged();
+					});
+				}
+			}
+	
+			// Chain
+			return this;
+		};
+		$.fn.Bespin = function(mode,options) {
+			// Alias
+			return $.Bespin.fn.apply(this,[mode,options]);
+		};
 	}
-	$.fn.Bespin = function(mode,options) {
-		// Alias
-		return $.Bespin.fn.apply(this,[mode,options]);
-	};
+	else {
+		console.warn("$.Bespin has already been defined...");
+	}
 
 
 })(jQuery);/**
@@ -2305,86 +2330,94 @@ Number.prototype.roundTo = String.prototype.roundTo = String.prototype.roundTo |
  	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  	 * @license GNU Affero General Public License - {@link http://www.gnu.org/licenses/agpl.html}
 	 */
-	$.timepicker = new $.BalClass({
-		'default': {
-			timeConvention: 24
-		},
-		'12hr': {
-			timeConvention: 12
-		},
-		'24hr': {
-			timeConvention: 24
-		}
-	});
-	$.fn.timepicker = $.fn.timepicker || function(mode,options){
-		// Prepare
-		var Me = $.timepicker;
-		var config = Me.getConfigWithDefault(mode,options);
-		// Handle
-		return $(this).each(function(){
-			var $input = $(this);
-			$input.hide();
-		
-			// Prepare
-			if ( $input.hasClass('sparkle-time-has') ) return $input; // already done
-			$input.addClass('sparkle-time').addClass('sparkle-time-has');
-		
-			// Generate
-			var $hours = $('<select class="sparkle-time-hours" />');
-			for ( var hours=12,hour=1; hour<=hours; ++hour ) {
-				$hours.append('<option value="'+hour+'">'+hour.padLeft('0',2)+'</option>');
+	if ( !($.timepicker||false) ) {
+		/**
+		 * $.timepicker
+		 */
+		$.timepicker = new $.BalClass({
+			'default': {
+				timeConvention: 24
+			},
+			'12hr': {
+				timeConvention: 12
+			},
+			'24hr': {
+				timeConvention: 24
 			}
-			var $minutes = $('<select class="sparkle-time-minutes" />');
-			for ( var mins=55,min=0; min<=mins; min+=5) {
-				$minutes.append('<option value="'+min+'">'+min.padLeft('0',2)+'</option>');
-			}
-			var $meridian = $('<select class="sparkle-time-meridian" />');
-			$meridian.append('<option>am</option>');
-			$meridian.append('<option>pm</option>');
-		
-			// Defaults
-			var value = $input.val(),
-				date = new Date(),
-				hours = '12',
-				minutes = '0',
-				meridian = 'am';
-			if ( value ) {
-				date.setTimestr(value);
-				hours = date.getUTCHours();
-				minutes = date.getUTCMinutes();
-				if ( hours > 12 ) {
-					hours -= 12; meridian = 'pm';
-				}
-			}
-		
-			// Append
-			$meridian.insertAfter($input);
-			$minutes.insertAfter($input);
-			$hours.insertAfter($input);
-		
-			// Apply
-			if ( hours > 12 && meridian == 'pm' ) hours -= 12;
-			$hours.val(hours);
-			$minutes.val(minutes.roundTo(5));
-			$meridian.val(meridian);
-		
-			// Bind
-			var updateFunction = function(){
-				var hours = parseInt($hours.val(),10);
-				var minutes = $minutes.val();
-				var meridian = $meridian.val();
-				if ( meridian == 'pm' ) hours += 12;
-				if ( hours >= 24 ) hours = 0;
-				var value = hours.padLeft(0,2)+':'+minutes.padLeft(0,2)+':00';
-				$input.val(value).trigger('change');
-			};
-			$hours.add($minutes).add($meridian).change(updateFunction);
-			$input.parent('form:first').submit(updateFunction);
-		
-			// Done
-			return $input;
 		});
-	};
+		$.fn.timepicker = function(mode,options){
+			// Prepare
+			var Me = $.timepicker;
+			var config = Me.getConfigWithDefault(mode,options);
+			// Handle
+			return $(this).each(function(){
+				var $input = $(this);
+				$input.hide();
+		
+				// Prepare
+				if ( $input.hasClass('sparkle-time-has') ) return $input; // already done
+				$input.addClass('sparkle-time').addClass('sparkle-time-has');
+		
+				// Generate
+				var $hours = $('<select class="sparkle-time-hours" />');
+				for ( var hours=12,hour=1; hour<=hours; ++hour ) {
+					$hours.append('<option value="'+hour+'">'+hour.padLeft('0',2)+'</option>');
+				}
+				var $minutes = $('<select class="sparkle-time-minutes" />');
+				for ( var mins=55,min=0; min<=mins; min+=5) {
+					$minutes.append('<option value="'+min+'">'+min.padLeft('0',2)+'</option>');
+				}
+				var $meridian = $('<select class="sparkle-time-meridian" />');
+				$meridian.append('<option>am</option>');
+				$meridian.append('<option>pm</option>');
+		
+				// Defaults
+				var value = $input.val(),
+					date = new Date(),
+					hours = '12',
+					minutes = '0',
+					meridian = 'am';
+				if ( value ) {
+					date.setTimestr(value);
+					hours = date.getUTCHours();
+					minutes = date.getUTCMinutes();
+					if ( hours > 12 ) {
+						hours -= 12; meridian = 'pm';
+					}
+				}
+		
+				// Append
+				$meridian.insertAfter($input);
+				$minutes.insertAfter($input);
+				$hours.insertAfter($input);
+		
+				// Apply
+				if ( hours > 12 && meridian == 'pm' ) hours -= 12;
+				$hours.val(hours);
+				$minutes.val(minutes.roundTo(5));
+				$meridian.val(meridian);
+		
+				// Bind
+				var updateFunction = function(){
+					var hours = parseInt($hours.val(),10);
+					var minutes = $minutes.val();
+					var meridian = $meridian.val();
+					if ( meridian == 'pm' ) hours += 12;
+					if ( hours >= 24 ) hours = 0;
+					var value = hours.padLeft(0,2)+':'+minutes.padLeft(0,2)+':00';
+					$input.val(value).trigger('change');
+				};
+				$hours.add($minutes).add($meridian).change(updateFunction);
+				$input.parent('form:first').submit(updateFunction);
+		
+				// Done
+				return $input;
+			});
+		};
+	}
+	else {
+		console.warn("$.timepicker has already been defined...");
+	}
 
 	
 })(jQuery);/**
@@ -2402,52 +2435,57 @@ Number.prototype.roundTo = String.prototype.roundTo = String.prototype.roundTo |
  	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  	 * @license GNU Affero General Public License - {@link http://www.gnu.org/licenses/agpl.html}
 	 */
-	$.Tinymce = new $.BalClass({
-		'default': {
-			// Location of TinyMCE script
-			script_url: '/scripts/tiny_mce/tiny_mce.js',
+	if ( !($.Tinymce||false) ) {
+		$.Tinymce = new $.BalClass({
+			'default': {
+				// Location of TinyMCE script
+				script_url: '/scripts/tiny_mce/tiny_mce.js',
 		
-			// General options
-			theme: "advanced",
-			plugins: "autoresize,safari,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template",
+				// General options
+				theme: "advanced",
+				plugins: "autoresize,safari,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template",
 
-			// Theme options
-			theme_advanced_buttons1: "bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,styleselect,formatselect,fontselect,fontsizeselect,|,code,",
-			theme_advanced_buttons2: "cut,copy,paste,pastetext,pasteword,|,undo,redo,|,link,unlink,image,|,preview,|,forecolor,backcolor,|,bullist,numlist,|,outdent,indent,blockquote,|,fullscreen",
-			theme_advanced_buttons3: "tablecontrols,|,hr,removeformat,visualaid,|,sub,sup",
-			theme_advanced_toolbar_location: "top",
-			theme_advanced_toolbar_align: "left",
-			theme_advanced_statusbar_location: "bottom",
-			theme_advanced_path: false,
-			theme_advanced_resizing: false,
-			width: "100%",
+				// Theme options
+				theme_advanced_buttons1: "bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,styleselect,formatselect,fontselect,fontsizeselect,|,code,",
+				theme_advanced_buttons2: "cut,copy,paste,pastetext,pasteword,|,undo,redo,|,link,unlink,image,|,preview,|,forecolor,backcolor,|,bullist,numlist,|,outdent,indent,blockquote,|,fullscreen",
+				theme_advanced_buttons3: "tablecontrols,|,hr,removeformat,visualaid,|,sub,sup",
+				theme_advanced_toolbar_location: "top",
+				theme_advanced_toolbar_align: "left",
+				theme_advanced_statusbar_location: "bottom",
+				theme_advanced_path: false,
+				theme_advanced_resizing: false,
+				width: "100%",
 		
-			// Compat
-			//add_form_submit_trigger: false,
-			//submit_patch: false,
+				// Compat
+				//add_form_submit_trigger: false,
+				//submit_patch: false,
 		
-			// Example content CSS (should be your site CSS)
-			// content_css : "css/content.css",
+				// Example content CSS (should be your site CSS)
+				// content_css : "css/content.css",
 		
-			// Replace values for the template plugin
-			template_replace_values: {
+				// Replace values for the template plugin
+				template_replace_values: {
 			
+				}
+			},
+			'rich': {
+			},
+			'simple': {
+				theme_advanced_buttons2: "",
+				theme_advanced_buttons3: ""
 			}
-		},
-		'rich': {
-		},
-		'simple': {
-			theme_advanced_buttons2: "",
-			theme_advanced_buttons3: ""
-		}
-	});
-	$.fn.Tinymce = function(mode,options) {
-		var Me = $.Tinymce;
-		var config = Me.getConfigWithDefault(mode,options);
-		var $this = $(this);
-		// Apply + Return
-		return $this.tinymce(config);
-	};
+		});
+		$.fn.Tinymce = function(mode,options) {
+			var Me = $.Tinymce;
+			var config = Me.getConfigWithDefault(mode,options);
+			var $this = $(this);
+			// Apply + Return
+			return $this.tinymce(config);
+		};
+	}
+	else {
+		console.warn("$.Tinymce has already been defined...");
+	}
 
 })(jQuery);/**
  * @depends jquery, balclass.js
@@ -2464,37 +2502,42 @@ Number.prototype.roundTo = String.prototype.roundTo = String.prototype.roundTo |
  	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  	 * @license GNU Affero General Public License - {@link http://www.gnu.org/licenses/agpl.html}
 	 */
-	$.Help = new $.BalClass({
-		'default': {
-			// Elements
-			wrap: '<span class="sparkle-help-wrap"/>',
-			icon: '<span class="sparkle-help-icon"/>',
-			text: '<span class="sparkle-help-text"/>',
-			parentClass: '',
-			title: ''
-		}
-	});
-	$.fn.help = function(options){
-		var Me = $.Help;
-		if ( typeof options === 'string' ) {
-			options = {
-				title: options
-			};
-		}
-		var config = Me.getConfigWithDefault('default',options);
-		// Fetch
-		var $this = $(this);
-		var $wrap = $(config.wrap);
-		var $icon = $(config.icon);
-		var $text = $(config.text);
-		var $parent = $this.parent().addClass(config.parentClass);
-		// Build
-		var $contents = $this.contents();
-		$this.append($wrap.append($text).append($icon));
-		$contents.appendTo($text);
-		$this.attr('title', config.title);
-		// Done
-		return $this;
+	if ( !($.Help||false) ) {
+		$.Help = new $.BalClass({
+			'default': {
+				// Elements
+				wrap: '<span class="sparkle-help-wrap"/>',
+				icon: '<span class="sparkle-help-icon"/>',
+				text: '<span class="sparkle-help-text"/>',
+				parentClass: '',
+				title: ''
+			}
+		});
+		$.fn.help = function(options){
+			var Me = $.Help;
+			if ( typeof options === 'string' ) {
+				options = {
+					title: options
+				};
+			}
+			var config = Me.getConfigWithDefault('default',options);
+			// Fetch
+			var $this = $(this);
+			var $wrap = $(config.wrap);
+			var $icon = $(config.icon);
+			var $text = $(config.text);
+			var $parent = $this.parent().addClass(config.parentClass);
+			// Build
+			var $contents = $this.contents();
+			$this.append($wrap.append($text).append($icon));
+			$contents.appendTo($text);
+			$this.attr('title', config.title);
+			// Done
+			return $this;
+		};
+	}
+	else {
+		console.warn("$.Help has already been defined...");
 	}
 
 

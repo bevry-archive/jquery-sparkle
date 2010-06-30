@@ -87,6 +87,9 @@
 			}
 		});
 	}
+	else {
+		console.warn("$.BalClass has already been defined...");
+	}
 
 
 })(jQuery);

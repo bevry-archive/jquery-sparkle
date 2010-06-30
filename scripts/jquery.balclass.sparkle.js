@@ -21,7 +21,7 @@
 	 */
 	if ( !($.SparkleClass||false) ) {
 		/**
-		 * Sparkle Class
+		 * $.SparkleClass
 		 */
 		$.SparkleClass = function(config){
 			this.construct(config);
@@ -112,6 +112,9 @@
 				return true;
 			}
 		});
+		/**
+		 * $.Sparkle
+		 */
 		$.Sparkle = new $.SparkleClass({
 			'date': {
 				config: {
@@ -453,10 +456,10 @@
 			}
 
 		});
-
+		
 	}
 	else {
-		console.warn("Sparkle Class has already been defined...")
+		console.warn("$.SparkleClass has already been defined...");
 	}
 
 })(jQuery);

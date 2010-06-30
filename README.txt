@@ -33,3 +33,5 @@ Installation:
 1. Include jQuery in your page
 2. Include /jquery-sparkle/scripts/all.min.js in your page
 
+Todo:
+1. Make ajaxCalendar and passwordstrength use BalClass

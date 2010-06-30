@@ -14,7 +14,7 @@
  	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  	 * @license GNU Affero General Public License - {@link http://www.gnu.org/licenses/agpl.html}
 	 */
-	String.prototype.passwordStrength = String.prototype.passwordStrength || function(confirm,username){
+	String.prototype.passwordstrength = String.prototype.passwordstrength || function(confirm,username){
 		/**
 		 * Checks the string as a password to identify it's strength
 		 * @copyright (c) Wordpress
@@ -69,95 +69,100 @@
  	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  	 * @license GNU Affero General Public License - {@link http://www.gnu.org/licenses/agpl.html}
 	 */
-	$.fn.passwordStrength = $.fn.passwordStrength || function(options) {
-		// Prepare
-		var passwordStrength = $.fn.passwordStrength;
-		passwordStrength.config = passwordStrength.config || {
-			content: '<div class="sparkle-passwordstrength-result"></div><div class="sparkle-passwordstrength-description"></div>',
-			contentSelectors: {
-				result: '.sparkle-passwordstrength-result',
-				description: '.sparkle-passwordstrength-description'
-			},
-			strengthCss: {
-				"short": "invalid",
-				mismatch: "invalid",
-				username: "invalid",
-				low: "low",
-				medium: "medium",
-				high: "high",
-				empty: ""
-			},
-			il8n: {
-				description: "Hint: The password should be have a strength of at least medium. To make it stronger, use upper and lower case letters, numbers and symbols like ! \" ? $ % ^ &amp; ).",
-				empty: "Strength indicator",
-				username: "Password should not match username",
-				mismatch: "Confirm password does not match",
-				"short": "Password is too short",
-				low: "Weak",
-				medium: "Medium",
-				high: "Strongest"
-			}
-		};
-		var config = $.extend({}, passwordStrength.config);
+	if ( !($.fn.passwordstrength||false) ) {
+		$.fn.passwordstrength = function(options) {
+			// Prepare
+			var passwordstrength = $.fn.passwordstrength;
+			passwordstrength.config = passwordstrength.config || {
+				content: '<div class="sparkle-passwordstrength-result"></div><div class="sparkle-passwordstrength-description"></div>',
+				contentSelectors: {
+					result: '.sparkle-passwordstrength-result',
+					description: '.sparkle-passwordstrength-description'
+				},
+				strengthCss: {
+					"short": "invalid",
+					mismatch: "invalid",
+					username: "invalid",
+					low: "low",
+					medium: "medium",
+					high: "high",
+					empty: ""
+				},
+				il8n: {
+					description: "Hint: The password should be have a strength of at least medium. To make it stronger, use upper and lower case letters, numbers and symbols like ! \" ? $ % ^ &amp; ).",
+					empty: "Strength indicator",
+					username: "Password should not match username",
+					mismatch: "Confirm password does not match",
+					"short": "Password is too short",
+					low: "Weak",
+					medium: "Medium",
+					high: "Strongest"
+				}
+			};
+			var config = $.extend({}, passwordstrength.config);
 	
-		// Options
-		$.extend(true, config, options);
+			// Options
+			$.extend(true, config, options);
 	
-		// Fetch
-		var $this = $(this);
-		var $container = $this.html(config.content).hide();
-	
-		// Implode
-		var $result = $container.find(config.contentSelectors.result);
-		var $description = $container.find(config.contentSelectors.description).html(config.il8n.description);
-		if ( !config.il8n.description ) {
-			$description.remove();
-		}
-	
-		// Prepare
-		var classes = [
-			config.strengthCss["short"],
-			config.strengthCss.mismatch,
-			config.strengthCss.username,
-			config.strengthCss.low,
-			config.strengthCss.medium,
-			config.strengthCss.high,
-			config.strengthCss.empty
-		].join(' ');
-	
-		// Fetch
-		var $password = $(config.password),
-			$confirm = $(config.confirm||null),
-			$username = $(config.username||null);
-	
-		// Apply
-		var check = function(){
 			// Fetch
-			var password = $password.val(),
-				confirm  = $confirm.val(),
-				username = $username.val();
+			var $this = $(this);
+			var $container = $this.html(config.content).hide();
 	
-			// Strength
-			var strength = password ? password.passwordStrength(confirm,username) : "empty";
-			var strength_css = config.strengthCss[strength];
-			var strength_text = config.il8n[strength];
+			// Implode
+			var $result = $container.find(config.contentSelectors.result);
+			var $description = $container.find(config.contentSelectors.description).html(config.il8n.description);
+			if ( !config.il8n.description ) {
+				$description.remove();
+			}
+	
+			// Prepare
+			var classes = [
+				config.strengthCss["short"],
+				config.strengthCss.mismatch,
+				config.strengthCss.username,
+				config.strengthCss.low,
+				config.strengthCss.medium,
+				config.strengthCss.high,
+				config.strengthCss.empty
+			].join(' ');
+	
+			// Fetch
+			var $password = $(config.password),
+				$confirm = $(config.confirm||null),
+				$username = $(config.username||null);
 	
 			// Apply
-			$result.removeClass(classes).addClass(strength_css).html(strength_text);
-		};
-		$password
-			.keyup(function(){
-				var $password = $(this);
-				$confirm.val('');
-				if ( $password.val() !== '' && !$container.data('shown') ) {
-					$container.animate({'height':'show','opacity':'show'},'slow').data('shown',true);
-				}
-			});
-		$password.add($confirm).add($username).keyup(check);
-		check();
+			var check = function(){
+				// Fetch
+				var password = $password.val(),
+					confirm  = $confirm.val(),
+					username = $username.val();
 	
-		// Chain
-		return $this;
+				// Strength
+				var strength = password ? password.passwordstrength(confirm,username) : "empty";
+				var strength_css = config.strengthCss[strength];
+				var strength_text = config.il8n[strength];
+	
+				// Apply
+				$result.removeClass(classes).addClass(strength_css).html(strength_text);
+			};
+			$password
+				.keyup(function(){
+					var $password = $(this);
+					$confirm.val('');
+					if ( $password.val() !== '' && !$container.data('shown') ) {
+						$container.animate({'height':'show','opacity':'show'},'slow').data('shown',true);
+					}
+				});
+			$password.add($confirm).add($username).keyup(check);
+			check();
+	
+			// Chain
+			return $this;
+		}
+	}
+	else {
+		console.warn("$.fn.passwordstrength has already been defined...");
 	}
 	
 

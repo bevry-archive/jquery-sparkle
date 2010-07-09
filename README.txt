@@ -40,12 +40,16 @@ Todo:
 2. Add a pre-commit hook to perform make
 
 ----
+
 Changelog:
 
 1.1.0-dev (July 09, 2010)
+- Restructured to now use resources folder
 - Updated some doc tags; name, package, category, author, copyright
 - Fixed example tag link
 - Fixed some typos in CHECKLIST
 
 1.0.0-dev (July 01, 2010)
 - Split and cleaned Sparkle into multiple files, added Makefile
+
+----

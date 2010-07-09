@@ -21,6 +21,9 @@ all:
 add:
 	git add Makefile README.txt CHECKLIST.txt ./scripts ./styles;
 
+push:
+	git push --all ; git push --tags ;
+
 edithooks:
 	mate .git/hooks/pre-commit
 

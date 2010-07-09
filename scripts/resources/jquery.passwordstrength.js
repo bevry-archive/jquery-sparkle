@@ -1,5 +1,7 @@
 /**
  * @depends jquery
+ * @name jquery.passwordstrength
+ * @package jquery-sparkle
  */
 
 /**

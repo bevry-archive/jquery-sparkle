@@ -1,5 +1,7 @@
 /**
  * @depends jquery
+ * @name jquery.balclass
+ * @package jquery-sparkle
  */
 
 /**

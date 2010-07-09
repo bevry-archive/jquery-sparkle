@@ -1,5 +1,7 @@
 /**
- * @depends jquery, balclass
+ * @depends jquery, jquery.balclass
+ * @name jquery.balclass.timepicker
+ * @package jquery-sparkle
  */
 
 /**

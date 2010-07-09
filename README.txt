@@ -18,16 +18,18 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with jQuery Sparkle (balupton edition).  If not, see <http://www.gnu.org/licenses/>.
  *
- * @name jquery-sparkle:
- * @package jQuery Sparkle (balupton edition)
- * @version 1.0.0-dev
- * @date July 01, 2010
+ * @name readme
+ * @package jquery-sparkle
+ * @category jquery-plugin
+ * @version 1.1.0-dev
+ * @date July 09, 2010
  * @category jQuery plugin
  * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
  * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  * @license GNU Affero General Public License - {@link http://www.gnu.org/licenses/agpl.html}
- * @example Visit {@link http://www.balupton.com/projects/jquery-sparkle} for more information.
+ * @example Visit {@link http://github.com/balupton/jquery-sparkle} for more information.
  */
+----
 
 Installation:
 1. Include jQuery in your page
@@ -36,3 +38,14 @@ Installation:
 Todo:
 1. Make ajaxCalendar and passwordstrength use BalClass
 2. Add a pre-commit hook to perform make
+
+----
+Changelog:
+
+1.1.0-dev (July 09, 2010)
+- Updated some doc tags; name, package, category, author, copyright
+- Fixed example tag link
+- Fixed some typos in CHECKLIST
+
+1.0.0-dev (July 01, 2010)
+- Split and cleaned Sparkle into multiple files, added Makefile

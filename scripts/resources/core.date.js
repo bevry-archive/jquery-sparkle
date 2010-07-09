@@ -1,5 +1,7 @@
 /**
  * @depends nothing
+ * @name core.date
+ * @package jquery-sparkle
  */
 
 /**
@@ -7,7 +9,8 @@
  * Datetime string in the format of "year month day hour min sec". "hour min sec" all optional.
  * @version 1.0.0
  * @date June 30, 2010
- * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+ * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
 Date.prototype.setDatetimestr = Date.prototype.setDatetimestr || function(timestamp){
 	// Set the datetime from a string
@@ -30,7 +33,8 @@ Date.prototype.setDatetimestr = Date.prototype.setDatetimestr || function(timest
  * Date string in the format of "year month day". "year month day" all optional.
  * @version 1.0.0
  * @date June 30, 2010
- * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+ * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
 Date.prototype.setDatestr = Date.prototype.setDatestr || function(timestamp){
 	// Set the date from a string
@@ -47,7 +51,8 @@ Date.prototype.setDatestr = Date.prototype.setDatestr || function(timestamp){
  * Time string in the format of "hour min sec". "hour min sec" all optional.
  * @version 1.0.0
  * @date June 30, 2010
- * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+ * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
 Date.prototype.setTimestr = Date.prototype.setTimestr || function(timestamp){
 	// Set the time from a string
@@ -66,7 +71,8 @@ Date.prototype.setTimestr = Date.prototype.setTimestr || function(timestamp){
  * Datetime string in the format of "year-month-date hours:minutes:seconds".
  * @version 1.0.0
  * @date June 30, 2010
- * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+ * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
 Date.prototype.getDatetimestr = Date.prototype.getDatetimestr || function() {
 	// Get the datetime as a string
@@ -79,7 +85,8 @@ Date.prototype.getDatetimestr = Date.prototype.getDatetimestr || function() {
  * Datetime string in the format of "year-month-date".
  * @version 1.0.0
  * @date June 30, 2010
- * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+ * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
 Date.prototype.getDatestr = Date.prototype.getDatestr || function() {
 	// Get the date as a string
@@ -95,7 +102,8 @@ Date.prototype.getDatestr = Date.prototype.getDatestr || function() {
  * Datetime string in the format of "hours:minutes:seconds".
  * @version 1.0.0
  * @date June 30, 2010
- * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+ * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
 Date.prototype.getTimestr = Date.prototype.getTimestr || function(){
 	// Get the time as a string
@@ -110,7 +118,8 @@ Date.prototype.getTimestr = Date.prototype.getTimestr || function(){
  * Return the Date as a ISO 8601 date string
  * @version 1.0.0
  * @date June 30, 2010
- * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+ * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
 Date.prototype.getDatetime = String.prototype.getDatetime || function(){
 	// Get a ISO 8601 date

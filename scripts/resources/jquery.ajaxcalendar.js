@@ -1,5 +1,7 @@
 /**
  * @depends jquery
+ * @name jquery.ajaxcalendar
+ * @package jquery-sparkle
  */
 
 /**

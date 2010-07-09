@@ -1,5 +1,7 @@
 /**
  * @depends nothing
+ * @name core.array
+ * @package jquery-sparkle
  */
 
 /**
@@ -19,7 +21,8 @@ Array.prototype.remove = function(from, to) {
  * if [current] is set, then set this index as the current index (we don't care if it doesn't exist)
  * @version 1.0.0
  * @date June 30, 2010
- * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+ * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
 Array.prototype.get = function(index, current) {
 	if ( index === 'first' ) index = 0;
@@ -34,7 +37,8 @@ Array.prototype.get = function(index, current) {
  * Apply the function [fn] to each element in the array
  * @version 1.0.0
  * @date June 30, 2010
- * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+ * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
 Array.prototype.each = function(fn){
 	for (var i = 0; i < this.length; ++i) {
@@ -48,7 +52,8 @@ Array.prototype.each = function(fn){
  * Set the current index of the array
  * @version 1.0.0
  * @date June 30, 2010
- * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+ * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
 Array.prototype.setIndex = function(index){
 	if ( index < this.length && index >= 0 ) {
@@ -64,7 +69,8 @@ Array.prototype.setIndex = function(index){
  * If [index] is passed then set that as the current, and return it's value
  * @version 1.0.0
  * @date June 30, 2010
- * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+ * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
 Array.prototype.current = function(index){
 	return this.get(index, true);
@@ -74,7 +80,8 @@ Array.prototype.current = function(index){
  * Get whether or not the array is empty
  * @version 1.0.0
  * @date June 30, 2010
- * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+ * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
 Array.prototype.isEmpty = function(){
 	return this.length === 0;
@@ -84,7 +91,8 @@ Array.prototype.isEmpty = function(){
  * Get whether or not the array has only one item
  * @version 1.0.0
  * @date June 30, 2010
- * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+ * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
 Array.prototype.isSingle = function(){
 	return this.length === 1;
@@ -94,7 +102,8 @@ Array.prototype.isSingle = function(){
  * Get whether or not the array is not empty
  * @version 1.0.0
  * @date June 30, 2010
- * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+ * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
 Array.prototype.isNotEmpty = function(){
 	return this.length !== 0;
@@ -104,7 +113,8 @@ Array.prototype.isNotEmpty = function(){
  * Get whether or not the array has more than one item
  * @version 1.0.0
  * @date June 30, 2010
- * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+ * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
 Array.prototype.isNotEmpty = function(){
 	return this.length > 1;
@@ -114,7 +124,8 @@ Array.prototype.isNotEmpty = function(){
  * Get whether or not the current index is the last one
  * @version 1.0.0
  * @date June 30, 2010
- * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+ * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
 Array.prototype.isLast = function(index){
 	index = typeof index === 'undefined' ? this.index : index;
@@ -125,7 +136,8 @@ Array.prototype.isLast = function(index){
  * Get whether or not the current index is the first one
  * @version 1.0.0
  * @date June 30, 2010
- * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+ * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
 Array.prototype.isFirst = function(index){
 	index = typeof index === 'undefined' ? this.index : index;
@@ -136,7 +148,8 @@ Array.prototype.isFirst = function(index){
  * Clear the array
  * @version 1.0.0
  * @date June 30, 2010
- * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+ * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
 Array.prototype.clear = function(){
 	this.length = 0;
@@ -146,7 +159,8 @@ Array.prototype.clear = function(){
  * Set the index as the next one, and get the item
  * @version 1.0.0
  * @date June 30, 2010
- * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+ * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
 Array.prototype.next = function(update){
 	return this.get(this.index+1, update);
@@ -156,7 +170,8 @@ Array.prototype.next = function(update){
  * Set the index as the previous one, and get the item
  * @version 1.0.0
  * @date June 30, 2010
- * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+ * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
 Array.prototype.prev = function(update){
 	return this.get(this.index-1, update);
@@ -166,7 +181,8 @@ Array.prototype.prev = function(update){
  * Reset the index
  * @version 1.0.0
  * @date June 30, 2010
- * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+ * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
 Array.prototype.reset = function(){
 	this.index = null;
@@ -177,7 +193,8 @@ Array.prototype.reset = function(){
  * Set the [index] to the [item]
  * @version 1.0.0
  * @date June 30, 2010
- * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+ * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
 Array.prototype.set = function(index, item){
 	// We want to set the item
@@ -195,7 +212,8 @@ Array.prototype.set = function(index, item){
  * If we reach the end, then start back at the beginning.
  * @version 1.0.0
  * @date June 30, 2010
- * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+ * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
 Array.prototype.loop = function(){
 	if ( !this.index && this.index !== 0 ) {
@@ -209,7 +227,8 @@ Array.prototype.loop = function(){
  * Add the [arguments] to the array
  * @version 1.0.0
  * @date June 30, 2010
- * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+ * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
 Array.prototype.add = function(){
 	this.push.apply(this,arguments);
@@ -220,7 +239,8 @@ Array.prototype.add = function(){
  * Insert the [item] at the [index] or at the end of the array
  * @version 1.0.0
  * @date June 30, 2010
- * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+ * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
 Array.prototype.insert = function(index, item){
 	if ( typeof index !== 'number' ) {
@@ -238,7 +258,8 @@ Array.prototype.insert = function(index, item){
  * Get whether or not hte value exists in the array
  * @version 1.0.0
  * @date June 30, 2010
- * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+ * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
 Array.prototype.has = Array.prototype.has || function(value){
 	// Is the value in the array?

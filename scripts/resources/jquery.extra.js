@@ -1,5 +1,7 @@
 /**
  * @depends jquery
+ * @name jquery.extra
+ * @package jquery-sparkle
  */
 
 /**
@@ -11,7 +13,8 @@
 	 * Get all elements above ourself which match the selector, and include ourself in the search
 	 * @version 1.0.0
 	 * @date June 30, 2010
-	 * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
 	 */
 	$.fn.parentsAndSelf = $.fn.parentsAndSelf || function(selector){
 		var $this = $(this);
@@ -22,7 +25,8 @@
 	 * Get all elements within ourself which match the selector, and include ourself in the search
 	 * @version 1.0.0
 	 * @date June 30, 2010
-	 * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
 	 */
 	$.fn.findAndSelf = $.fn.findAndSelf || function(selector){
 		var $this = $(this);
@@ -33,7 +37,8 @@
 	 * Find the first input, and include ourself in the search
 	 * @version 1.0.0
 	 * @date June 30, 2010
-	 * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
 	 */
 	$.fn.firstInput = $.fn.firstInput || function(){
 		var $this = $(this);
@@ -45,7 +50,8 @@
 	 * Rather than setting the actual value of a element which $el.val does.
 	 * @version 1.0.0
 	 * @date June 30, 2010
-	 * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
 	 */
 	$.fn.choose = $.fn.choose||function(value){
 		var $this = $(this);
@@ -78,7 +84,8 @@
 	 * Deselect a option within options, checkboxes, radios and selects.
 	 * @version 1.0.0
 	 * @date June 30, 2010
-	 * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
 	 */
 	$.fn.unchoose = $.fn.unchoose||function(){
 		var $this = $(this);
@@ -105,7 +112,8 @@
 	 * Checks if the element would be passed with the form if the form was submitted.
 	 * @version 1.0.0
 	 * @date June 30, 2010
-	 * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
 	 */
 	$.fn.wouldSubmit = $.fn.wouldSubmit || function(){
 		var $input = $(this).findAndSelf(':input');
@@ -120,7 +128,8 @@
 	 * Grab all the values of a form in JSON format if the form would be submitted.
 	 * @version 1.0.0
 	 * @date June 30, 2010
-	 * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
 	 */
 	$.fn.values = $.fn.values || function(){
 		var $inputs = $(this).findAndSelf(':input');
@@ -152,7 +161,8 @@
 	 * Submit the form which the element is associated with.
 	 * @version 1.0.0
 	 * @date June 30, 2010
-	 * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
 	 */
 	$.fn.submitForm = $.fn.submitForm || function(){
 		// Submit the parent form or our form
@@ -167,7 +177,8 @@
 	 * Checks if the element is attached within the DOM
 	 * @version 1.0.0
 	 * @date June 30, 2010
-	 * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
 	 */
 	$.fn.inDOM = function(){
 		var $ancestor = $(this).parent().parent();
@@ -178,7 +189,8 @@
 	 * Wrap the element's value with the passed start and end text
 	 * @version 1.0.0
 	 * @date June 30, 2010
-	 * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
 	 */
 	$.fn.valWrap = function(start,end){
 		// Wrap a value
@@ -190,7 +202,8 @@
 	 * Wrap a selection of the element's value with the passed start and end text
 	 * @version 1.0.0
 	 * @date June 30, 2010
-	 * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
 	 */
 	$.fn.valWrapSelection = function(start,end,a,z){
 		// Wrap the selected text
@@ -225,7 +238,8 @@
 	 * Find (with regards to the element) the first visible input element, and give focus to it
 	 * @version 1.0.0
 	 * @date June 30, 2010
-	 * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
 	 */
 	$.fn.giveFocus = function(){
 		// Give focus to the current element
@@ -239,7 +253,8 @@
 	 * Perform the highlight effect
 	 * @version 1.0.0
 	 * @date June 30, 2010
-	 * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
 	 */
 	$.fn.highlight = function(duration){
 		// Perform the Highlight Effect

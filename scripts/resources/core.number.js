@@ -1,12 +1,15 @@
 /**
  * @depends nothing
+ * @name core.number
+ * @package jquery-sparkle
  */
 
 /**
  * Return a new string with zeroes added correctly to the front of the number, given the threshold
  * @version 1.0.0
  * @date June 30, 2010
- * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+ * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
 Number.prototype.zeroise = String.prototype.zeroise = String.prototype.zeroise ||function(threshold){
 	var number = this,
@@ -21,7 +24,8 @@ Number.prototype.zeroise = String.prototype.zeroise = String.prototype.zeroise |
  * Return a new string with the string/number padded left using [ch] of [num] length
  * @version 1.0.0
  * @date June 30, 2010
- * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+ * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
 Number.prototype.padLeft = String.prototype.padLeft = String.prototype.padLeft ||function(ch, num){
 	var val = String(this);
@@ -38,7 +42,8 @@ Number.prototype.padLeft = String.prototype.padLeft = String.prototype.padLeft |
  * Return a new string with the string/number padded right using [ch] of [num] length
  * @version 1.0.0
  * @date June 30, 2010
- * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+ * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
 Number.prototype.padRight = String.prototype.padRight = String.prototype.padRight ||function(ch, num){
 	var val = String(this);
@@ -55,7 +60,8 @@ Number.prototype.padRight = String.prototype.padRight = String.prototype.padRigh
  * Return a new number with the current number rounded to [to]
  * @version 1.0.0
  * @date June 30, 2010
- * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+ * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
 Number.prototype.roundTo = String.prototype.roundTo = String.prototype.roundTo || function(to){
 	var val = String(parseInt(this,10));

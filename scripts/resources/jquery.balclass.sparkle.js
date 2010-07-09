@@ -1,5 +1,7 @@
 /**
- * @depends jquery, console, balclass
+ * @depends jquery, core.console, jquery.balclass
+ * @name jquery.balclass.bespin.sparkle
+ * @package jquery-sparkle
  */
 
 /**

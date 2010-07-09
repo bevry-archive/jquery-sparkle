@@ -1,5 +1,7 @@
 /**
  * @depends jquery
+ * @name jquery.appendscriptstyle
+ * @package jquery-sparkle
  */
 
 /**
@@ -11,7 +13,8 @@
 	 * Append a Stylesheet to the DOM
 	 * @version 1.0.0
 	 * @date June 30, 2010
-	 * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
 	 */
 	$.appendStylesheet = $.appendStylesheet || function(url, overwrite){
 		// Prepare
@@ -50,7 +53,8 @@
 	 * Append a Script to the DOM
 	 * @version 1.0.0
 	 * @date June 30, 2010
-	 * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
 	 */
 	$.appendScript = $.appendScript || function(url, overwrite){
 		// Prepare

@@ -1,5 +1,7 @@
 /**
  * @depends nothing
+ * @name core.array
+ * @package jquery-sparkle
  */
 
 /**
@@ -19,7 +21,8 @@ Array.prototype.remove = function(from, to) {
  * if [current] is set, then set this index as the current index (we don't care if it doesn't exist)
  * @version 1.0.0
  * @date June 30, 2010
- * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+ * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
 Array.prototype.get = function(index, current) {
 	if ( index === 'first' ) index = 0;
@@ -34,7 +37,8 @@ Array.prototype.get = function(index, current) {
  * Apply the function [fn] to each element in the array
  * @version 1.0.0
  * @date June 30, 2010
- * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+ * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
 Array.prototype.each = function(fn){
 	for (var i = 0; i < this.length; ++i) {
@@ -48,7 +52,8 @@ Array.prototype.each = function(fn){
  * Set the current index of the array
  * @version 1.0.0
  * @date June 30, 2010
- * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+ * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
 Array.prototype.setIndex = function(index){
 	if ( index < this.length && index >= 0 ) {
@@ -64,7 +69,8 @@ Array.prototype.setIndex = function(index){
  * If [index] is passed then set that as the current, and return it's value
  * @version 1.0.0
  * @date June 30, 2010
- * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+ * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
 Array.prototype.current = function(index){
 	return this.get(index, true);
@@ -74,7 +80,8 @@ Array.prototype.current = function(index){
  * Get whether or not the array is empty
  * @version 1.0.0
  * @date June 30, 2010
- * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+ * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
 Array.prototype.isEmpty = function(){
 	return this.length === 0;
@@ -84,7 +91,8 @@ Array.prototype.isEmpty = function(){
  * Get whether or not the array has only one item
  * @version 1.0.0
  * @date June 30, 2010
- * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+ * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
 Array.prototype.isSingle = function(){
 	return this.length === 1;
@@ -94,7 +102,8 @@ Array.prototype.isSingle = function(){
  * Get whether or not the array is not empty
  * @version 1.0.0
  * @date June 30, 2010
- * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+ * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
 Array.prototype.isNotEmpty = function(){
 	return this.length !== 0;
@@ -104,7 +113,8 @@ Array.prototype.isNotEmpty = function(){
  * Get whether or not the array has more than one item
  * @version 1.0.0
  * @date June 30, 2010
- * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+ * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
 Array.prototype.isNotEmpty = function(){
 	return this.length > 1;
@@ -114,7 +124,8 @@ Array.prototype.isNotEmpty = function(){
  * Get whether or not the current index is the last one
  * @version 1.0.0
  * @date June 30, 2010
- * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+ * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
 Array.prototype.isLast = function(index){
 	index = typeof index === 'undefined' ? this.index : index;
@@ -125,7 +136,8 @@ Array.prototype.isLast = function(index){
  * Get whether or not the current index is the first one
  * @version 1.0.0
  * @date June 30, 2010
- * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+ * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
 Array.prototype.isFirst = function(index){
 	index = typeof index === 'undefined' ? this.index : index;
@@ -136,7 +148,8 @@ Array.prototype.isFirst = function(index){
  * Clear the array
  * @version 1.0.0
  * @date June 30, 2010
- * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+ * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
 Array.prototype.clear = function(){
 	this.length = 0;
@@ -146,7 +159,8 @@ Array.prototype.clear = function(){
  * Set the index as the next one, and get the item
  * @version 1.0.0
  * @date June 30, 2010
- * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+ * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
 Array.prototype.next = function(update){
 	return this.get(this.index+1, update);
@@ -156,7 +170,8 @@ Array.prototype.next = function(update){
  * Set the index as the previous one, and get the item
  * @version 1.0.0
  * @date June 30, 2010
- * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+ * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
 Array.prototype.prev = function(update){
 	return this.get(this.index-1, update);
@@ -166,7 +181,8 @@ Array.prototype.prev = function(update){
  * Reset the index
  * @version 1.0.0
  * @date June 30, 2010
- * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+ * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
 Array.prototype.reset = function(){
 	this.index = null;
@@ -177,7 +193,8 @@ Array.prototype.reset = function(){
  * Set the [index] to the [item]
  * @version 1.0.0
  * @date June 30, 2010
- * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+ * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
 Array.prototype.set = function(index, item){
 	// We want to set the item
@@ -195,7 +212,8 @@ Array.prototype.set = function(index, item){
  * If we reach the end, then start back at the beginning.
  * @version 1.0.0
  * @date June 30, 2010
- * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+ * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
 Array.prototype.loop = function(){
 	if ( !this.index && this.index !== 0 ) {
@@ -209,7 +227,8 @@ Array.prototype.loop = function(){
  * Add the [arguments] to the array
  * @version 1.0.0
  * @date June 30, 2010
- * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+ * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
 Array.prototype.add = function(){
 	this.push.apply(this,arguments);
@@ -220,7 +239,8 @@ Array.prototype.add = function(){
  * Insert the [item] at the [index] or at the end of the array
  * @version 1.0.0
  * @date June 30, 2010
- * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+ * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
 Array.prototype.insert = function(index, item){
 	if ( typeof index !== 'number' ) {
@@ -238,7 +258,8 @@ Array.prototype.insert = function(index, item){
  * Get whether or not hte value exists in the array
  * @version 1.0.0
  * @date June 30, 2010
- * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+ * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
 Array.prototype.has = Array.prototype.has || function(value){
 	// Is the value in the array?
@@ -252,13 +273,16 @@ Array.prototype.has = Array.prototype.has || function(value){
 	return has;
 };/**
  * @depends nothing
+ * @name core.string
+ * @package jquery-sparkle
  */
 
 /**
  * Return a new string with any spaces trimmed the left and right of the string
  * @version 1.0.0
  * @date June 30, 2010
- * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+ * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
 String.prototype.trim = String.prototype.trim || function() {
 	// Trim off any whitespace from the front and back
@@ -269,7 +293,8 @@ String.prototype.trim = String.prototype.trim || function() {
  * Return a new string with the value stripped from the left and right of the string
  * @version 1.0.0
  * @date June 30, 2010
- * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+ * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
 String.prototype.strip = String.prototype.strip || function(value){
 	// Strip a value from left and right
@@ -282,7 +307,8 @@ String.prototype.strip = String.prototype.strip || function(value){
  * Return a new string with the value stripped from the left of the string
  * @version 1.0.0
  * @date June 30, 2010
- * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+ * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
 String.prototype.stripLeft = String.prototype.stripLeft || function(value){
 	// Strip a value from the left
@@ -295,7 +321,8 @@ String.prototype.stripLeft = String.prototype.stripLeft || function(value){
  * Return a new string with the value stripped from the right of the string
  * @version 1.0.0
  * @date June 30, 2010
- * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+ * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
 String.prototype.stripRight = String.prototype.stripRight || function(value){
 	// Strip a value from the right
@@ -308,7 +335,8 @@ String.prototype.stripRight = String.prototype.stripRight || function(value){
  * Return a int of the string
  * @version 1.0.0
  * @date June 30, 2010
- * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+ * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
 String.prototype.toInt = String.prototype.toInt || function(){
 	// Convert to a Integer
@@ -319,7 +347,8 @@ String.prototype.toInt = String.prototype.toInt || function(){
  * Return a new string of the old string wrapped with the start and end values
  * @version 1.0.0
  * @date June 30, 2010
- * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+ * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
 String.prototype.wrap = String.prototype.wrap || function(start,end){
 	// Wrap the string
@@ -330,7 +359,8 @@ String.prototype.wrap = String.prototype.wrap || function(start,end){
  * Return a new string of a selection of the old string wrapped with the start and end values
  * @version 1.0.0
  * @date June 30, 2010
- * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+ * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
 String.prototype.wrapSelection = String.prototype.wrapSelection || function(start,end,a,z){
 	// Wrap the selection
@@ -343,7 +373,8 @@ String.prototype.wrapSelection = String.prototype.wrapSelection || function(star
  * Return a new string of the slug of the old string
  * @version 1.0.0
  * @date June 30, 2010
- * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+ * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
 String.prototype.toSlug = String.prototype.toSlug || function(){
 	// Convert a string to a slug
@@ -355,7 +386,8 @@ String.prototype.toSlug = String.prototype.toSlug || function(){
  * Turning 'a=b&c.e=d' to {a:'b',c:{e:'d'}}
  * @version 1.0.0
  * @date June 30, 2010
- * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+ * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
 String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || function ( )
 {	// Turns a params string or url into an array of params
@@ -425,6 +457,8 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 };
 /**
  * @depends nothing
+ * @name core.date
+ * @package jquery-sparkle
  */
 
 /**
@@ -432,7 +466,8 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
  * Datetime string in the format of "year month day hour min sec". "hour min sec" all optional.
  * @version 1.0.0
  * @date June 30, 2010
- * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+ * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
 Date.prototype.setDatetimestr = Date.prototype.setDatetimestr || function(timestamp){
 	// Set the datetime from a string
@@ -455,7 +490,8 @@ Date.prototype.setDatetimestr = Date.prototype.setDatetimestr || function(timest
  * Date string in the format of "year month day". "year month day" all optional.
  * @version 1.0.0
  * @date June 30, 2010
- * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+ * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
 Date.prototype.setDatestr = Date.prototype.setDatestr || function(timestamp){
 	// Set the date from a string
@@ -472,7 +508,8 @@ Date.prototype.setDatestr = Date.prototype.setDatestr || function(timestamp){
  * Time string in the format of "hour min sec". "hour min sec" all optional.
  * @version 1.0.0
  * @date June 30, 2010
- * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+ * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
 Date.prototype.setTimestr = Date.prototype.setTimestr || function(timestamp){
 	// Set the time from a string
@@ -491,7 +528,8 @@ Date.prototype.setTimestr = Date.prototype.setTimestr || function(timestamp){
  * Datetime string in the format of "year-month-date hours:minutes:seconds".
  * @version 1.0.0
  * @date June 30, 2010
- * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+ * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
 Date.prototype.getDatetimestr = Date.prototype.getDatetimestr || function() {
 	// Get the datetime as a string
@@ -504,7 +542,8 @@ Date.prototype.getDatetimestr = Date.prototype.getDatetimestr || function() {
  * Datetime string in the format of "year-month-date".
  * @version 1.0.0
  * @date June 30, 2010
- * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+ * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
 Date.prototype.getDatestr = Date.prototype.getDatestr || function() {
 	// Get the date as a string
@@ -520,7 +559,8 @@ Date.prototype.getDatestr = Date.prototype.getDatestr || function() {
  * Datetime string in the format of "hours:minutes:seconds".
  * @version 1.0.0
  * @date June 30, 2010
- * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+ * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
 Date.prototype.getTimestr = Date.prototype.getTimestr || function(){
 	// Get the time as a string
@@ -535,7 +575,8 @@ Date.prototype.getTimestr = Date.prototype.getTimestr || function(){
  * Return the Date as a ISO 8601 date string
  * @version 1.0.0
  * @date June 30, 2010
- * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+ * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
 Date.prototype.getDatetime = String.prototype.getDatetime || function(){
 	// Get a ISO 8601 date
@@ -549,13 +590,16 @@ Date.prototype.getDatetime = String.prototype.getDatetime || function(){
 	return datetime;
 };/**
  * @depends nothing
+ * @name core.number
+ * @package jquery-sparkle
  */
 
 /**
  * Return a new string with zeroes added correctly to the front of the number, given the threshold
  * @version 1.0.0
  * @date June 30, 2010
- * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+ * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
 Number.prototype.zeroise = String.prototype.zeroise = String.prototype.zeroise ||function(threshold){
 	var number = this,
@@ -570,7 +614,8 @@ Number.prototype.zeroise = String.prototype.zeroise = String.prototype.zeroise |
  * Return a new string with the string/number padded left using [ch] of [num] length
  * @version 1.0.0
  * @date June 30, 2010
- * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+ * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
 Number.prototype.padLeft = String.prototype.padLeft = String.prototype.padLeft ||function(ch, num){
 	var val = String(this);
@@ -587,7 +632,8 @@ Number.prototype.padLeft = String.prototype.padLeft = String.prototype.padLeft |
  * Return a new string with the string/number padded right using [ch] of [num] length
  * @version 1.0.0
  * @date June 30, 2010
- * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+ * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
 Number.prototype.padRight = String.prototype.padRight = String.prototype.padRight ||function(ch, num){
 	var val = String(this);
@@ -604,7 +650,8 @@ Number.prototype.padRight = String.prototype.padRight = String.prototype.padRigh
  * Return a new number with the current number rounded to [to]
  * @version 1.0.0
  * @date June 30, 2010
- * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+ * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
 Number.prototype.roundTo = String.prototype.roundTo = String.prototype.roundTo || function(to){
 	var val = String(parseInt(this,10));
@@ -613,6 +660,8 @@ Number.prototype.roundTo = String.prototype.roundTo = String.prototype.roundTo |
 };
 /**
  * @depends jquery
+ * @name jquery.ajaxcalendar
+ * @package jquery-sparkle
  */
 
 /**
@@ -834,6 +883,8 @@ Number.prototype.roundTo = String.prototype.roundTo = String.prototype.roundTo |
 
 })(jQuery);/**
  * @depends jquery
+ * @name jquery.appendscriptstyle
+ * @package jquery-sparkle
  */
 
 /**
@@ -845,7 +896,8 @@ Number.prototype.roundTo = String.prototype.roundTo = String.prototype.roundTo |
 	 * Append a Stylesheet to the DOM
 	 * @version 1.0.0
 	 * @date June 30, 2010
-	 * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
 	 */
 	$.appendStylesheet = $.appendStylesheet || function(url, overwrite){
 		// Prepare
@@ -884,7 +936,8 @@ Number.prototype.roundTo = String.prototype.roundTo = String.prototype.roundTo |
 	 * Append a Script to the DOM
 	 * @version 1.0.0
 	 * @date June 30, 2010
-	 * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
 	 */
 	$.appendScript = $.appendScript || function(url, overwrite){
 		// Prepare
@@ -920,6 +973,8 @@ Number.prototype.roundTo = String.prototype.roundTo = String.prototype.roundTo |
 
 })(jQuery);/**
  * @depends jquery
+ * @name jquery.extra
+ * @package jquery-sparkle
  */
 
 /**
@@ -931,7 +986,8 @@ Number.prototype.roundTo = String.prototype.roundTo = String.prototype.roundTo |
 	 * Get all elements above ourself which match the selector, and include ourself in the search
 	 * @version 1.0.0
 	 * @date June 30, 2010
-	 * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
 	 */
 	$.fn.parentsAndSelf = $.fn.parentsAndSelf || function(selector){
 		var $this = $(this);
@@ -942,7 +998,8 @@ Number.prototype.roundTo = String.prototype.roundTo = String.prototype.roundTo |
 	 * Get all elements within ourself which match the selector, and include ourself in the search
 	 * @version 1.0.0
 	 * @date June 30, 2010
-	 * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
 	 */
 	$.fn.findAndSelf = $.fn.findAndSelf || function(selector){
 		var $this = $(this);
@@ -953,7 +1010,8 @@ Number.prototype.roundTo = String.prototype.roundTo = String.prototype.roundTo |
 	 * Find the first input, and include ourself in the search
 	 * @version 1.0.0
 	 * @date June 30, 2010
-	 * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
 	 */
 	$.fn.firstInput = $.fn.firstInput || function(){
 		var $this = $(this);
@@ -965,7 +1023,8 @@ Number.prototype.roundTo = String.prototype.roundTo = String.prototype.roundTo |
 	 * Rather than setting the actual value of a element which $el.val does.
 	 * @version 1.0.0
 	 * @date June 30, 2010
-	 * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
 	 */
 	$.fn.choose = $.fn.choose||function(value){
 		var $this = $(this);
@@ -998,7 +1057,8 @@ Number.prototype.roundTo = String.prototype.roundTo = String.prototype.roundTo |
 	 * Deselect a option within options, checkboxes, radios and selects.
 	 * @version 1.0.0
 	 * @date June 30, 2010
-	 * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
 	 */
 	$.fn.unchoose = $.fn.unchoose||function(){
 		var $this = $(this);
@@ -1025,7 +1085,8 @@ Number.prototype.roundTo = String.prototype.roundTo = String.prototype.roundTo |
 	 * Checks if the element would be passed with the form if the form was submitted.
 	 * @version 1.0.0
 	 * @date June 30, 2010
-	 * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
 	 */
 	$.fn.wouldSubmit = $.fn.wouldSubmit || function(){
 		var $input = $(this).findAndSelf(':input');
@@ -1040,7 +1101,8 @@ Number.prototype.roundTo = String.prototype.roundTo = String.prototype.roundTo |
 	 * Grab all the values of a form in JSON format if the form would be submitted.
 	 * @version 1.0.0
 	 * @date June 30, 2010
-	 * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
 	 */
 	$.fn.values = $.fn.values || function(){
 		var $inputs = $(this).findAndSelf(':input');
@@ -1072,7 +1134,8 @@ Number.prototype.roundTo = String.prototype.roundTo = String.prototype.roundTo |
 	 * Submit the form which the element is associated with.
 	 * @version 1.0.0
 	 * @date June 30, 2010
-	 * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
 	 */
 	$.fn.submitForm = $.fn.submitForm || function(){
 		// Submit the parent form or our form
@@ -1087,7 +1150,8 @@ Number.prototype.roundTo = String.prototype.roundTo = String.prototype.roundTo |
 	 * Checks if the element is attached within the DOM
 	 * @version 1.0.0
 	 * @date June 30, 2010
-	 * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
 	 */
 	$.fn.inDOM = function(){
 		var $ancestor = $(this).parent().parent();
@@ -1098,7 +1162,8 @@ Number.prototype.roundTo = String.prototype.roundTo = String.prototype.roundTo |
 	 * Wrap the element's value with the passed start and end text
 	 * @version 1.0.0
 	 * @date June 30, 2010
-	 * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
 	 */
 	$.fn.valWrap = function(start,end){
 		// Wrap a value
@@ -1110,7 +1175,8 @@ Number.prototype.roundTo = String.prototype.roundTo = String.prototype.roundTo |
 	 * Wrap a selection of the element's value with the passed start and end text
 	 * @version 1.0.0
 	 * @date June 30, 2010
-	 * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
 	 */
 	$.fn.valWrapSelection = function(start,end,a,z){
 		// Wrap the selected text
@@ -1145,7 +1211,8 @@ Number.prototype.roundTo = String.prototype.roundTo = String.prototype.roundTo |
 	 * Find (with regards to the element) the first visible input element, and give focus to it
 	 * @version 1.0.0
 	 * @date June 30, 2010
-	 * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
 	 */
 	$.fn.giveFocus = function(){
 		// Give focus to the current element
@@ -1159,7 +1226,8 @@ Number.prototype.roundTo = String.prototype.roundTo = String.prototype.roundTo |
 	 * Perform the highlight effect
 	 * @version 1.0.0
 	 * @date June 30, 2010
-	 * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
 	 */
 	$.fn.highlight = function(duration){
 		// Perform the Highlight Effect
@@ -1169,6 +1237,8 @@ Number.prototype.roundTo = String.prototype.roundTo = String.prototype.roundTo |
 
 })(jQuery);/**
  * @depends jquery
+ * @name jquery.events
+ * @package jquery-sparkle
  */
 
 /**
@@ -1181,7 +1251,8 @@ Number.prototype.roundTo = String.prototype.roundTo = String.prototype.roundTo |
 	 * Benefit over $.bind, is that $.binder(event, callback, false|{}|''|false) works.
 	 * @version 1.0.0
 	 * @date June 30, 2010
-	 * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
 	 */
 	$.fn.binder = $.fn.binder || function(event, data, callback){
 		// Help us bind events properly
@@ -1201,7 +1272,8 @@ Number.prototype.roundTo = String.prototype.roundTo = String.prototype.roundTo |
 	 * Bind a event only once
 	 * @version 1.0.0
 	 * @date June 30, 2010
-	 * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
 	 */
 	$.fn.once = $.fn.once || function(event, data, callback){
 		// Only apply a event handler once
@@ -1223,7 +1295,8 @@ Number.prototype.roundTo = String.prototype.roundTo = String.prototype.roundTo |
 	 * Event for pressing the enter key
 	 * @version 1.0.0
 	 * @date June 30, 2010
-	 * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
 	 */
 	$.fn.enter = $.fn.enter || function(data,callback){
 		return $(this).binder('enter',data,callback);
@@ -1253,7 +1326,8 @@ Number.prototype.roundTo = String.prototype.roundTo = String.prototype.roundTo |
 	 * Event for pressing the escape key
 	 * @version 1.0.0
 	 * @date June 30, 2010
-	 * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
 	 */
 	$.fn.cancel = $.fn.cancel || function(data,callback){
 		return $(this).binder('cancel',data,callback);
@@ -1283,7 +1357,8 @@ Number.prototype.roundTo = String.prototype.roundTo = String.prototype.roundTo |
 	 * Event for performing a singleclick
 	 * @version 1.0.0
 	 * @date June 30, 2010
-	 * @copyright Benjamin "balupton" Lupton (MIT Licenced)
+	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
 	 */
 	$.fn.singleclick = $.fn.singleclick || function(data,callback){
 		return $(this).binder('singleclick',data,callback);
@@ -1318,6 +1393,8 @@ Number.prototype.roundTo = String.prototype.roundTo = String.prototype.roundTo |
 
 })(jQuery);/**
  * @depends jquery
+ * @name jquery.passwordstrength
+ * @package jquery-sparkle
  */
 
 /**
@@ -1486,6 +1563,8 @@ Number.prototype.roundTo = String.prototype.roundTo = String.prototype.roundTo |
 
 })(jQuery);/**
  * @depends jquery
+ * @name jquery.balclass
+ * @package jquery-sparkle
  */
 
 /**
@@ -1583,7 +1662,9 @@ Number.prototype.roundTo = String.prototype.roundTo = String.prototype.roundTo |
 
 
 })(jQuery);/**
- * @depends jquery, balclass.js
+ * @depends jquery, jquery.balclass
+ * @name jquery.balclass.datetimepicker
+ * @package jquery-sparkle
  */
 
 /**
@@ -1678,7 +1759,9 @@ Number.prototype.roundTo = String.prototype.roundTo = String.prototype.roundTo |
 
 	
 })(jQuery);/**
- * @depends jquery, console, balclass
+ * @depends jquery, core.console, jquery.balclass
+ * @name jquery.balclass.bespin.sparkle
+ * @package jquery-sparkle
  */
 
 /**
@@ -2142,7 +2225,9 @@ Number.prototype.roundTo = String.prototype.roundTo = String.prototype.roundTo |
 	}
 
 })(jQuery);/**
- * @depends jquery, balclass.js
+ * @depends jquery, jquery.balclass
+ * @name jquery.balclass.bespin
+ * @package jquery-sparkle
  */
 
 /**
@@ -2319,7 +2404,9 @@ Number.prototype.roundTo = String.prototype.roundTo = String.prototype.roundTo |
 
 
 })(jQuery);/**
- * @depends jquery, balclass
+ * @depends jquery, jquery.balclass
+ * @name jquery.balclass.timepicker
+ * @package jquery-sparkle
  */
 
 /**
@@ -2425,7 +2512,9 @@ Number.prototype.roundTo = String.prototype.roundTo = String.prototype.roundTo |
 
 	
 })(jQuery);/**
- * @depends jquery, balclass
+ * @depends jquery, jquery.balclass
+ * @name jquery.balclass.tinymce
+ * @package jquery-sparkle
  */
 
 /**
@@ -2492,7 +2581,9 @@ Number.prototype.roundTo = String.prototype.roundTo = String.prototype.roundTo |
 	}
 
 })(jQuery);/**
- * @depends jquery, balclass.js
+ * @depends jquery, jquery.balclass
+ * @name jquery.balclass.help
+ * @package jquery-sparkle
  */
 
 /**

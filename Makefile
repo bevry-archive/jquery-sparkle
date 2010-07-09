@@ -16,32 +16,39 @@ YUIFILE = $(YUIDIR)/yuicompressor-2.4.2/build/yuicompressor-2.4.2.jar
 all:
 	$(MAKE) pack;
 	$(MAKE) compress;
-	
+	$(MAKE) add;
+
+add:
+	git add Makefile README.txt CHECKLIST.txt ./scripts ./styles;
+
+edithooks:
+	mate .git/hooks/pre-commit
+
 pack:
 	cat \
-		./scripts/core.array.js \
-		./scripts/core.string.js \
-		./scripts/core.date.js \
-		./scripts/core.number.js \
-		./scripts/jquery.ajaxcalendar.js \
-		./scripts/jquery.appendscriptstyle.js \
-		./scripts/jquery.extra.js \
-		./scripts/jquery.events.js \
-		./scripts/jquery.passwordstrength.js \
-		./scripts/jquery.balclass.js \
-		./scripts/jquery.balclass.datetimepicker.js \
-		./scripts/jquery.balclass.sparkle.js \
-		./scripts/jquery.balclass.bespin.js \
-		./scripts/jquery.balclass.timepicker.js \
-		./scripts/jquery.balclass.tinymce.js \
-		./scripts/jquery.balclass.help.js \
-		> ./scripts/compiled/all.js;
+		./scripts/resources/core.array.js \
+		./scripts/resources/core.string.js \
+		./scripts/resources/core.date.js \
+		./scripts/resources/core.number.js \
+		./scripts/resources/jquery.ajaxcalendar.js \
+		./scripts/resources/jquery.appendscriptstyle.js \
+		./scripts/resources/jquery.extra.js \
+		./scripts/resources/jquery.events.js \
+		./scripts/resources/jquery.passwordstrength.js \
+		./scripts/resources/jquery.balclass.js \
+		./scripts/resources/jquery.balclass.datetimepicker.js \
+		./scripts/resources/jquery.balclass.sparkle.js \
+		./scripts/resources/jquery.balclass.bespin.js \
+		./scripts/resources/jquery.balclass.timepicker.js \
+		./scripts/resources/jquery.balclass.tinymce.js \
+		./scripts/resources/jquery.balclass.help.js \
+		> ./scripts/jquery.sparkle.js;
 		
 compress:
 	$(MAKE) build;
 	
-	java -jar $(CLOSUREFILE) --js_output_file=./scripts/compiled/all.min.js --js=./scripts/compiled/all.js;
-	java -jar $(YUIFILE) ./styles/all.css -o ./styles/compiled/all.min.css;
+	java -jar $(CLOSUREFILE) --js_output_file=./scripts/jquery.sparkle.min.js --js=./scripts/jquery.sparkle.js;
+	java -jar $(YUIFILE) ./styles/jquery.sparkle.css -o ./styles/jquery.sparkle.min.css
 	
 	$(MAKE) clean;
 

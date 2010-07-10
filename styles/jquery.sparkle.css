@@ -30,6 +30,31 @@
 	}
 
 
+/* Demo */
+
+	.sparkle-demo-section {
+		border-top:1px solid #CCC;
+		margin:1em 0;
+		padding:0 0 0.5em;
+		font-size:14px;
+	}
+	.sparkle-demo-section h3 {
+		font-size:22px;
+		font-weight:bold;
+		margin:1em 0;
+		background: #EEE;
+	}
+	.sparkle-demo-section h4 {
+		font-size:16px;
+		font-weight:bold;
+		margin:1em 0;
+	}
+	.sparkle-demo-section .spakle-demo-result,
+	.sparkle-demo-section .sparkle-demo-code,
+	.sparkle-demo-section .sparkle-demo-text {
+		margin:1em 0;
+	}
+
 /* Help */
 
 	.sparkle-help {

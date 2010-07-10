@@ -19,18 +19,33 @@ Array.prototype.remove = function(from, to) {
 /**
  * Get a element from an array at [index]
  * if [current] is set, then set this index as the current index (we don't care if it doesn't exist)
- * @version 1.0.0
- * @date June 30, 2010
+ * @version 1.0.1
+ * @date July 09, 2010
+ * @since 1.0.0 June 30, 2010
  * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
  * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
 Array.prototype.get = function(index, current) {
-	if ( index === 'first' ) index = 0;
-	else if ( index === 'last' ) index = this.length-1;
-	else if ( !index && index !== 0 ) index = this.index;
-	var result = this[index] || undefined;
-	if ( current !== false ) this.setIndex(index);
-	return result;
+	// Determine
+	if ( index === 'first' ) {
+		index = 0;
+	} else if ( index === 'last' ) {
+		index = this.length-1;
+	} else if ( index === 'prev' ) {
+		index = this.index-1;
+	} else if ( index === 'next' ) {
+		index = this.index+1;
+	} else if ( !index && index !== 0 ) {
+		index = this.index;
+	}
+	
+	// Set current?
+	if ( current||false !== false ) {
+		this.setIndex(index);
+	}
+	
+	// Return
+	return this.exists(index) ? this[index] : undefined;
 };
 
 /**
@@ -49,6 +64,17 @@ Array.prototype.each = function(fn){
 }
 
 /**
+ * Checks whether the index is a valid index
+ * @version 1.0.0
+ * @date July 09, 2010
+ * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+ */
+Array.prototype.validIndex = function(index){
+	return index >= 0 && index < this.length;
+};
+
+/**
  * Set the current index of the array
  * @version 1.0.0
  * @date June 30, 2010
@@ -56,7 +82,7 @@ Array.prototype.each = function(fn){
  * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
 Array.prototype.setIndex = function(index){
-	if ( index < this.length && index >= 0 ) {
+	if ( this.validIndex(index) ) {
 		this.index = index;
 	} else {
 		this.index = null;
@@ -255,14 +281,24 @@ Array.prototype.insert = function(index, item){
 };
 
 /**
- * Get whether or not hte value exists in the array
+ * Get whether or not the index exists in the array
+ * @version 1.0.0
+ * @date July 09, 2010
+ * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+ */
+Array.prototype.exists = Array.prototype.exists || function(index){
+	return typeof this[index] !== 'undefined';
+};
+
+/**
+ * Get whether or not the value exists in the array
  * @version 1.0.0
  * @date June 30, 2010
  * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
  * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
 Array.prototype.has = Array.prototype.has || function(value){
-	// Is the value in the array?
 	var has = false;
 	for ( var i=0, n=this.length; i<n; ++i ) {
 		if ( value == this[i] ) {
@@ -271,7 +307,8 @@ Array.prototype.has = Array.prototype.has || function(value){
 		}
 	}
 	return has;
-};/**
+};
+/**
  * @depends nothing
  * @name core.string
  * @package jquery-sparkle
@@ -1574,21 +1611,28 @@ Number.prototype.roundTo = String.prototype.roundTo = String.prototype.roundTo |
 	
 	/**
 	 * BalClass
-	 * @version 1.0.0
-	 * @date June 30, 2010
+	 * @version 1.2.0
+	 * @date July 11, 2010
+	 * @since 1.0.0, June 30, 2010
  	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  	 * @license GNU Affero General Public License - {@link http://www.gnu.org/licenses/agpl.html}
 	 */
 	if ( !($.BalClass||false) ) {
-		$.BalClass = function(config){
-			this.construct(config);
+		// Constructor
+		$.BalClass = function(config,extend){
+			this.construct(config,extend);
 		};
+		// Prototype
 		$.extend($.BalClass.prototype, {
 			config: {
-				'default': {}
 			},
-			construct: function(config){
-				this.configure(config);
+			construct: function(config,extend){
+				var Me = this;
+				Me.configure(config);
+				$.extend(Me,extend||{});
+				if ( typeof Me.built === 'function' ) {
+					return Me.built();
+				}
 				return true;
 			},
 			configure: function(config){
@@ -1596,6 +1640,23 @@ Number.prototype.roundTo = String.prototype.roundTo = String.prototype.roundTo |
 				Me.config = Me.config||{};
 				Me.config = $.extend({},Me.config,config||{}); // we want to clone
 				return Me;
+			},
+			clone: function(extend){
+				// Clone a BalClass (Creates a new BalClass type)
+				var Me = this;
+				var clone = function(config){
+					this.construct(config);
+				};
+				$.extend(true, clone.prototype, Me.prototype, extend||{});
+				clone.clone = Me.prototype.clone;
+				clone.create = Me.prototype.create;
+				return clone;
+			},
+			create: function(config,extend){
+				// Create a BalClass (Creates a new instance of a BalClass)
+				var Me = this;
+				var Obj = new Me(config,extend);
+				return Obj;
 			},
 			addConfig: function(name, config){
 				var Me = this;
@@ -1655,6 +1716,11 @@ Number.prototype.roundTo = String.prototype.roundTo = String.prototype.roundTo |
 				return Me.applyConfig('default',config);
 			}
 		});
+		// Instance
+		$.BalClass.clone = $.BalClass.prototype.clone;
+		$.BalClass.create = $.BalClass.prototype.create;
+		// ^ we alias these as they should be both in prototype and instance
+		//   however we do not want to create a full instance yet...
 	}
 	else {
 		console.warn("$.BalClass has already been defined...");
@@ -1674,84 +1740,102 @@ Number.prototype.roundTo = String.prototype.roundTo = String.prototype.roundTo |
 	
 	/**
 	 * jQuery Time Picker
-	 * @version 1.0.0
-	 * @date June 30, 2010
+	 * @version 1.2.0
+	 * @date July 11, 2010
+	 * @since 1.0.0, June 30, 2010
  	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  	 * @license GNU Affero General Public License - {@link http://www.gnu.org/licenses/agpl.html}
 	 */
 	if ( !($.Help||false) ) {
-		$.datetimepicker = new $.BalClass({
-			'default': {
-				datepickerOptions: {
+		$.datetimepicker = $.BalClass.create(
+			// Configuration
+			{
+				'default': {
+					datepickerOptions: {
+					},
+					timepickerOptions: {
+					}
 				},
-				timepickerOptions: {
+				'12hr': {
+					timepickerOptions: {
+						timeConvention: 12
+					}
+				},
+				'24hr': {
+					timepickerOptions: {
+						timeConvention: 24
+					}
 				}
 			},
-			'12hr': {
-				timepickerOptions: {
-					timeConvention: 12
-				}
-			},
-			'24hr': {
-				timepickerOptions: {
-					timeConvention: 24
+			// Extensions
+			{
+				fn: function(mode,options){
+					// Prepare
+					var Me = $.datetimepicker;
+					var config = Me.getConfigWithDefault(mode,options);
+					// Handle
+					return $(this).each(function(){
+						var $input = $(this);
+						$input.hide();
+		
+						// Prepare
+						if ( $input.hasClass('sparkle-datetime-has') ) return $input; // already done
+						$input.addClass('sparkle-datetime').addClass('sparkle-datetime-has');
+	
+						// Create date part
+						var $date = $('<input type="text" class="sparkle-date"/>');
+						var $sep = $('<span class="sparkle-datetime-sep"> @ </span>');
+						var $time = $('<input type="text" class="sparkle-time"/>');
+						//var $empty = $('<label class="form-empty">or <input type="checkbox" value="true"/> empty</label>');
+	
+						// Defaults
+						var value = $input.val();
+						var date = new Date();
+						var datestr = '', timestr = '';
+						if ( value ) {
+							date.setDatetimestr(value);
+							datestr = date.getDatestr();
+							timestr = date.getTimestr();
+						}
+		
+						// Append
+						//$empty.insertAfter($input);
+						$time.insertAfter($input);
+						$sep.insertAfter($input);
+						$date.insertAfter($input);
+		
+						// Apply
+						$date.val(datestr);
+						$time.val(timestr);
+		
+						// Bind
+						var updateFunction = function(){
+							var value = $date.val()+' '+$time.val();
+							$input.val(value).trigger('change');
+						};
+						$date.add($time).change(updateFunction);
+		
+						// Instantiate
+						$date.datepicker(config.datepickerOptions);
+						$time.timepicker(config.timepickerOptions);
+		
+						// Chain
+						return $input;
+					});
+				},
+				built: function(){
+					// Prepare
+					var Me = this;
+					// Attach
+					$.fn.datetimepicker = function(mode,options) {
+						// Alias
+						return Me.fn.apply(this,[mode,options]);
+					};
+					// Return true
+					return true;
 				}
 			}
-		});
-		$.fn.datetimepicker = function(mode,options){
-			// Prepare
-			var Me = $.timepicker;
-			var config = Me.getConfigWithDefault(mode,options);
-			// Handle
-			return $(this).each(function(){
-				var $input = $(this);
-				$input.hide();
-		
-				// Prepare
-				if ( $input.hasClass('sparkle-datetime-has') ) return $input; // already done
-				$input.addClass('sparkle-datetime').addClass('sparkle-datetime-has');
-	
-				// Create date part
-				var $date = $('<input type="text" class="sparkle-date"/>');
-				var $sep = $('<span class="sparkle-datetime-sep"> @ </span>');
-				var $time = $('<input type="text" class="sparkle-time"/>');
-				//var $empty = $('<label class="form-empty">or <input type="checkbox" value="true"/> empty</label>');
-	
-				// Defaults
-				var value = $input.val();
-				var date = new Date();
-				var datestr = '', timestr = '';
-				if ( value ) {
-					date.setDatetimestr(value);
-					datestr = date.getDatestr();
-					timestr = date.getTimestr();
-				}
-		
-				// Append
-				//$empty.insertAfter($input);
-				$time.insertAfter($input);
-				$sep.insertAfter($input);
-				$date.insertAfter($input);
-		
-				// Apply
-				$date.val(datestr);
-				$time.val(timestr);
-		
-				// Bind
-				var updateFunction = function(){
-					var value = $date.val()+' '+$time.val();
-					$input.val(value).trigger('change');
-				};
-				$date.add($time).change(updateFunction);
-		
-				// Instantiate
-				$date.datepicker(config.datepickerOptions);
-				$time.timepicker(config.timepickerOptions);
-		
-				// Chain
-				return $input;
-			});
-		};
+		);
 	}
 	else {
 		console.warn("$.datetimepicker has already been defined...");
@@ -1775,457 +1859,549 @@ Number.prototype.roundTo = String.prototype.roundTo = String.prototype.roundTo |
 	$(document.body).addClass('js');
 
 	/**
-	 * jQuery Sparkle
-	 * @version 1.0.0
-	 * @date June 30, 2010
+	 * jQuery Sparkle - jQuery's DRY Effect Library
+	 * @version 1.2.0
+	 * @date July 11, 2010
+	 * @since 1.0.0, June 30, 2010
  	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  	 * @license GNU Affero General Public License - {@link http://www.gnu.org/licenses/agpl.html}
 	 */
-	if ( !($.SparkleClass||false) ) {
+	if ( !($.Sparkle||false) ) {
 		/**
 		 * $.SparkleClass
 		 */
-		$.SparkleClass = function(config){
-			this.construct(config);
-		};
-		$.extend($.SparkleClass.prototype, $.BalClass.prototype, {
-			addExtension: function(name, func, config) {
-				var Sparkle = $.Sparkle;
-				if ( name === 'object' ) {
-					// Series
-					for ( var i in name ) {
-						Sparkle.addExtension(i, name[i]);
-					}
-				} else {
-					// Individual
-					var Extension = {
-						config: {},
-						extension: false
-					};
-					// Discover
-					if ( typeof func === 'object' && typeof func.config !== 'undefined' ) {
-						Extension.config = func.config;
-						Extension.extension = func.extension;
+		$.SparkleClass = $.BalClass.clone(
+			// Class Extensions
+			{
+				addExtension: function(name, func, config) {
+					var Sparkle = $.Sparkle;
+					if ( name === 'object' ) {
+						// Series
+						for ( var i in name ) {
+							Sparkle.addExtension(i, name[i]);
+						}
 					} else {
-						Extension.extension = func;
+						// Individual
+						var Extension = {
+							config: {},
+							extension: false
+						};
+						// Discover
+						if ( typeof func === 'object' && typeof func.config !== 'undefined' ) {
+							Extension.config = func.config;
+							Extension.extension = func.extension;
+						} else {
+							Extension.extension = func;
+						}
+						// Apply
+						Sparkle.addConfig(name, Extension);
 					}
-					// Apply
-					Sparkle.addConfig(name, Extension);
-				}
-				return true;
-			},
-			cycleExtensions: function(){
-				var $this = $(this); var Sparkle = $.Sparkle;
-				var Extensions = Sparkle.getExtensions();
-				for ( var extension in Extensions ) {
-					Sparkle.triggerExtension.apply($this, [extension]);
-				}
-				return $this;
-			},
+					return true;
+				},
+				cycleExtensions: function(){
+					var $this = $(this); var Sparkle = $.Sparkle;
+					var Extensions = Sparkle.getExtensions();
+					for ( var extension in Extensions ) {
+						Sparkle.triggerExtension.apply($this, [extension]);
+					}
+					return $this;
+				},
 	
-			getExtensions: function ( ) {
-				var $this = $(this); var Sparkle = $.Sparkle;
-				var Extensions = Sparkle.getConfig();
-				return Extensions;
-			},
-			getExtension: function(extension) {
-				var $this = $(this); var Sparkle = $.Sparkle;
-				var Extension = Sparkle.getConfigWithDefault(extension);
-				return Extension;
-			},
-			getExtensionConfig: function(extension) {
-				var $this = $(this); var Sparkle = $.Sparkle;
-				var Extension = Sparkle.getExtension(extension);
-				return Extension.config||{};
-			},
-			configureExtension: function(extension, config) {
-				var $this = $(this); var Sparkle = $.Sparkle;
-				Sparkle.applyConfig(extension, {'config':config});
-				return this; // chain
-			},
-	
-			triggerExtension: function(extension){
-				var $this = $(this); var Sparkle = $.Sparkle;
-				var Extension = Sparkle.getExtension(extension);
-				if ( typeof Extension.extension !== 'undefined' ) {
-					// We are not just a config object but an actual extension
-					return Extension.extension.apply($this, [Sparkle, Extension.config, Extension]);
+				getExtensions: function ( ) {
+					var $this = $(this); var Sparkle = $.Sparkle;
+					var Extensions = Sparkle.getConfig();
+					return Extensions;
+				},
+				getExtension: function(extension) {
+					var $this = $(this); var Sparkle = $.Sparkle;
+					var Extension = Sparkle.getConfigWithDefault(extension);
+					return Extension;
+				},
+				getExtensionConfig: function(extension) {
+					var $this = $(this); var Sparkle = $.Sparkle;
+					var Extension = Sparkle.getExtension(extension);
+					return Extension.config||{};
+				},
+				applyExtensionConfig: function(extension, config) {
+					var $this = $(this); var Sparkle = $.Sparkle;
+					Sparkle.applyConfig(extension, {'config':config});
+					return this; // chain
+				},
+				
+				triggerExtension: function(extension){
+					var $this = $(this); var Sparkle = $.Sparkle;
+					var Extension = Sparkle.getExtension(extension);
+					if ( typeof Extension.extension !== 'undefined' ) {
+						// We are not just a config object but an actual extension
+						return Extension.extension.apply($this, [Sparkle, Extension.config, Extension]);
+					}
+					return false;
+				},
+				fn: function(extension){
+					var $this = $(this); var Sparkle = $.Sparkle;
+					if ( extension ) {
+						// Individual
+						Sparkle.triggerExtension.apply($this, [extension]);
+					} else {
+						// Series
+						Sparkle.cycleExtensions.apply($this, []);
+					}
+					return $this;
+				},
+				built: function(){
+					// Prepare
+					var Sparkle = this;
+					// Attach
+					$.fn.sparkle = function(extension) {
+						// Alias
+						return Sparkle.fn.apply(this,[extension]);
+					};
+					// onDomReady
+					$(function(){
+						// Sparkle
+						$(document.body).sparkle();
+					});
+					// Return true
+					return true;
 				}
-				return false;
-			},
-			fn: function(extension){
-				var $this = $(this); var Sparkle = $.Sparkle;
-				if ( extension ) {
-					// Individual
-					Sparkle.triggerExtension.apply($this, [extension]);
-				} else {
-					// Series
-					Sparkle.cycleExtensions.apply($this, []);
-				}
-				return $this;
-			},
-			construct: function(config){
-				var Sparkle = this;
-				Sparkle.configure(config);
-				$(function(){
-					$.fn.sparkle = Sparkle.fn;
-					$(document.body).sparkle();
-				});
-				return true;
 			}
-		});
+		);
 		/**
 		 * $.Sparkle
 		 */
-		$.Sparkle = new $.SparkleClass({
-			'date': {
-				config: {
-					selector: '.sparkle-date',
-					datepickerOptions: {
-					}
-				},
-				extension: function(Sparkle, config){
-					var $this = $(this);
-					var $item = $this.findAndSelf(config.selector);
-					return typeof $item.datepicker === 'undefined' ? $item : $item.datepicker(config.datepickerOptions);
-				}
-			},
-			'time': {
-				config: {
-					selector: '.sparkle-time',
-					timepickerOptions: {
-					}
-				},
-				extension: function(Sparkle, config){
-					var $this = $(this);
-					var $item = $this.findAndSelf(config.selector);
-					return typeof $item.timepicker === 'undefined' ? $item : $item.timepicker(config.timepickerOptions);
-				}
-			},
-			'datetime': {
-				config: {
-					selector: '.sparkle-datetime',
-					datepickerOptions: {
+		$.Sparkle = $.SparkleClass.create(
+			// Instance Configuration
+			{
+				'date': {
+					config: {
+						selector: '.sparkle-date',
+						datepickerOptions: {
+						},
+						demo: '<input type="text" class="sparkle-date" />'
 					},
-					timepickerOptions: {
+					extension: function(Sparkle, config){
+						var $this = $(this);
+						var $item = $this.findAndSelf(config.selector);
+						return typeof $item.datepicker === 'undefined' ? $item : $item.datepicker(config.datepickerOptions);
 					}
 				},
-				extension: function(Sparkle, config){
-					var $this = $(this);
-					var $item = $this.findAndSelf(config.selector);
-					return typeof $item.datetimepicker === 'undefined' ? $item : $item.datetimepicker({
-						datepickerOptions: Sparkle.getExtensionConfig('date').datepickerOptions,
-						timepickerOptions: Sparkle.getExtensionConfig('time').timepickerOptions
-					});
-				}
-			},
-			'hide-if-empty': {
-				config: {
-					selector: '.sparkle-hide-if-empty:empty'
-				},
-				extension: function(Sparkle, config) {
-					var $this = $(this);
-					return $this.findAndSelf(config.selector).hide();
-				}
-			},
-			'hide': {
-				config: {
-					selector: '.sparkle-hide'
-				},
-				extension: function(Sparkle, config) {
-					var $this = $(this);
-					return $this.findAndSelf(config.selector).removeClass(config.selector.replace('.','')).hide();
-				}
-			},
-			'show': {
-				config: {
-					selector: '.sparkle-show'
-				},
-				extension: function(Sparkle, config) {
-					var $this = $(this);
-					return $this.findAndSelf(config.selector).removeClass(config.selector.replace('.','')).show();
-				}
-			},
-			'subtle': {
-				config: {
-					selector: '.sparkle-subtle',
-					css: {
-						'font-size': '80%'
+				'time': {
+					config: {
+						selector: '.sparkle-time',
+						timepickerOptions: {
+						},
+						demo: '<input type="text" class="sparkle-time" />'
 					},
-					inSpeed: 200,
-					inCss: {
-						'opacity': 1
-					},
-					outSpeed: 400,
-					outCss: {
-						'opacity': 0.5
+					extension: function(Sparkle, config){
+						var $this = $(this);
+						var $item = $this.findAndSelf(config.selector);
+						return typeof $item.timepicker === 'undefined' ? $item : $item.timepicker(config.timepickerOptions);
 					}
 				},
-				extension: function(Sparkle, config) {
-					var $this = $(this);
-					var $subtle = $this.findAndSelf(config.selector);
-					return $subtle.css(config.css).hover(function() {
-						// Over
-						$(this).stop(true, false).animate(config.inCss, config.inSpeed);
-					}, function() {
-						// Out
-						$(this).stop(true, false).animate(config.outCss, config.outSpeed);
-					});
-				}
-			},
-			'panelshower': {
-				config: {
-					selectorSwitch: '.sparkle-panelshower-switch',
-					selectorPanel: '.sparkle-panelshower-panel',
-					inSpeed: 200,
-					outSpeed: 200
+				'datetime': {
+					config: {
+						selector: '.sparkle-datetime',
+						datepickerOptions: {
+						},
+						timepickerOptions: {
+						},
+						demo: '<input type="text" class="sparkle-datetime" />'
+					},
+					extension: function(Sparkle, config){
+						var $this = $(this);
+						var $item = $this.findAndSelf(config.selector);
+						return typeof $item.datetimepicker === 'undefined' ? $item : $item.datetimepicker({
+							datepickerOptions: Sparkle.getExtensionConfig('date').datepickerOptions,
+							timepickerOptions: Sparkle.getExtensionConfig('time').timepickerOptions
+						});
+					}
 				},
-				extension: function(Sparkle, config) {
-					var $this = $(this);
-					// Fetch
-					var $switches = $this.findAndSelf(config.selectorSwitch);
-					var $panels = $this.findAndSelf(config.selectorPanel);
-					// Events
-					var events = {
-						clickEvent: function(event) {
-							var $switch = $(this);
-							var $panel = $switch.siblings(config.selectorPanel).filter(':first');
-							var value = $switch.val();
-							var show = $switch.is(':checked,:selected') && !(!value || value === 0 || value === '0' || value === 'false' || value === false || value === 'no' || value === 'off');
-							if (show) {
-								$panel.fadeIn(config.inSpeed);
+				'hide-if-empty': {
+					config: {
+						selector: '.sparkle-hide-if-empty:empty',
+						demo: '<div class="sparkle-hide-if-empty" style="border:1px solid black"></div>'+
+							  '<div class="sparkle-hide-if-empty" style="border:1px solid black">Hello World</div>'
+					},
+					extension: function(Sparkle, config) {
+						var $this = $(this);
+						return $this.findAndSelf(config.selector).hide();
+					}
+				},
+				'hide': {
+					config: {
+						selector: '.sparkle-hide',
+						demo: '<div class="sparkle-hide">Something to Hide when Sparkle has Loaded</div>'
+					},
+					extension: function(Sparkle, config) {
+						var $this = $(this);
+						return $this.findAndSelf(config.selector).removeClass(config.selector.replace('.','')).hide();
+					}
+				},
+				'show': {
+					config: {
+						selector: '.sparkle-show',
+						demo: '<div class="sparkle-show" style="display:none;">Something to Show when Sparkle has Loaded</div>'
+					},
+					extension: function(Sparkle, config) {
+						var $this = $(this);
+						return $this.findAndSelf(config.selector).removeClass(config.selector.replace('.','')).show();
+					}
+				},
+				'subtle': {
+					config: {
+						selector: '.sparkle-subtle',
+						css: {
+						},
+						inSpeed: 200,
+						inCss: {
+							'opacity': 1
+						},
+						outSpeed: 400,
+						outCss: {
+							'opacity': 0.5
+						},
+						demo: '<div class="sparkle-subtle">This is some subtle text. (mouseover)</div>'
+					},
+					extension: function(Sparkle, config) {
+						var $this = $(this);
+						var $subtle = $this.findAndSelf(config.selector);
+						return $subtle.css(config.css).hover(function() {
+							// Over
+							$(this).stop(true, false).animate(config.inCss, config.inSpeed);
+						}, function() {
+							// Out
+							$(this).stop(true, false).animate(config.outCss, config.outSpeed);
+						});
+					}
+				},
+				'panelshower': {
+					config: {
+						selectorSwitch: '.sparkle-panelshower-switch',
+						selectorPanel: '.sparkle-panelshower-panel',
+						inSpeed: 200,
+						outSpeed: 200,
+						demo: ''
+					},
+					extension: function(Sparkle, config) {
+						var $this = $(this);
+						// Fetch
+						var $switches = $this.findAndSelf(config.selectorSwitch);
+						var $panels = $this.findAndSelf(config.selectorPanel);
+						// Events
+						var events = {
+							clickEvent: function(event) {
+								var $switch = $(this);
+								var $panel = $switch.siblings(config.selectorPanel).filter(':first');
+								var value = $switch.val();
+								var show = $switch.is(':checked,:selected') && !(!value || value === 0 || value === '0' || value === 'false' || value === false || value === 'no' || value === 'off');
+								if (show) {
+									$panel.fadeIn(config.inSpeed);
+								}
+								else {
+									$panel.fadeOut(config.outSpeed);
+								}
 							}
-							else {
-								$panel.fadeOut(config.outSpeed);
-							}
-						}
-					};
-					// Apply
-					$switches.once('click',events.clickEvent);
-					$panels.hide();
-					// Done
-					return true;
-				}
-			},
-			'autogrow': {
-				config: {
-					selector: 'textarea.autogrow,textarea.autosize'
-				},
-				extension: function(Sparkle, config){
-					var $this = $(this);
-					// Fetch
-					var $els = $this.findAndSelf(config.selector);
-					// Apply
-					if ( $els.length ) {
-						if (typeof $.fn.autogrow === 'undefined') {
-							console.warn('Autogrow has failed to load.');
-							return false;
-						}
-						$els.autogrow();
+						};
+						// Apply
+						$switches.once('click',events.clickEvent);
+						$panels.hide();
+						// Done
+						return true;
 					}
-					// Done
-					return true;
-				}
-			},
-			'gsfnwidget': {
-				config: {
-					selector: '.gsfnwidget'
 				},
-				extension: function(Sparkle, config) {
-					var $this = $(this);
-					// Events
-					var events = {
-						clickEvent: function(event) {
-							if ( typeof GSFN_feedback_widget === 'undefined' ) {
-								console.warn('GSFN has failed to load.');
+				'autogrow': {
+					config: {
+						selector: 'textarea.autogrow,textarea.autosize',
+						demo: '<textarea class="autogrow">This textarea will autogrow with your input. - Only if jQuery Autogrow has been loaded.</textarea>'
+					},
+					extension: function(Sparkle, config){
+						var $this = $(this);
+						// Fetch
+						var $els = $this.findAndSelf(config.selector);
+						// Apply
+						if ( $els.length ) {
+							if (typeof $.fn.autogrow === 'undefined') {
+								console.warn('Autogrow has failed to load.');
+								return false;
+							}
+							$els.autogrow();
+						}
+						// Done
+						return true;
+					}
+				},
+				'gsfnwidget': {
+					config: {
+						selector: '.gsfnwidget',
+						demo: '<a class="gsfnwidget" href="#">This link will show a GetSatisfaction Widget onclick. - Only if GetSatisfaction has been loaded.</a>'
+					},
+					extension: function(Sparkle, config) {
+						var $this = $(this);
+						// Events
+						var events = {
+							clickEvent: function(event) {
+								if ( typeof GSFN_feedback_widget === 'undefined' ) {
+									console.warn('GSFN has failed to load.');
+									return true;
+								}
+								GSFN_feedback_widget.show();
+								//event.stopPropagation();
+								event.preventDefault();
+								return false;
+							}
+						};
+						// Apply
+						$(function() {
+							$this.findAndSelf(config.selector).once('click',events.clickEvent);
+						});
+						// Done
+						return true;
+					}
+				},
+				'hint': {
+					config: {
+						selector: '.form-input-tip,.sparkle-hint,.sparkle-hint-has,:text[placeholder]',
+						hasClass: 'sparkle-hint-has',
+						hintedClass: 'sparkle-hint-hinted',
+						demoText: 'Simulates HTML5\'s <code>placeholder</code> attribute for non HTML5 browsers. Placeholder can be the <code>title</code> or <code>placeholder</code> attribute. Placeholder will not be sent with the form (unlike most other solutions). The <code>sparkle-hint</code> class is optional if you are using the <code>placeholder</code> attribute.',
+						demo: '<input type="text" class="sparkle-hint" placeholder="This is some hint text." title="This is a title." /><br/>'+"\n"+
+							  '<input type="text" class="sparkle-hint" title="This is some hint text." />'
+					},
+					extension: function(Sparkle, config) {
+						var $this = $(this);
+						// Fetch
+						var $inputs = $this.findAndSelf(config.selector).addClass(config.hasClass);
+						// Events
+						var events = {
+							focusEvent: function(){
+								var $input = $(this);
+								var tip = $input.attr('placeholder')||$input.attr('title');
+								var val = $input.val();
+								// Handle
+								if (tip === val) {
+									$input.val('').removeClass(config.hintedClass);
+								}
+								// Done
+								return true;
+							},
+							blurEvent: function(){
+								var $input = $(this);
+								var tip = $input.attr('placeholder')||$input.attr('title');
+								var val = $input.val();
+								// Handle
+								if (tip === val || !val) {
+									$input.val('').addClass(config.hintedClass).val(tip);
+								}
+								// Done
+								return true;
+							},
+							submitEvent: function(){
+								$inputs.trigger('focus');
+							}
+						};
+						// Apply
+						if ( typeof Modernizr !== 'undefined' && Modernizr.input.placeholder ) {
+							// We Support HTML5 Hinting
+							$inputs.each(function(){
+								var $input = $(this);
+								// Set the placeholder as the title if the placeholder does not exist
+								// We could use a filter selector, however we believe this should be faster - not benchmarked though
+								var title = $input.attr('title');
+								if ( title && !$input.attr('placeholder') ) {
+									$input.attr('placeholder',title);
+								}
+							});
+						}
+						else {
+							// We Support Javascript Hinting
+							$inputs.each(function(){
+								var $input = $(this);
+								$input.once('focus',events.focusEvent).once('blur',events.blurEvent).trigger('blur');
+							});
+							$this.find('form').once('submit',events.submitEvent);
+						}
+						// Done
+						return $this;
+					}
+				},
+				'debug': {
+					config: {
+						selector: '.sparkle-debug',
+						hasClass: 'sparkle-debug-has',
+						hintedClass: 'sparkle-debug-hinted',
+						showVar: 'sparkle-debug-show',
+						demo: ''
+					},
+					extension: function(Sparkle, config) {
+						var $this = $(this); var Sparkle = $.Sparkle;
+						// Events
+						var events = {
+							clickEvent: function(event){
+								var $this = $(this);
+								var $parent = $this.parent();
+								var show = !$parent.data(config.showVar);
+								$parent.data(config.showVar, show);
+								$this.siblings('.value').toggle(show);
+							},
+							dblclickEvent: function(event){
+								var $this = $(this);
+								var $parent = $this.parent();
+								var show = $parent.data(config.showVar); // first click will set this off
+								$parent.data(config.showVar, show);
+								$parent.find('.value').toggle(show);
+							}
+						};
+						// Fetch
+						var $debug = $this.findAndSelf(config.selector);
+						$debug.addClass(config.hasClass).find('.value:has(.var)').hide().siblings('.name,.type').addClass('link').once('singleclick',events.clickEvent).once('dblclick',events.dblclickEvent);
+						// Done
+						return $this;
+					}
+				},
+				'submit': {
+					config: {
+						selector: '.sparkle-submit',
+						demoText: 'Adding the <code>sparkle-submit</code> class to an element within a <code>form</code> will submit the form when that element is clicked.'
+					},
+					extension: function(Sparkle, config) {
+						var $this = $(this); var Sparkle = $.Sparkle;
+						// Events
+						var events = {
+							clickEvent: function(event){
+								var $this = $(this).submitForm();
 								return true;
 							}
-							GSFN_feedback_widget.show();
-							//event.stopPropagation();
-							event.preventDefault();
-							return false;
-						}
-					};
-					// Apply
-					$(function() {
-						$this.findAndSelf(config.selector).once('click',events.clickEvent);
-					});
-					// Done
-					return true;
-				}
-			},
-			'hint': {
-				config: {
-					selector: '.form-input-tip,.sparkle-hint,.sparkle-hint-has',
-					hasClass: 'sparkle-hint-has',
-					hintedClass: 'sparkle-hint-hinted'
+						};
+						// Fetch
+						var $submit = $this.findAndSelf(config.selector);
+						$submit.once('singleclick',events.clickEvent);
+						// Done
+						return $this;
+					}
 				},
-				extension: function(Sparkle, config) {
-					var $this = $(this);
-					// Fetch
-					var $inputs = $this.findAndSelf(config.selector).addClass(config.hasClass);
-					// Events
-					var events = {
-						focusEvent: function(){
-							var $input = $(this);
-							var tip = $input.attr('title');
-							var val = $input.val();
-							// Handle
-							if (tip === val) {
-								$input.val('').removeClass(config.hintedClass);
+				'submitswap': {
+					config: {
+						selector: '.sparkle-submitswap',
+						demoText: 'Adding the <code>sparkle-submitswap</code> class to a submit button, will swap it\'s value with it\'s title when it has been clicked. Making it possible for a submit value which isn\'t the submit button\'s text.'
+					},
+					extension: function(Sparkle, config) {
+						var $this = $(this); var Sparkle = $.Sparkle;
+						// Events
+						var events = {
+							clickEvent: function(event){
+								// Fetch
+								var $submit = $(this);
+				
+								// Put correct value back
+								$submit.val($submit.data('sparkle-submitswap-value'));
+				
+								// Continue with Form Submission
+								return true;
 							}
-							// Done
-							return true;
-						},
-						blurEvent: function(){
-							var $input = $(this);
-							var tip = $input.attr('title');
-							var val = $input.val();
-							// Handle
-							if (tip === val || !val) {
-								$input.val('').addClass(config.hintedClass).val(tip);
-							}
-							// Done
-							return true;
-						},
-						submitEvent: function(){
-							$inputs.trigger('focus');
-						}
-					};
-					// Apply
-					$inputs.each(function(){
-						var $input = $(this);
-						$input.once('focus',events.focusEvent).once('blur',events.blurEvent).trigger('blur');
-					});
-					$this.find('form').once('submit',events.submitEvent);
-					// Done
-					return $this;
-				}
-			},
-			'debug': {
-				config: {
-					selector: '.sparkle-debug',
-					hasClass: 'sparkle-debug-has',
-					hintedClass: 'sparkle-debug-hinted',
-					showVar: 'sparkle-debug-show'
-				},
-				extension: function(Sparkle, config) {
-					var $this = $(this); var Sparkle = $.Sparkle;
-					// Events
-					var events = {
-						clickEvent: function(event){
-							var $this = $(this);
-							var $parent = $this.parent();
-							var show = !$parent.data(config.showVar);
-							$parent.data(config.showVar, show);
-							$this.siblings('.value').toggle(show);
-						},
-						dblclickEvent: function(event){
-							var $this = $(this);
-							var $parent = $this.parent();
-							var show = $parent.data(config.showVar); // first click will set this off
-							$parent.data(config.showVar, show);
-							$parent.find('.value').toggle(show);
-						}
-					};
-					// Fetch
-					var $debug = $this.findAndSelf(config.selector);
-					$debug.addClass(config.hasClass).find('.value:has(.var)').hide().siblings('.name,.type').addClass('link').once('singleclick',events.clickEvent).once('dblclick',events.dblclickEvent);
-					// Done
-					return $this;
-				}
-			},
-			'submit': {
-				config: {
-					selector: '.sparkle-submit'
-				},
-				extension: function(Sparkle, config) {
-					var $this = $(this); var Sparkle = $.Sparkle;
-					// Events
-					var events = {
-						clickEvent: function(event){
-							var $this = $(this).submitForm();
-							return true;
-						}
-					};
-					// Fetch
-					var $submit = $this.findAndSelf(config.selector);
-					$submit.once('singleclick',events.clickEvent);
-					// Done
-					return $this;
-				}
-			},
-			'submitswap': {
-				config: {
-					selector: '.sparkle-submitswap'
-				},
-				extension: function(Sparkle, config) {
-					var $this = $(this); var Sparkle = $.Sparkle;
-					// Events
-					var events = {
-						clickEvent: function(event){
-							// Fetch
+						};
+		
+						// Fetch
+						var $submit = $this.findAndSelf(config.selector);
+						$submit.once('singleclick',events.clickEvent);
+						$submit.each(function(){
 							var $submit = $(this);
-					
-							// Put correct value back
-							$submit.val($submit.data('sparkle-submitswap-value'));
-					
-							// Continue with Form Submission
+							$submit.data('sparkle-submitswap-value', $submit.val());
+							$submit.val($submit.attr('title'));
+							$submit.removeAttr('title');
+						});
+		
+						// Done
+						return $this;
+					}
+				},
+				'highlight-values': {
+					config: {
+						selector: '.sparkle-highlight-values',
+						innerSelector: 'td,.column',
+						empty: ['',false,null,'false','null',0,'-'],
+						emptyClass: 'sparkle-highlight-values-empty',
+						notemptyClass: 'sparkle-highlight-values-notempty',
+						demoText: 'Adding the <code>sparkle-highlight-values</code> class to a table will highlight all <code>td</code> elements with non empty values. By adding <code>sparkle-highlight-values-notempty</code> or <code>sparkle-highlight-values-empty</code> to the corresponding <code>td</code> element - which can by styled by yourself. Benefit over css\'s <code>:empty</code> as 0, false, null and - are counted as empty values (not just "").'
+					},
+					extension: function(Sparkle, config) {
+						var $this = $(this); var Sparkle = $.Sparkle;
+						// Fetch
+						var $container = $this.findAndSelf(config.selector);
+						var $inner = $container.findAndSelf(config.innerSelector);
+						$inner.each(function(){
+							var $this = $(this);
+							var value = $this.text().trim();
+							var empty = config.empty.has(value);
+							if ( empty ) {
+								$this.addClass(config.emptyClass);
+							} else {
+								$this.addClass(config.notemptyClass);
+							}
+						});
+						// Done
+						return $this;
+					}
+				},
+				'demo': {
+					config: {
+						selector: '.sparkle-demo',
+						hasClass: 'sparkle-debug-has',
+						demoText: 'Adding the <code>sparkle-demo</code> will display all these demo examples used on this page.'
+					},
+					extension: function(Sparkle, config){
+						var $this = $(this); var Sparkle = $.Sparkle;
+						var $container = $this.findAndSelf(config.selector);
+						// Prepare
+						if ( $container.hasClass(config.hasClass) ) {
+							// Only run once
 							return true;
 						}
-					};
-			
-					// Fetch
-					var $submit = $this.findAndSelf(config.selector);
-					$submit.once('singleclick',events.clickEvent);
-					$submit.each(function(){
-						var $submit = $(this);
-						$submit.data('sparkle-submitswap-value', $submit.val());
-						$submit.val($submit.attr('title'));
-						$submit.removeAttr('title');
-					});
-			
-					// Done
-					return $this;
-				}
-			},
-			'highlight-values': {
-				config: {
-					selector: '.sparkle-highlight-values',
-					innerSelector: 'td',
-					empty: ['',false,null,'false','null',0,'-'],
-					emptyClass: 'sparkle-highlight-values-empty',
-					notemptyClass: 'sparkle-highlight-values-notempty'
-				},
-				extension: function(Sparkle, config) {
-					var $this = $(this); var Sparkle = $.Sparkle;
-					// Fetch
-					var $container = $this.findAndSelf(config.selector);
-					var $inner = $container.findAndSelf(config.innerSelector);
-					$inner.each(function(){
-						var $this = $(this);
-						var value = $this.text().trim();
-						var empty = config.empty.has(value);
-						if ( empty ) {
-							$this.addClass(config.emptyClass);
-						} else {
-							$this.addClass(config.notemptyClass);
+						$container.addClass(config.hasClass);
+						// Fetch
+						var Extensions = Sparkle.getExtensions();
+						// Cycle
+						for ( var extension in Extensions ) {
+							var Extension = Sparkle.getExtension(extension);
+							if ( !Extension ) {
+								continue;
+							}
+							var demo = Extension.config.demo||'';
+							var demoText = Extension.config.demoText||'';
+							if ( !demo && !demoText ) {
+								continue;
+							}
+							var $demo = $(
+								'<div class="sparkle-demo-section">'+
+									'<h3>'+extension+'<h3>'+
+								'</div>'
+							);
+							if ( demoText ) {
+								$demo.append('<div class="sparkle-demo-text">'+demoText+'</div>');
+							}
+							if ( demo ) {
+								var demoCode = demo.replace(/</g,'&lt;').replace(/>/g,'&gt;');
+								$demo.append(
+									'<h4>Example Code:</h4>'+
+										'<code class="code language-html sparkle-demo-code">'+demoCode+'</code>'+
+									'<h4>Example Result:</h4>'+
+										'<div class="sparkle-demo-result">'+demo+'</div>'
+								);
+							}
+							$container.append($demo).sparkle();
 						}
-					});
-					// Done
-					return $this;
+						// Done
+						return true;
+					}
 				}
 			}
-
-		});
-		
+		);
 	}
 	else {
-		console.warn("$.SparkleClass has already been defined...");
+		console.warn("$.Sparkle has already been defined...");
 	}
 
 })(jQuery);/**
- * @depends jquery, jquery.balclass
+ * @depends jquery, jquery.balclass, bespin
  * @name jquery.balclass.bespin
  * @package jquery-sparkle
  */
@@ -2237,166 +2413,181 @@ Number.prototype.roundTo = String.prototype.roundTo = String.prototype.roundTo |
 	
 	/**
 	 * jQuery Bespin Extender
-	 * @depends BalClass, bespin
+	 * @version 1.2.0
+	 * @date July 11, 2010
+	 * @since 1.0.0, June 30, 2010
  	 * @copyright (c) 2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  	 * @license GNU Affero General Public License - {@link http://www.gnu.org/licenses/agpl.html}
 	 */
-	if ( !($.Help||false) ) {
-		$.Bespin = new $.BalClass({
-			"default": {
-				"content": null,
-				"bespin": {
-					"settings": {
-						"tabstop": 4
+	if ( !($.Bespin||false) ) {
+		$.Bespin = $.BalClass.create(
+			// Configuration
+			{
+				"default": {
+					"content": null,
+					"bespin": {
+						"settings": {
+							"tabstop": 4
+						}
+					},
+					"toolbar": {
+						"fullscreen": true
 					}
 				},
-				"toolbar": {
-					"fullscreen": true
-				}
-			},
-			"rich": {
-				"bespin": {
-					"syntax": "html"
-				}
-			},
-			"html": {
-				"bespin": {
-					"syntax": "html"
-				}
-			},
-			"plain": {
-				"toolbar": false
-			}
-		});
-		$.Bespin.fn = function(mode, options) {
-			// Prepare
-			var Me = $.Bespin;
-			var config = Me.getConfigWithDefault(mode,options);
-	
-			// Elements
-			var element = this;
-	
-			// Bespin
-			var onBespinLoad = function(){
-				// Use Bespin
-				Me.useBespin(element, config);
-			};
-			$(window).bind('onBespinLoad', onBespinLoad);
-			window.onBespinLoad = function(){
-				$(window).trigger('onBespinLoad');
-			};
-	
-			// Chain
-			return this;
-		};
-		$.Bespin.useBespin = function(element, config) {
-			// Prepare
-			var Me = $.Bespin;
-	
-			// Elements
-			var $element = $(element),
-				$bespin,
-				bespin_id;
-	
-			// Check
-			if ( $element.is('textarea') ) {
-				// Editor is a textarea
-				// So we have to create a div to use as our bespin editor
-				// Update id
-				bespin_id = $element.attr('id')+'-bespin';
-				// Create div
-				$bespin = $('<div id="'+bespin_id+'"/>').html($element.val()).css({
-					height: $element.css('height'),
-					width: $element.css('width')
-				});
-				// Insert div
-				$bespin.insertAfter($element);
-				// Hide textarea
-				$element.hide();
-			}
-			else {
-				// Editor is likely a div
-				// So we can use that as our bespin editor
-				$bespin = $element;
-				bespin_id = $bespin.attr('id');
-			}
-	
-			// Use Bespin
-			bespin.useBespin(bespin_id,config.bespin).then(
-				function(env){
-					// Success
-					Me.postBespin(bespin_id, env, config);
+				"rich": {
+					"bespin": {
+						"syntax": "html"
+					}
 				},
-				function(error){
-					// Error
-					throw new Error("Bespin Launch Failed: " + error);
+				"html": {
+					"bespin": {
+						"syntax": "html"
+					}
+				},
+				"plain": {
+					"toolbar": false
 				}
-			);
+			},
+			// Extensions
+			{
+				fn: function(mode, options) {
+					// Prepare
+					var Me = $.Bespin;
+					var config = Me.getConfigWithDefault(mode,options);
 	
-			// Chain
-			return this;
-		};
-		$.Bespin.postBespin = function(bespin_id, env, config) {
-			// Prepare
-			var Me = $.Bespin;
+					// Elements
+					var element = this;
 	
-			// Elements
-			var $bespin = $('#'+bespin_id);
-			var $textarea = $bespin.siblings('textarea');
-			var editor = env.editor;
+					// Bespin
+					var onBespinLoad = function(){
+						// Use Bespin
+						Me.useBespin(element, config);
+					};
+					$(window).bind('onBespinLoad', onBespinLoad);
+					window.onBespinLoad = function(){
+						$(window).trigger('onBespinLoad');
+					};
 	
-			// Ensure overflow is set to hidden
-			// stops bespin from having text outside it's box in rare circumstances
-			$bespin.css('overflow','hidden');
+					// Chain
+					return this;
+				},
+				useBespin: function(element, config) {
+					// Prepare
+					var Me = $.Bespin;
 	
-			// Wrap our div
-			$bespin.wrap('<div class="bespin-wrap" />');
-			var $bespin_wrap = $bespin.parent();
+					// Elements
+					var $element = $(element),
+						$bespin,
+						bespin_id;
 	
-			// Update Textarea on submit
-			if ( $textarea.length ) {
-				var updateFunction = function(){
-					var val = editor.value;
-					$textarea.val(val);
-				};
-				$textarea.parents('form:first').submit(updateFunction);
-			}
+					// Check
+					if ( $element.is('textarea') ) {
+						// Editor is a textarea
+						// So we have to create a div to use as our bespin editor
+						// Update id
+						bespin_id = $element.attr('id')+'-bespin';
+						// Create div
+						$bespin = $('<div id="'+bespin_id+'"/>').html($element.val()).css({
+							height: $element.css('height'),
+							width: $element.css('width')
+						});
+						// Insert div
+						$bespin.insertAfter($element);
+						// Hide textarea
+						$element.hide();
+					}
+					else {
+						// Editor is likely a div
+						// So we can use that as our bespin editor
+						$bespin = $element;
+						bespin_id = $bespin.attr('id');
+					}
 	
-		  		// Change the value
-			if ( config.content || config.content === '' ) {
-				editor.value = config.content;
-			}
+					// Use Bespin
+					bespin.useBespin(bespin_id,config.bespin).then(
+						function(env){
+							// Success
+							Me.postBespin(bespin_id, env, config);
+						},
+						function(error){
+							// Error
+							throw new Error("Bespin Launch Failed: " + error);
+						}
+					);
 	
-			// Toolbar
-			if ( config.toolbar||false ) {
-				$toolbar = $('<div class="bespin-toolbar" />');
-				$toolbar.insertBefore($bespin);
+					// Chain
+					return this;
+				},
+				postBespin: function(bespin_id, env, config) {
+					// Prepare
+					var Me = $.Bespin;
+	
+					// Elements
+					var $bespin = $('#'+bespin_id);
+					var $textarea = $bespin.siblings('textarea');
+					var editor = env.editor;
+	
+					// Ensure overflow is set to hidden
+					// stops bespin from having text outside it's box in rare circumstances
+					$bespin.css('overflow','hidden');
+	
+					// Wrap our div
+					$bespin.wrap('<div class="bespin-wrap" />');
+					var $bespin_wrap = $bespin.parent();
+	
+					// Update Textarea on submit
+					if ( $textarea.length ) {
+						var updateFunction = function(){
+							var val = editor.value;
+							$textarea.val(val);
+						};
+						$textarea.parents('form:first').submit(updateFunction);
+					}
+	
+				  		// Change the value
+					if ( config.content || config.content === '' ) {
+						editor.value = config.content;
+					}
+	
+					// Toolbar
+					if ( config.toolbar||false ) {
+						$toolbar = $('<div class="bespin-toolbar" />');
+						$toolbar.insertBefore($bespin);
 		
-				// Fullscreen
-				if (config.toolbar.fullscreen||false ) {
-					$fullscreen = $('<span class="bespin-toolbar-fullscreen">Fullscreen</span>');
-					$fullscreen.appendTo($toolbar);
-					$fullscreen.click(function(){
-						if ( $bespin_wrap.hasClass('bespin-fullscreen') ) {
-							// Destroy fullscreen
-							$('body').add($bespin_wrap).removeClass('bespin-fullscreen');
+						// Fullscreen
+						if (config.toolbar.fullscreen||false ) {
+							$fullscreen = $('<span class="bespin-toolbar-fullscreen">Fullscreen</span>');
+							$fullscreen.appendTo($toolbar);
+							$fullscreen.click(function(){
+								if ( $bespin_wrap.hasClass('bespin-fullscreen') ) {
+									// Destroy fullscreen
+									$('body').add($bespin_wrap).removeClass('bespin-fullscreen');
+								}
+								else {
+									// Make fullscreen
+									$('body').add($bespin_wrap).addClass('bespin-fullscreen');
+								}
+								env.dimensionsChanged();
+							});
 						}
-						else {
-							// Make fullscreen
-							$('body').add($bespin_wrap).addClass('bespin-fullscreen');
-						}
-						env.dimensionsChanged();
-					});
+					}
+	
+					// Chain
+					return this;
+				},
+				built: function(){
+					// Prepare
+					var Me = this;
+					// Attach
+					$.fn.Bespin = function(mode,options) {
+						// Alias
+						return Me.fn.apply(this,[mode,options]);
+					};
+					// Return true
+					return true;
 				}
 			}
-	
-			// Chain
-			return this;
-		};
-		$.fn.Bespin = function(mode,options) {
-			// Alias
-			return $.Bespin.fn.apply(this,[mode,options]);
-		};
+		);
 	}
 	else {
 		console.warn("$.Bespin has already been defined...");
@@ -2416,8 +2607,9 @@ Number.prototype.roundTo = String.prototype.roundTo = String.prototype.roundTo |
 	
 	/**
 	 * jQuery Time Picker
-	 * @version 1.0.0
-	 * @date June 30, 2010
+	 * @version 1.2.0
+	 * @date July 11, 2010
+	 * @since 1.0.0, June 30, 2010
  	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  	 * @license GNU Affero General Public License - {@link http://www.gnu.org/licenses/agpl.html}
 	 */
@@ -2425,86 +2617,103 @@ Number.prototype.roundTo = String.prototype.roundTo = String.prototype.roundTo |
 		/**
 		 * $.timepicker
 		 */
-		$.timepicker = new $.BalClass({
-			'default': {
-				timeConvention: 24
+		$.timepicker = $.BalClass.create(
+			// Configuration
+			{
+				'default': {
+					timeConvention: 24
+				},
+				'12hr': {
+					timeConvention: 12
+				},
+				'24hr': {
+					timeConvention: 24
+				}
 			},
-			'12hr': {
-				timeConvention: 12
-			},
-			'24hr': {
-				timeConvention: 24
+			// Extensions
+			{
+				fn: function(mode,options){
+					// Prepare
+					var Me = $.timepicker;
+					var config = Me.getConfigWithDefault(mode,options);
+					// Handle
+					return $(this).each(function(){
+						var $input = $(this);
+						$input.hide();
+		
+						// Prepare
+						if ( $input.hasClass('sparkle-time-has') ) return $input; // already done
+						$input.addClass('sparkle-time').addClass('sparkle-time-has');
+		
+						// Generate
+						var $hours = $('<select class="sparkle-time-hours" />');
+						for ( var hours=12,hour=1; hour<=hours; ++hour ) {
+							$hours.append('<option value="'+hour+'">'+hour.padLeft('0',2)+'</option>');
+						}
+						var $minutes = $('<select class="sparkle-time-minutes" />');
+						for ( var mins=55,min=0; min<=mins; min+=5) {
+							$minutes.append('<option value="'+min+'">'+min.padLeft('0',2)+'</option>');
+						}
+						var $meridian = $('<select class="sparkle-time-meridian" />');
+						$meridian.append('<option>am</option>');
+						$meridian.append('<option>pm</option>');
+		
+						// Defaults
+						var value = $input.val(),
+							date = new Date(),
+							hours = '12',
+							minutes = '0',
+							meridian = 'am';
+						if ( value ) {
+							date.setTimestr(value);
+							hours = date.getUTCHours();
+							minutes = date.getUTCMinutes();
+							if ( hours > 12 ) {
+								hours -= 12; meridian = 'pm';
+							}
+						}
+		
+						// Append
+						$meridian.insertAfter($input);
+						$minutes.insertAfter($input);
+						$hours.insertAfter($input);
+		
+						// Apply
+						if ( hours > 12 && meridian == 'pm' ) hours -= 12;
+						$hours.val(hours);
+						$minutes.val(minutes.roundTo(5));
+						$meridian.val(meridian);
+		
+						// Bind
+						var updateFunction = function(){
+							var hours = parseInt($hours.val(),10);
+							var minutes = $minutes.val();
+							var meridian = $meridian.val();
+							if ( meridian == 'pm' ) hours += 12;
+							if ( hours >= 24 ) hours = 0;
+							var value = hours.padLeft(0,2)+':'+minutes.padLeft(0,2)+':00';
+							$input.val(value).trigger('change');
+						};
+						$hours.add($minutes).add($meridian).change(updateFunction);
+						$input.parent('form:first').submit(updateFunction);
+		
+						// Done
+						return $input;
+					});
+				},
+				built: function(){
+					// Prepare
+					var Me = this;
+					// Attach
+					$.fn.timepicker = function(mode,options) {
+						// Alias
+						return Me.fn.apply(this,[mode,options]);
+					};
+					// Return true
+					return true;
+				}
 			}
-		});
-		$.fn.timepicker = function(mode,options){
-			// Prepare
-			var Me = $.timepicker;
-			var config = Me.getConfigWithDefault(mode,options);
-			// Handle
-			return $(this).each(function(){
-				var $input = $(this);
-				$input.hide();
-		
-				// Prepare
-				if ( $input.hasClass('sparkle-time-has') ) return $input; // already done
-				$input.addClass('sparkle-time').addClass('sparkle-time-has');
-		
-				// Generate
-				var $hours = $('<select class="sparkle-time-hours" />');
-				for ( var hours=12,hour=1; hour<=hours; ++hour ) {
-					$hours.append('<option value="'+hour+'">'+hour.padLeft('0',2)+'</option>');
-				}
-				var $minutes = $('<select class="sparkle-time-minutes" />');
-				for ( var mins=55,min=0; min<=mins; min+=5) {
-					$minutes.append('<option value="'+min+'">'+min.padLeft('0',2)+'</option>');
-				}
-				var $meridian = $('<select class="sparkle-time-meridian" />');
-				$meridian.append('<option>am</option>');
-				$meridian.append('<option>pm</option>');
-		
-				// Defaults
-				var value = $input.val(),
-					date = new Date(),
-					hours = '12',
-					minutes = '0',
-					meridian = 'am';
-				if ( value ) {
-					date.setTimestr(value);
-					hours = date.getUTCHours();
-					minutes = date.getUTCMinutes();
-					if ( hours > 12 ) {
-						hours -= 12; meridian = 'pm';
-					}
-				}
-		
-				// Append
-				$meridian.insertAfter($input);
-				$minutes.insertAfter($input);
-				$hours.insertAfter($input);
-		
-				// Apply
-				if ( hours > 12 && meridian == 'pm' ) hours -= 12;
-				$hours.val(hours);
-				$minutes.val(minutes.roundTo(5));
-				$meridian.val(meridian);
-		
-				// Bind
-				var updateFunction = function(){
-					var hours = parseInt($hours.val(),10);
-					var minutes = $minutes.val();
-					var meridian = $meridian.val();
-					if ( meridian == 'pm' ) hours += 12;
-					if ( hours >= 24 ) hours = 0;
-					var value = hours.padLeft(0,2)+':'+minutes.padLeft(0,2)+':00';
-					$input.val(value).trigger('change');
-				};
-				$hours.add($minutes).add($meridian).change(updateFunction);
-				$input.parent('form:first').submit(updateFunction);
-		
-				// Done
-				return $input;
-			});
-		};
+		);
 	}
 	else {
 		console.warn("$.timepicker has already been defined...");
@@ -2512,7 +2721,7 @@ Number.prototype.roundTo = String.prototype.roundTo = String.prototype.roundTo |
 
 	
 })(jQuery);/**
- * @depends jquery, jquery.balclass
+ * @depends jquery, jquery.balclass, tinymce
  * @name jquery.balclass.tinymce
  * @package jquery-sparkle
  */
@@ -2524,57 +2733,76 @@ Number.prototype.roundTo = String.prototype.roundTo = String.prototype.roundTo |
 	
 	/**
 	 * jQuery TinyMCE Extender
-	 * @depends BalClass, $.fn.tinymce
+	 * @version 1.2.0
+	 * @date July 11, 2010
+	 * @since 1.0.0, June 30, 2010
  	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  	 * @license GNU Affero General Public License - {@link http://www.gnu.org/licenses/agpl.html}
 	 */
 	if ( !($.Tinymce||false) ) {
-		$.Tinymce = new $.BalClass({
-			'default': {
-				// Location of TinyMCE script
-				script_url: '/scripts/tiny_mce/tiny_mce.js',
+		$.Tinymce = $.BalClass.create(
+			// Configuration
+			{
+				'default': {
+					// Location of TinyMCE script
+					script_url: '/scripts/tiny_mce/tiny_mce.js',
 		
-				// General options
-				theme: "advanced",
-				plugins: "autoresize,safari,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template",
+					// General options
+					theme: "advanced",
+					plugins: "autoresize,safari,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template",
 
-				// Theme options
-				theme_advanced_buttons1: "bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,styleselect,formatselect,fontselect,fontsizeselect,|,code,",
-				theme_advanced_buttons2: "cut,copy,paste,pastetext,pasteword,|,undo,redo,|,link,unlink,image,|,preview,|,forecolor,backcolor,|,bullist,numlist,|,outdent,indent,blockquote,|,fullscreen",
-				theme_advanced_buttons3: "tablecontrols,|,hr,removeformat,visualaid,|,sub,sup",
-				theme_advanced_toolbar_location: "top",
-				theme_advanced_toolbar_align: "left",
-				theme_advanced_statusbar_location: "bottom",
-				theme_advanced_path: false,
-				theme_advanced_resizing: false,
-				width: "100%",
+					// Theme options
+					theme_advanced_buttons1: "bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,styleselect,formatselect,fontselect,fontsizeselect,|,code,",
+					theme_advanced_buttons2: "cut,copy,paste,pastetext,pasteword,|,undo,redo,|,link,unlink,image,|,preview,|,forecolor,backcolor,|,bullist,numlist,|,outdent,indent,blockquote,|,fullscreen",
+					theme_advanced_buttons3: "tablecontrols,|,hr,removeformat,visualaid,|,sub,sup",
+					theme_advanced_toolbar_location: "top",
+					theme_advanced_toolbar_align: "left",
+					theme_advanced_statusbar_location: "bottom",
+					theme_advanced_path: false,
+					theme_advanced_resizing: false,
+					width: "100%",
 		
-				// Compat
-				//add_form_submit_trigger: false,
-				//submit_patch: false,
+					// Compat
+					//add_form_submit_trigger: false,
+					//submit_patch: false,
 		
-				// Example content CSS (should be your site CSS)
-				// content_css : "css/content.css",
+					// Example content CSS (should be your site CSS)
+					// content_css : "css/content.css",
 		
-				// Replace values for the template plugin
-				template_replace_values: {
+					// Replace values for the template plugin
+					template_replace_values: {
 			
+					}
+				},
+				'rich': {
+				},
+				'simple': {
+					theme_advanced_buttons2: "",
+					theme_advanced_buttons3: ""
 				}
 			},
-			'rich': {
-			},
-			'simple': {
-				theme_advanced_buttons2: "",
-				theme_advanced_buttons3: ""
+			// Extensions
+			{
+				fn: function(mode,options) {
+					var Me = $.Tinymce;
+					var config = Me.getConfigWithDefault(mode,options);
+					var $this = $(this);
+					// Apply + Return
+					return $this.tinymce(config);
+				},
+				built: function(){
+					// Prepare
+					var Me = this;
+					// Attach
+					$.fn.Tinymce = function(mode,options) {
+						// Alias
+						return Me.fn.apply(this,[mode,options]);
+					};
+					// Return true
+					return true;
+				}
 			}
-		});
-		$.fn.Tinymce = function(mode,options) {
-			var Me = $.Tinymce;
-			var config = Me.getConfigWithDefault(mode,options);
-			var $this = $(this);
-			// Apply + Return
-			return $this.tinymce(config);
-		};
+		);
 	}
 	else {
 		console.warn("$.Tinymce has already been defined...");
@@ -2593,43 +2821,62 @@ Number.prototype.roundTo = String.prototype.roundTo = String.prototype.roundTo |
 	
 	/**
 	 * jQuery Help
-	 * @depends BalClass
+	 * @version 1.2.0
+	 * @date July 11, 2010
+	 * @since 1.0.0, June 30, 2010
  	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  	 * @license GNU Affero General Public License - {@link http://www.gnu.org/licenses/agpl.html}
 	 */
 	if ( !($.Help||false) ) {
-		$.Help = new $.BalClass({
-			'default': {
-				// Elements
-				wrap: '<span class="sparkle-help-wrap"/>',
-				icon: '<span class="sparkle-help-icon"/>',
-				text: '<span class="sparkle-help-text"/>',
-				parentClass: '',
-				title: ''
+		$.Help = $.BalClass.create(
+			// Configuration
+			{
+				'default': {
+					// Elements
+					wrap: '<span class="sparkle-help-wrap"/>',
+					icon: '<span class="sparkle-help-icon"/>',
+					text: '<span class="sparkle-help-text"/>',
+					parentClass: '',
+					title: ''
+				}
+			},
+			// Extensions
+			{
+				fn: function(options){
+					var Me = $.Help;
+					if ( typeof options === 'string' ) {
+						options = {
+							title: options
+						};
+					}
+					var config = Me.getConfigWithDefault('default',options);
+					// Fetch
+					var $this = $(this);
+					var $wrap = $(config.wrap);
+					var $icon = $(config.icon);
+					var $text = $(config.text);
+					var $parent = $this.parent().addClass(config.parentClass);
+					// Build
+					var $contents = $this.contents();
+					$this.append($wrap.append($text).append($icon));
+					$contents.appendTo($text);
+					$this.attr('title', config.title);
+					// Done
+					return $this;
+				},
+				built: function(){
+					// Prepare
+					var Me = this;
+					// Attach
+					$.fn.help = function(mode,options) {
+						// Alias
+						return Me.fn.apply(this,[mode,options]);
+					};
+					// Return true
+					return true;
+				}
 			}
-		});
-		$.fn.help = function(options){
-			var Me = $.Help;
-			if ( typeof options === 'string' ) {
-				options = {
-					title: options
-				};
-			}
-			var config = Me.getConfigWithDefault('default',options);
-			// Fetch
-			var $this = $(this);
-			var $wrap = $(config.wrap);
-			var $icon = $(config.icon);
-			var $text = $(config.text);
-			var $parent = $this.parent().addClass(config.parentClass);
-			// Build
-			var $contents = $this.contents();
-			$this.append($wrap.append($text).append($icon));
-			$contents.appendTo($text);
-			$this.attr('title', config.title);
-			// Done
-			return $this;
-		};
+		);	
 	}
 	else {
 		console.warn("$.Help has already been defined...");

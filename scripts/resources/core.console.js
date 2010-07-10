@@ -7,14 +7,15 @@
 /**
  * Console Emulator
  * We have to convert arguments into arrays, and do this explicitly as webkit (chrome) hates function references, and arguments cannot be passed as is
- * @version 1.0.0
- * @date June 30, 2010
+ * @version 1.0.1
+ * @since 1.0.0 June 20, 2010
+ * @date July 09, 2010
  * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
  * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
 if ( typeof window.console !== 'object' || typeof window.console.emulated === 'undefined' ) {
 	// Check to see if console exists
-	if ( typeof window.console !== 'object' && typeof window.console.log !== 'function' ) {
+	if ( typeof window.console !== 'object' || typeof window.console.log !== 'function' ) {
 		// Console does not exist
 		window.console = {};
 		window.console.log = window.console.debug = window.console.warn = window.console.trace = function(){};
@@ -23,7 +24,7 @@ if ( typeof window.console !== 'object' || typeof window.console.emulated === 'u
 		};
 	}
 	else {
-		// Log Exists
+		// Console is object, and log does exist
 		// Check Debug
 		if ( typeof window.console.debug === 'undefined' ) {
 			window.console.debug = function(){

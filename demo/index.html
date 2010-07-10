@@ -1,0 +1,244 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>
+            jQuery Sparkle - jQuery's DRY Effect Library
+        </title>
+
+		<!-- Include jQuery (Sparkle Requirement) -->
+		<script type="text/javascript" src="../scripts/jquery-1.4.2.min.js"></script>
+		<!-- Include Sparkle (Production) -->
+		<script type="text/javascript" src="../scripts/jquery.sparkle.js"></script>
+		<link href="../styles/jquery.sparkle.min.css" media="screen" rel="stylesheet" type="text/css" > 
+		
+		<!-- Include The Demo's Requirements -->
+		<link type="text/css" rel="stylesheet" media="screen" href="./styles/style.css" />
+		<!-- jQuery UI -->
+		<script type="text/javascript" src="./scripts/jquery-ui-1.8.2/js/jquery-ui-1.8.2.custom.min.js"></script> 
+		<link href="./scripts/jquery-ui-1.8.2/css/cupertino/jquery-ui-1.8.2.custom.css" media="screen" rel="stylesheet" type="text/css" > 
+		<!-- Autogrow -->
+		<script type="text/javascript" src="./scripts/jquery.autogrow.min.js"></script> 
+		<<!-- Syntax Highlighting -->
+		<script type="text/javascript" src="./scripts/jquery.beautyOfCode.min.js"></script>
+		<script type="text/javascript">/*<![CDATA[*/
+			$.beautyOfCode.init({
+				defaults: { gutter: true },
+				brushes: ["Xml", "JScript", "Css"]
+			}); 
+		/*]]>*/</script> 
+    </head>
+    <body>
+		
+		<div class="section">
+			<h1>jQuery Sparkle - jQuery's DRY Effect Library</h1>
+			<h2><a href="http://github.com/balupton/jquery-sparkle/downloads" title="Download">Download</a></h2>
+			<h2><a href="http://github.com/balupton/jquery-sparkle" title="Project Page">Project Page</a></h2>
+			<h2><a href="http://github.com/balupton/jquery-sparkle/tree/master" title="Source Code">Source Code</a></h2>
+		</div>
+		
+		<div class="section">
+			<h1>Installation</h1>
+			
+			<h2>Step 1. Download jQuery Sparkle, and extract it to your hard drive</h2>
+			
+			<h2>Step 2. Move the extracted <code>jquery-sparkle</code> directory to somewhere on your webserver</h2>
+				
+			<h2>Step 3. Include jQuery (insert into your page's head tag)</h2>
+			<code class="code language-html">
+				&lt;!-- Include jQuery (Sparkle Requirement) --&gt;
+				&lt;script type="text/javascript" src="http://www.yoursite.com/somewhere/on/your/webserver/jquery-sparkle/scripts/jquery-1.4.2.min.js"&gt;&lt;/script&gt;
+			</code>
+			
+			<h2>Step 4. Include jQuery Sparkle (insert into your page's head tag)</h2>
+			<code class="code language-html">
+				&lt;!-- Include Sparkle (Production) --&gt;
+				&lt;script type="text/javascript" src="http://www.yoursite.com/somewhere/on/your/webserver/jquery-sparkle/scripts/jquery.sparkle.min.js"&gt;&lt;/script&gt;
+				&lt;link href="http://www.yoursite.com/somewhere/on/your/webserver/jquery-sparkle/styles/jquery.sparkle.min.css" media="screen" rel="stylesheet" type="text/css" &gt; 
+			</code>
+		</div>
+		
+		<div class="section">
+			<h1>Using jQuery Sparkle</h1>
+			
+			<div class="sparkle-demo"></div>
+		</div>
+		
+		<div class="section">
+			<h1>Using BalClass</h1>
+			
+			<h2>The Benefits of BalClass</h2>
+			<p>The major benefits of using BalClass is that you can easily work with multiple configurations for your plugin, as well as making it easily extensible by other developers. For example we can do this to have our plugin easily translatable:</p>
+			<code class="code language-javascript">
+				if ( !($.HiBye||false) ) {
+					$.HiBye = $.HiBye.create(
+						// Configuration
+						{
+							"default": {
+								"hi": "Hello",
+								"bye": "Goodbye"
+							},
+							"english": {
+								// Same as default
+							},
+							"french": {
+								"hi": "Salut",
+								"bye": "Au Revoir"
+							}
+						},
+						// Functions
+						{
+							fn: function(mode, options) {
+								// Prepare
+								var Me = $.Bespin;
+								var config = Me.getConfigWithDefault(mode,options);
+								var $this = $(this);
+					
+								// Say Hi then Bye
+								$this.hide().html(config.hi).fadeIn('slow',function(){
+									$this.html(config.bye).fadeOut('slow');
+								});
+					
+								// Chain
+								return this;
+							},
+							built: function(){
+								// Prepare
+								var Me = this;
+								// Attach
+								$.fn.hibye = Me.fn;
+								// Return true
+								return true;
+							}
+						}
+					);
+				}
+				else {
+					console.warn("$.HiBye has already been defined...");
+				}
+			</code>
+			<p>We can then trigger your plugin using different configurations like so:</p>
+			<code class="code language-html">
+				&lt;p id="hibye-example"&gt;&lt;/p&gt;
+				&lt;script type="text/javascript"&gt;
+					// onDomReady
+					$(function(){
+						$('#hibye-example').hibye(); // uses the default language
+						$('#hibye-example').hibye('english'); // uses the english language
+						$('#hibye-example').hibye('french'); // uses the english language
+						$('#hibye-example').hibye('french',{
+							'hi': 'Salut :-)'
+						}); // uses the french language with a override on hi to include a smiley face
+						$('#hibye-example').hibye({
+							'hi': 'Ciao',
+							'bye': 'Ciao'
+						}); // uses the default language with a override on hi and bye so that they are italian
+					});
+				&lt;/script&gt;
+			</code>
+			<p>Now that is pretty nifty isn't it! Now say if an Italian developer is using our plugin calls the hibye jquery function ($.fn.hibye) a fair bit, instead of doing the following (which is a bit redundant):</p>
+			<code class="code language-javascript">
+				$('#hibye-example1').hibye({
+					'hi': 'Ciao',
+					'bye': 'Ciao'
+				});
+				$('#hibye-example2').hibye({
+					'hi': 'Ciao',
+					'bye': 'Ciao'
+				});
+			</code>
+			<p>They could do this:</p>
+			<code class="code language-javascript">
+				var hibye_italian = {
+					'hi': 'Ciao',
+					'bye': 'Ciao'
+				};
+				$('#hibye-example1').hibye(hibye_italian);
+				$('#hibye-example2').hibye(hibye_italian);
+			</code>
+			<p>But that could possibly unleash a plague of scope issues down your alleyway. A much better solution is to add the Italian language directly to HiBye's configuration! We can do this easily with:</p>
+			<code class="code language-javascript">
+				$.HiBye.addConfig("italian", {
+					'hi': 'Ciao',
+					'bye': 'Ciao'
+				});
+				$('#hibye-example1').hibye("italian");
+				$('#hibye-example2').hibye("italian");
+			</code>
+			<p>Now isn't that sweet and tastes like honey. Mmmm. honey...</p>
+			
+			<h2>The Benefits of Sparkle</h2>
+			<p>For our HiBye example, what could make it even better is if we use sparkle! Sparkle really saves us a lot of time, instead of having to do all those lengthy jQuery fn calls whenever we want to instantiate something, we can just add a CSS class and Sparkle will handle it automagically! Wow!</p>
+			<p>This has huge benefits especially for AJAX loaded in content, as say datepickers and timepickers for example will be instantiated automatically for their AJAX content without us having to instantiate each and every one manually! This is a serious life saver at times!</p>
+			<p>So let's see how we can do this. Firstly we want to modify our example to no longer use an <code>id</code> attribute, but instead a CSS <code>class</code>.</p>
+			<code class="code language-html">
+				&lt;p class="sparkle-hibye"&gt;&lt;/p&gt;
+			</code>
+			<p>You don't need to prefix the CSS classname with <code>sparkle-</code> but we like to as it has become a kinda convention and standard with other sparkle extensions. So now that that's done, all we need to do is add our sparkle extension. We can do this with:</p>
+			<code class="code language-javascript">
+				$.Sparkle.addExtension(
+					// Extension Name
+					"hibye",
+					// Extension Function
+					function(Sparkle, config){
+						var $this = $(this);
+						var $item = $this.findAndSelf(config.selector);
+						return $item.hibye(config.hibyeMode, config.hibyeConfig);
+					},
+					// Extension Configuration
+					{
+						selector: '.sparkle-hibye', // the selector which will be used
+						hibyeMode: 'default', // the mode to be used for hibye
+						hibyeConfig: {} // the configuration to be used for hibye
+					}
+				});
+			</code>
+			<p>Now that's all there is to it, now wherever there is a element with the class <code>sparkle-hibye</code> they will automatically be hibye'd <code>onDomReady</code>. If you are loading in AJAX content, you can use <code>$ajax_content.sparkle()</code> to sparkleify the ajax content.</p>
+			<p>But what if we are on a French website, we would want all the HiBye's to be in French! We can do this easily with:</p>
+			<code class="code language-javascript">
+				$.Sparkle.applyExtensionConfig("hibye",{
+					"hibyeMode": "french"
+				});
+			</code>
+			<p>And bang, just like that, all the sparkle instantiated HiBye's are now in french! As well as any future sparkled content!</p>
+			
+		</div>
+		
+		<div class="section">
+			<h1>Enjoy!!!</h1>
+			<p> 
+				This work is licensed under a <a rel="license" href="http://www.gnu.org/licenses/agpl.html">GNU Affero General Public License</a> &nbsp;&nbsp;|&nbsp;&nbsp; Hosting generously donated by <a href="http://www.nghosting.org/">New Generation Hosting</a><br /> 
+			</p> 
+			<br /> 
+			<form action="https://www.paypal.com/cgi-bin/webscr" method="post"><p> 
+			    <input type="hidden" name="cmd" value="_s-xclick" /> <input type="image" src="https://www.paypal.com/en_US/i/btn/x-click-but21.gif" name="submit" alt="Make payments with PayPal - it's fast, free and secure!" /> <img alt="" src="https://www.paypal.com/en_AU/i/scr/pixel.gif" width="1" height="1" /> <input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----MIIHVwYJKoZIhvcNAQcEoIIHSDCCB0QCAQExggEwMIIBLAIBADCBlDCBjjELMAkGA1UEBhMCVVMxCzAJBgNVBAgTAkNBMRYwFAYDVQQHEw1Nb3VudGFpbiBWaWV3MRQwEgYDVQQKEwtQYXlQYWwgSW5jLjETMBEGA1UECxQKbGl2ZV9jZXJ0czERMA8GA1UEAxQIbGl2ZV9hcGkxHDAaBgkqhkiG9w0BCQEWDXJlQHBheXBhbC5jb20CAQAwDQYJKoZIhvcNAQEBBQAEgYC3jC5K6NHjBsONUCSXe17THsbioh+Dr6OSMdMYd2bpKBof/tIpuxJVmurvGkjJt4YEMqInC7YmJdpSpNernyDGH6v19LNpFemsqDeN92SVTVRaE7SBKFfkMZikbTMBAKMqeQReF6+J3EFQY9K1Bhh52k2JYLJlMzHWmbjCPPrEqzELMAkGBSsOAwIaBQAwgdQGCSqGSIb3DQEHATAUBggqhkiG9w0DBwQIE5aG0EHyx+SAgbBN2K8cF5rrx2XM/AIPxGffKXJ+NiRwgJ+8nb1zZPHNcAHUwXLzz98Z64c5WU3j4UNh4+qKHHOKIND/dfpFqeL/jwD7nSK5rXUZ/ldHKeb/ygR10NlIb6jsaleDR7ksQsMMGEmQ+5jV06ktFyKTm5ZZNr8OIcWSTNgb3AL7avDk7kc8UqjXzqSROle61/vCJQQuTO1vTXxX6c2IdEAGs7izRBncpMoBinAJYscCauEZ46CCA4cwggODMIIC7KADAgECAgEAMA0GCSqGSIb3DQEBBQUAMIGOMQswCQYDVQQGEwJVUzELMAkGA1UECBMCQ0ExFjAUBgNVBAcTDU1vdW50YWluIFZpZXcxFDASBgNVBAoTC1BheVBhbCBJbmMuMRMwEQYDVQQLFApsaXZlX2NlcnRzMREwDwYDVQQDFAhsaXZlX2FwaTEcMBoGCSqGSIb3DQEJARYNcmVAcGF5cGFsLmNvbTAeFw0wNDAyMTMxMDEzMTVaFw0zNTAyMTMxMDEzMTVaMIGOMQswCQYDVQQGEwJVUzELMAkGA1UECBMCQ0ExFjAUBgNVBAcTDU1vdW50YWluIFZpZXcxFDASBgNVBAoTC1BheVBhbCBJbmMuMRMwEQYDVQQLFApsaXZlX2NlcnRzMREwDwYDVQQDFAhsaXZlX2FwaTEcMBoGCSqGSIb3DQEJARYNcmVAcGF5cGFsLmNvbTCBnzANBgkqhkiG9w0BAQEFAAOBjQAwgYkCgYEAwUdO3fxEzEtcnI7ZKZL412XvZPugoni7i7D7prCe0AtaHTc97CYgm7NsAtJyxNLixmhLV8pyIEaiHXWAh8fPKW+R017+EmXrr9EaquPmsVvTywAAE1PMNOKqo2kl4Gxiz9zZqIajOm1fZGWcGS0f5JQ2kBqNbvbg2/Za+GJ/qwUCAwEAAaOB7jCB6zAdBgNVHQ4EFgQUlp98u8ZvF71ZP1LXChvsENZklGswgbsGA1UdIwSBszCBsIAUlp98u8ZvF71ZP1LXChvsENZklGuhgZSkgZEwgY4xCzAJBgNVBAYTAlVTMQswCQYDVQQIEwJDQTEWMBQGA1UEBxMNTW91bnRhaW4gVmlldzEUMBIGA1UEChMLUGF5UGFsIEluYy4xEzARBgNVBAsUCmxpdmVfY2VydHMxETAPBgNVBAMUCGxpdmVfYXBpMRwwGgYJKoZIhvcNAQkBFg1yZUBwYXlwYWwuY29tggEAMAwGA1UdEwQFMAMBAf8wDQYJKoZIhvcNAQEFBQADgYEAgV86VpqAWuXvX6Oro4qJ1tYVIT5DgWpE692Ag422H7yRIr/9j/iKG4Thia/Oflx4TdL+IFJBAyPK9v6zZNZtBgPBynXb048hsP16l2vi0k5Q2JKiPDsEfBhGI+HnxLXEaUWAcVfCsQFvd2A1sxRr67ip5y2wwBelUecP3AjJ+YcxggGaMIIBlgIBATCBlDCBjjELMAkGA1UEBhMCVVMxCzAJBgNVBAgTAkNBMRYwFAYDVQQHEw1Nb3VudGFpbiBWaWV3MRQwEgYDVQQKEwtQYXlQYWwgSW5jLjETMBEGA1UECxQKbGl2ZV9jZXJ0czERMA8GA1UEAxQIbGl2ZV9hcGkxHDAaBgkqhkiG9w0BCQEWDXJlQHBheXBhbC5jb20CAQAwCQYFKw4DAhoFAKBdMBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkFMQ8XDTA4MDEyMzIzNTAzMVowIwYJKoZIhvcNAQkEMRYEFIkmUtmhJ9sf0UXXUI+1H3nk1a8kMA0GCSqGSIb3DQEBAQUABIGAZMISeCIePC11wppQrz1yyI1A22q+QCUZMs/4rrCii7P/AKvZV0KZ9bKOuxSovddvZ2wZPRWwFPFsx9xjKVBtvKc0lUyP/wPtPbgFcv2/QVI5Xbh/O4s6xIVLikff1tlus3JvqHxshFDubwe9+5w+LIgLIyrDIEP61COoA3B+RCQ=-----END PKCS7-----" /> 
+			</p></form> 
+			<br />
+		</div>
+		
+		<!-- Google Analytics --> 
+		<script type="text/javascript"> 
+			//<![CDATA[
+			var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+			document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+			//]]>
+		</script> 
+		<script type="text/javascript" src="./scripts/modernizr-1.5.min.js"></script> 
+		<script type="text/javascript"> 
+			//<![CDATA[
+			try {
+				var pageTracker = _gat._getTracker("UA-4446117-1");
+				pageTracker._initData();
+				pageTracker._setCustomVar(1, "html5.boxshadow", Modernizr.boxshadow ? "yes" : "no" , 2 );
+				pageTracker._setCustomVar(2, "html5.multiplebgs", Modernizr.multiplebgs ? "yes" : "no", 2 );
+				pageTracker._setCustomVar(3, "html5.fontface", Modernizr.fontface ? "yes" : "no", 2 );
+				pageTracker._setCustomVar(4, "html5.csstransitions", Modernizr.csstransitions ? "yes" : "no", 2 );
+				pageTracker._setCustomVar(5, "html5.borderradius", Modernizr.borderradius ? "yes" : "no", 2 );
+				pageTracker._trackPageview();
+			} catch(err) {}
+			//]]>
+		</script>
+		
+    </body>
+</html>

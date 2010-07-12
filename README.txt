@@ -1,5 +1,5 @@
 /**
- * jQuery Sparkle - jQuery's DRY Effect Library
+ * jQuery Sparkle - jQuery's DRY Plugin/Effect Framework
  * Copyright (C) 2009-2010 Benjamin Arthur Lupton
  * http://www.balupton.com/projects/jquery-sparkle
  *

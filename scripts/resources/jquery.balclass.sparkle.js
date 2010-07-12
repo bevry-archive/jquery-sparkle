@@ -673,7 +673,7 @@
 								continue;
 							}
 							var $demo = $(
-								'<div class="sparkle-demo-section">'+
+								'<div class="sparkle-demo-section" id="sparkle-demo-'+extension+'">'+
 									'<h3>'+extension+'<h3>'+
 								'</div>'
 							);

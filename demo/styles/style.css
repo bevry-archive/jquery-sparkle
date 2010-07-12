@@ -77,6 +77,27 @@ textarea {
     display: inline;
 }
 
+a.help {
+	text-decoration:none;
+	border-bottom:1px dotted #00E;
+}
+a.help:visited {
+	border-bottom:1px dotted #551A8B;
+}
+
+.section.about p {
+	margin:1em 0;
+}
+.section ul.features {
+	display: block;
+	list-style: disc;
+	margin-left:2em;
+}
+.section ul.features li {
+	list-style: disc;
+	display: list-item;
+}
+
 .section span.code {
     font-family: "Courier New", Courier, monospace;
     margin-left: 10px;

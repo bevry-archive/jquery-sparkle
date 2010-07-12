@@ -1,5 +1,5 @@
 /**
- * @depends jquery, jquery.balclass, bespin
+ * @depends jquery, core.console, jquery.balclass, bespin
  * @name jquery.balclass.bespin
  * @package jquery-sparkle
  */
@@ -62,10 +62,27 @@
 						Me.useBespin(element, config);
 					};
 					$(window).bind('onBespinLoad', onBespinLoad);
-					window.onBespinLoad = function(){
-						$(window).trigger('onBespinLoad');
+					
+					// Events
+					var events = {
+						onBespinLoad: function(){
+							$(window).trigger('onBespinLoad');
+						}
 					};
-	
+					
+					// Check Loaded
+					if ( bespin.bootLoaded ) {
+						// Fire Event
+						setTimeout(function(){
+							events.onBespinLoad();
+						},500);
+					}
+					else {
+						// Add Event
+						window.onBespinLoad = events.onBespinLoad;
+					}
+					// ^ we have this check as if bespin has already loaded, then the onBespinLoad will never fire!
+					
 					// Chain
 					return this;
 				},
@@ -154,7 +171,7 @@
 		
 						// Fullscreen
 						if (config.toolbar.fullscreen||false ) {
-							$fullscreen = $('<span class="bespin-toolbar-fullscreen">Fullscreen</span>');
+							$fullscreen = $('<span class="bespin-toolbar-fullscreen" title="Toggle Fullscreen"></span>');
 							$fullscreen.appendTo($toolbar);
 							$fullscreen.click(function(){
 								if ( $bespin_wrap.hasClass('bespin-fullscreen') ) {

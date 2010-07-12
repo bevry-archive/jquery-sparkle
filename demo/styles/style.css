@@ -1,3 +1,42 @@
+/* Imports*/
+@import url("./yui-reset-3.1.1-min.css");
+
+/* CSS */
+
+h1 {
+	font-size: 2em;
+	font-weight: bold;
+	margin: 0.67em 0px;
+}
+h2 {
+	font-size: 1.5em;
+	font-weight: bold;
+	margin: 0.83em 0px;
+}
+h3 {
+	font-size: 1.5em;
+	font-weight: bold;
+	margin: 0.83em 0px;
+}
+
+code.code, pre {
+	border: 5px solid #DDD;
+	padding: 7px 0 5px;
+	font-size: 14px;
+	overflow: auto;
+	max-height: 500px;
+	width: 100%;
+	white-space: pre;
+	display: block;
+}
+
+strong {
+	font-weight:bold;
+}
+em {
+	font-style:italic;
+}
+
 body {
     padding-left: 0px;
     padding-right: 0px;
@@ -12,6 +51,11 @@ p {
 
 textarea {
 	width: 100%;
+}
+
+#myBespin {
+	height:100px;
+	width:100%;
 }
 
 .section {

@@ -1,6 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html><html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title>
@@ -11,16 +9,33 @@
 		<script type="text/javascript" src="../scripts/jquery-1.4.2.min.js"></script>
 		<!-- Include Sparkle (Production) -->
 		<script type="text/javascript" src="../scripts/jquery.sparkle.js"></script>
-		<link href="../styles/jquery.sparkle.min.css" media="screen" rel="stylesheet" type="text/css" > 
+		<link href="../styles/jquery.sparkle.min.css" media="screen" rel="stylesheet" type="text/css" /> 
 		
 		<!-- Include The Demo's Requirements -->
 		<link type="text/css" rel="stylesheet" media="screen" href="./styles/style.css" />
+		
+		<!-- Bespin -->
+		<link id="bespin_base" href="./scripts/bespin-0.9a1-custom" rel="" />
+		<link href="./scripts/bespin-0.9a1-custom/BespinEmbedded.css" media="screen" rel="stylesheet" type="text/css" />
+		<script type="text/javascript" src="./scripts/bespin-0.9a1-custom/BespinEmbedded.js"></script> 
+		
+		<!-- Modernizr -->
+		<script type="text/javascript" src="./scripts/modernizr-1.5.min.js"></script> 
+		
 		<!-- jQuery UI -->
+		<link href="./scripts/jquery-ui-1.8.2/css/cupertino/jquery-ui-1.8.2.custom.css" media="screen" rel="stylesheet" type="text/css" /> 
 		<script type="text/javascript" src="./scripts/jquery-ui-1.8.2/js/jquery-ui-1.8.2.custom.min.js"></script> 
-		<link href="./scripts/jquery-ui-1.8.2/css/cupertino/jquery-ui-1.8.2.custom.css" media="screen" rel="stylesheet" type="text/css" > 
+		
 		<!-- Autogrow -->
 		<script type="text/javascript" src="./scripts/jquery.autogrow.min.js"></script> 
-		<<!-- Syntax Highlighting -->
+		
+		<!-- GetSatisfaction -->
+		<script type="text/javascript" src="http://s3.amazonaws.com/getsatisfaction.com/javascripts/feedback-v2.js"></script> 
+		<script type="text/javascript">/*<![CDATA[*/
+		var GSFN_feedback_widget = new GSFN.feedback_widget({ display: 'overlay', company: 'balupton', placement: 'hidden', color: '#222', style: 'question' });
+		/*]]>*/</script> 
+		
+		<!-- Syntax Highlighting -->
 		<script type="text/javascript" src="./scripts/jquery.beautyOfCode.min.js"></script>
 		<script type="text/javascript">/*<![CDATA[*/
 			$.beautyOfCode.init({
@@ -28,12 +43,14 @@
 				brushes: ["Xml", "JScript", "Css"]
 			}); 
 		/*]]>*/</script> 
+		
     </head>
     <body>
 		
 		<div class="section">
 			<h1>jQuery Sparkle - jQuery's DRY Effect Library</h1>
 			<h2><a href="http://github.com/balupton/jquery-sparkle/downloads" title="Download">Download</a></h2>
+			<h2><a href="http://www.balupton.com/projects/jquery-sparkle" title="Home Page">Home Page</a></h2>
 			<h2><a href="http://github.com/balupton/jquery-sparkle" title="Project Page">Project Page</a></h2>
 			<h2><a href="http://github.com/balupton/jquery-sparkle/tree/master" title="Source Code">Source Code</a></h2>
 		</div>
@@ -60,7 +77,7 @@
 		</div>
 		
 		<div class="section">
-			<h1>Using jQuery Sparkle</h1>
+			<h1>Using Sparkle Extensions</h1>
 			
 			<div class="sparkle-demo"></div>
 		</div>
@@ -206,6 +223,247 @@
 		</div>
 		
 		<div class="section">
+			<h1>Using BalClass Plugins</h1>
+			
+			<div class="sparkle-demo-section">
+				<h3>jQuery.BalClass.Bespin</h3>
+				<h4>Example Code</h4>
+				<code class="code language-html sparkle-demo-code">
+					&lt;textarea id="myBespin"&gt;
+						&lt;!-- Include Sparkle (Production) --&gt;
+						&lt;script type="text/javascript" src="http://www.yoursite.com/somewhere/on/your/webserver/jquery-sparkle/scripts/jquery.sparkle.min.js"&gt;&lt;/script&gt;
+						&lt;link href="http://www.yoursite.com/somewhere/on/your/webserver/jquery-sparkle/styles/jquery.sparkle.min.css" media="screen" rel="stylesheet" type="text/css" &gt; 
+					&lt;/textarea&gt;
+					&lt;script type="text/javascript"&gt;
+						$(function(){
+							$('#myBespin').Bespin('rich');
+						});
+					&lt;/script&gt;
+				</code>
+				<h4>Example Result</h4>
+				<div class="sparkle-demo-result">
+					<textarea id="myBespin">
+						&lt;!-- Include Sparkle (Production) --&gt;
+						&lt;script type="text/javascript" src="http://www.yoursite.com/somewhere/on/your/webserver/jquery-sparkle/scripts/jquery.sparkle.min.js"&gt;&lt;/script&gt;
+						&lt;link href="http://www.yoursite.com/somewhere/on/your/webserver/jquery-sparkle/styles/jquery.sparkle.min.css" media="screen" rel="stylesheet" type="text/css" &gt; 
+					</textarea>
+					<script type="text/javascript">
+						$(function(){
+							$('#myBespin').Bespin('rich');
+						});
+					</script>
+				</div>
+			</div>
+			
+			<div class="sparkle-demo-section">
+				<h3>jQuery.BalClass.EventCalendar</h3>
+				<h4>Example Code</h4>
+				<code class="code language-html sparkle-demo-code">
+					&lt;div id="eventCal"&gt;&lt;/div&gt;
+					&lt;div id="eventsInfo"&gt;&lt;/div&gt;
+				</code>
+				<code class="code language-javascript sparkle-demo-code">
+					$(function(){
+						var $eventCal = $('#eventCal'),
+							$eventsInfo = $('#eventsInfo');
+						var now = new Date();
+						$eventCal.EventCalendar({
+							// Ajax Variables
+							/** The JSON variable that will be return on the AJAX request which will contain our entries */
+							//ajaxEntriesVariable: 'entries',
+							/** The AJAX url to request for our entries */
+							//ajaxEntriesUrl: '',
+							/** The JSON Object to send via POST to our AJAX request */
+							//ajaxPostData: {},
+							/** Whether or not to Cache the AJAX data */
+							//ajaxCache: true,
+			
+							// Data Variables
+							/* If you are not using AJAX, you can define your entries here */
+							calendarEntries: &#91;
+								{
+									id: 1,
+									title: "My First Entry",
+									start: "2010-"+(now.getMonth()+1).padLeft('0',2)+"-14 11:11:00",
+									finish: "2010-"+(now.getMonth()+1).padLeft('0',2)+"-14 14:23:18",
+									link: 'http://www.balupton.com/projects/jquery-sparkle',
+									user: {
+										name: "Joe"
+									}
+								},
+								{
+									id: 2,
+									title: "My Second Entry",
+									start: "2010-"+(now.getMonth()+1).padLeft('0',2)+"-14 11:11:00",
+									finish: "2010-"+(now.getMonth()+1).padLeft('0',2)+"-15 14:23:18",
+									link: 'http://www.balupton.com/projects/jquery-sparkle',
+									user: {
+										name: "Joe"
+									}
+								},
+								{
+									id: 3,
+									title: "My Third Entry",
+									start: "2010-"+(now.getMonth()+2).padLeft('0',2)+"-11 11:11:00",
+									finish: "2010-"+(now.getMonth()+2).padLeft('0',2)+"-12 14:23:18",
+									user: {
+										name: "Joe"
+									}
+								},
+								{
+									id: 4,
+									title: "My Fourth Entry",
+									start: "2010-"+(now.getMonth()).padLeft('0',2)+"-15 11:11:00",
+									finish: "2010-"+(now.getMonth()).padLeft('0',2)+"-15 14:23:18",
+									user: {
+										name: "Joe"
+									}
+								}
+							&#93;,
+			
+							// Customisation Variables
+							/** The CSS class which will be assigned to the Event Calendar */
+							calendarClass: 'hasEventCalendar',
+							/** The CSS class which will be assigned to day when the day contains a entry */
+							dayEventClass: 'ui-state-active hasEvent',
+							/** The standard options to send to the datepicker */
+							datepickerOptions: {
+								firstDay: 1 /* Monday */
+							},
+							/** Whether or not to disable the datepicker date selection click */
+							disableClick: true,
+							/**
+							 * Whatever events you would like to assign to a $day
+							 * You will recieve the arguments: domEvent, day, dayEvents, monthEvents
+							 */
+							domEvents: {
+								mouseenter: function(domEvent, day, dayEvents, monthEvents) {
+									// Prepare
+									var $day = $(this);
+									// Output
+									$.each(dayEvents,function(i,event){
+										$eventsInfo.append(
+											'&lt;p&gt;'+
+												'&lt;strong&gt;'+event.title+'&lt;/strong&gt; ~'+event.user.name+'&lt;br/&gt;'+
+												'&lt;em&gt;'+event.start.toLocaleDateString()+'&lt;/em&gt; to &lt;em&gt;'+event.finish.toLocaleDateString()+'&lt;/em&gt;'+
+											'&lt;/p&gt;'
+										);
+									});
+								},
+								mouseleave: function(domEvent, day, dayEvents, monthEvents) {
+									// Clear
+									$eventsInfo.empty();
+								}
+							}
+						});
+					});
+				</code>
+				<h4>Example Result</h4>
+				<div class="sparkle-demo-result">
+					<div id="eventCal"></div>
+					<div id="eventsInfo"></div>
+					<script type="text/javascript">
+					$(function(){
+						var $eventCal = $('#eventCal'),
+							$eventsInfo = $('#eventsInfo');
+						var now = new Date();
+						$eventCal.EventCalendar({
+							// Ajax Variables
+							/** The JSON variable that will be return on the AJAX request which will contain our entries */
+							ajaxEntriesVariable: 'entries',
+							/** The AJAX url to request for our entries */
+							ajaxEntriesUrl: '',
+							/** The JSON Object to send via POST to our AJAX request */
+							ajaxPostData: {},
+							/** Whether or not to Cache the AJAX data */
+							ajaxCache: true,
+			
+							// Data Variables
+							/* If you are not using AJAX, you can define your entries here */
+							calendarEntries: [
+								{
+									id: 1,
+									title: "My First Entry",
+									start: "2010-"+(now.getMonth()+1).padLeft('0',2)+"-14 11:11:00",
+									finish: "2010-"+(now.getMonth()+1).padLeft('0',2)+"-14 14:23:18",
+									link: 'http://www.balupton.com/projects/jquery-sparkle',
+									user: {
+										name: "Joe"
+									}
+								},
+								{
+									id: 2,
+									title: "My Second Entry",
+									start: "2010-"+(now.getMonth()+1).padLeft('0',2)+"-14 11:11:00",
+									finish: "2010-"+(now.getMonth()+1).padLeft('0',2)+"-15 14:23:18",
+									link: 'http://www.balupton.com/projects/jquery-sparkle',
+									user: {
+										name: "Joe"
+									}
+								},
+								{
+									id: 3,
+									title: "My Third Entry",
+									start: "2010-"+(now.getMonth()+2).padLeft('0',2)+"-11 11:11:00",
+									finish: "2010-"+(now.getMonth()+2).padLeft('0',2)+"-12 14:23:18",
+									user: {
+										name: "Joe"
+									}
+								},
+								{
+									id: 4,
+									title: "My Fourth Entry",
+									start: "2010-"+(now.getMonth()).padLeft('0',2)+"-15 11:11:00",
+									finish: "2010-"+(now.getMonth()).padLeft('0',2)+"-15 14:23:18",
+									user: {
+										name: "Joe"
+									}
+								}
+							],
+			
+							// Customisation Variables
+							/** The CSS class which will be assigned to the Event Calendar */
+							calendarClass: 'hasEventCalendar',
+							/** The CSS class which will be assigned to day when the day contains a entry */
+							dayEventClass: 'ui-state-active hasEvent',
+							/** The standard options to send to the datepicker */
+							datepickerOptions: {
+								firstDay: 1 /* Monday */
+							},
+							/** Whether or not to disable the datepicker date selection click */
+							disableClick: true,
+							/**
+							 * Whatever events you would like to assign to a $day
+							 * You will recieve the arguments: domEvent, day, dayEvents, monthEvents
+							 */
+							domEvents: {
+								mouseenter: function(domEvent, day, dayEvents, monthEvents) {
+									// Prepare
+									var $day = $(this);
+									// Output
+									$.each(dayEvents,function(i,event){
+										$eventsInfo.append(
+											'<p>'+
+												'<strong>'+event.title+'</strong> ~'+event.user.name+'<br/>'+
+												'<em>'+event.start.toLocaleDateString()+'</em> to <em>'+event.finish.toLocaleDateString()+'</em>'+
+											'</p>'
+										);
+									});
+								},
+								mouseleave: function(domEvent, day, dayEvents, monthEvents) {
+									// Clear
+									$eventsInfo.empty();
+								}
+							}
+						});
+					});
+					</script>
+				</div>
+			</div>
+			
+		</div>
+		
+		<div class="section">
 			<h1>Enjoy!!!</h1>
 			<p> 
 				This work is licensed under a <a rel="license" href="http://www.gnu.org/licenses/agpl.html">GNU Affero General Public License</a> &nbsp;&nbsp;|&nbsp;&nbsp; Hosting generously donated by <a href="http://www.nghosting.org/">New Generation Hosting</a><br /> 
@@ -224,7 +482,6 @@
 			document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
 			//]]>
 		</script> 
-		<script type="text/javascript" src="./scripts/modernizr-1.5.min.js"></script> 
 		<script type="text/javascript"> 
 			//<![CDATA[
 			try {

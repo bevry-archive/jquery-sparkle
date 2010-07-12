@@ -1,5 +1,5 @@
 /**
- * @depends jquery, core.console, jquery.balclass
+ * @depends jquery, core.console, jquery.extra, jquery.balclass
  * @name jquery.balclass.bespin.sparkle
  * @package jquery-sparkle
  */
@@ -137,8 +137,24 @@
 					},
 					extension: function(Sparkle, config){
 						var $this = $(this);
-						var $item = $this.findAndSelf(config.selector);
-						return typeof $item.datepicker === 'undefined' ? $item : $item.datepicker(config.datepickerOptions);
+						
+						// Fetch
+						var $elements = $this.findAndSelf(config.selector);
+						if ( !$elements.length ) {
+							return true;
+						}
+						
+						// Check
+						if ( typeof $elements.timepicker === 'undefined' ) {
+							console.warn('datepicker not loaded. Did you forget to include it?');
+							return false;
+						}
+						
+						// Apply
+						$elements.datepicker(config.datepickerOptions);
+						
+						// Done
+						return true;
 					}
 				},
 				'time': {
@@ -150,8 +166,24 @@
 					},
 					extension: function(Sparkle, config){
 						var $this = $(this);
-						var $item = $this.findAndSelf(config.selector);
-						return typeof $item.timepicker === 'undefined' ? $item : $item.timepicker(config.timepickerOptions);
+						
+						// Fetch
+						var $elements = $this.findAndSelf(config.selector);
+						if ( !$elements.length ) {
+							return true;
+						}
+						
+						// Check
+						if ( typeof $elements.timepicker === 'undefined' ) {
+							console.warn('timepicker not loaded. Did you forget to include it?');
+							return false;
+						}
+						
+						// Apply
+						$elements.timepicker(config.timepickerOptions);
+						
+						// Done
+						return true;
 					}
 				},
 				'datetime': {
@@ -165,22 +197,49 @@
 					},
 					extension: function(Sparkle, config){
 						var $this = $(this);
-						var $item = $this.findAndSelf(config.selector);
-						return typeof $item.datetimepicker === 'undefined' ? $item : $item.datetimepicker({
+						
+						// Fetch
+						var $elements = $this.findAndSelf(config.selector);
+						if ( !$elements.length ) {
+							return true;
+						}
+						
+						// Check
+						if ( typeof $elements.datetimepicker === 'undefined' ) {
+							console.warn('datetimepicker not loaded. Did you forget to include it?');
+							return false;
+						}
+						
+						// Apply
+						$elements.datetimepicker({
 							datepickerOptions: Sparkle.getExtensionConfig('date').datepickerOptions,
 							timepickerOptions: Sparkle.getExtensionConfig('time').timepickerOptions
 						});
+						
+						// Done
+						return true;
 					}
 				},
 				'hide-if-empty': {
 					config: {
 						selector: '.sparkle-hide-if-empty:empty',
-						demo: '<div class="sparkle-hide-if-empty" style="border:1px solid black"></div>'+
+						demo: '<div class="sparkle-hide-if-empty" style="border:1px solid black"></div>'+"\n"+
 							  '<div class="sparkle-hide-if-empty" style="border:1px solid black">Hello World</div>'
 					},
 					extension: function(Sparkle, config) {
 						var $this = $(this);
-						return $this.findAndSelf(config.selector).hide();
+						
+						// Fetch
+						var $elements = $this.findAndSelf(config.selector);
+						if ( !$elements.length ) {
+							return true;
+						}
+						
+						// Apply
+						$elements.hide();
+						
+						// Done
+						return true;
 					}
 				},
 				'hide': {
@@ -190,7 +249,18 @@
 					},
 					extension: function(Sparkle, config) {
 						var $this = $(this);
-						return $this.findAndSelf(config.selector).removeClass(config.selector.replace('.','')).hide();
+						
+						// Fetch
+						var $elements = $this.findAndSelf(config.selector);
+						if ( !$elements.length ) {
+							return true;
+						}
+						
+						// Apply
+						$elements.removeClass(config.selector.replace('.','')).hide();
+						
+						// Done
+						return true;
 					}
 				},
 				'show': {
@@ -200,7 +270,18 @@
 					},
 					extension: function(Sparkle, config) {
 						var $this = $(this);
-						return $this.findAndSelf(config.selector).removeClass(config.selector.replace('.','')).show();
+						
+						// Fetch
+						var $elements = $this.findAndSelf(config.selector);
+						if ( !$elements.length ) {
+							return true;
+						}
+						
+						// Apply
+						$elements.removeClass(config.selector.replace('.','')).show();
+						
+						// Done
+						return true;
 					}
 				},
 				'subtle': {
@@ -220,14 +301,26 @@
 					},
 					extension: function(Sparkle, config) {
 						var $this = $(this);
-						var $subtle = $this.findAndSelf(config.selector);
-						return $subtle.css(config.css).hover(function() {
+						
+						// Fetch
+						var $elements = $this.findAndSelf(config.selector);
+						if ( !$elements.length ) {
+							return true;
+						}
+						
+						// Apply
+						var css = {};
+						$.extend(css, config.outCss, config.css);
+						$elements.css(css).opacityFix().hover(function() {
 							// Over
 							$(this).stop(true, false).animate(config.inCss, config.inSpeed);
 						}, function() {
 							// Out
 							$(this).stop(true, false).animate(config.outCss, config.outSpeed);
 						});
+						
+						// Done
+						return true;
 					}
 				},
 				'panelshower': {
@@ -240,9 +333,14 @@
 					},
 					extension: function(Sparkle, config) {
 						var $this = $(this);
+						
 						// Fetch
 						var $switches = $this.findAndSelf(config.selectorSwitch);
 						var $panels = $this.findAndSelf(config.selectorPanel);
+						if ( !$switches.length && !$panels.length ) {
+							return true;
+						}
+						
 						// Events
 						var events = {
 							clickEvent: function(event) {
@@ -258,9 +356,11 @@
 								}
 							}
 						};
+						
 						// Apply
 						$switches.once('click',events.clickEvent);
 						$panels.hide();
+						
 						// Done
 						return true;
 					}
@@ -272,16 +372,22 @@
 					},
 					extension: function(Sparkle, config){
 						var $this = $(this);
+						
 						// Fetch
-						var $els = $this.findAndSelf(config.selector);
-						// Apply
-						if ( $els.length ) {
-							if (typeof $.fn.autogrow === 'undefined') {
-								console.warn('Autogrow has failed to load.');
-								return false;
-							}
-							$els.autogrow();
+						var $elements = $this.findAndSelf(config.selector);
+						if ( !$elements.length ) {
+							return true;
 						}
+						
+						// Check
+						if (typeof $.fn.autogrow === 'undefined') {
+							console.warn('autogrow not loaded. Did you forget to include it?');
+							return false;
+						}
+						
+						// Apply
+						$elements.autogrow();
+						
 						// Done
 						return true;
 					}
@@ -293,12 +399,13 @@
 					},
 					extension: function(Sparkle, config) {
 						var $this = $(this);
+						
 						// Events
 						var events = {
 							clickEvent: function(event) {
 								if ( typeof GSFN_feedback_widget === 'undefined' ) {
-									console.warn('GSFN has failed to load.');
-									return true;
+									console.warn('GSFN not loaded. Did you forget to include it?');
+									return true; // continue with click event
 								}
 								GSFN_feedback_widget.show();
 								//event.stopPropagation();
@@ -306,10 +413,16 @@
 								return false;
 							}
 						};
+						
+						// Fetch
+						var $elements = $this.findAndSelf(config.selector);
+						if ( !$elements.length ) {
+							return true;
+						}
+						
 						// Apply
-						$(function() {
-							$this.findAndSelf(config.selector).once('click',events.clickEvent);
-						});
+						$elements.once('click',events.clickEvent);
+						
 						// Done
 						return true;
 					}
@@ -325,8 +438,13 @@
 					},
 					extension: function(Sparkle, config) {
 						var $this = $(this);
+						
 						// Fetch
 						var $inputs = $this.findAndSelf(config.selector).addClass(config.hasClass);
+						if ( !$inputs.length ) {
+							return true;
+						}
+						
 						// Events
 						var events = {
 							focusEvent: function(){
@@ -355,6 +473,7 @@
 								$inputs.trigger('focus');
 							}
 						};
+						
 						// Apply
 						if ( typeof Modernizr !== 'undefined' && Modernizr.input.placeholder ) {
 							// We Support HTML5 Hinting
@@ -376,6 +495,7 @@
 							});
 							$this.find('form').once('submit',events.submitEvent);
 						}
+						
 						// Done
 						return $this;
 					}
@@ -390,6 +510,16 @@
 					},
 					extension: function(Sparkle, config) {
 						var $this = $(this); var Sparkle = $.Sparkle;
+						
+						// Fetch
+						var $debug = $this.findAndSelf(config.selector);
+						if ( !$debug.length ) {
+							return true;
+						}
+						
+						// Apply
+						$debug.addClass(config.hasClass).find('.value:has(.var)').hide().siblings('.name,.type').addClass('link').once('singleclick',events.clickEvent).once('dblclick',events.dblclickEvent);
+						
 						// Events
 						var events = {
 							clickEvent: function(event){
@@ -407,9 +537,7 @@
 								$parent.find('.value').toggle(show);
 							}
 						};
-						// Fetch
-						var $debug = $this.findAndSelf(config.selector);
-						$debug.addClass(config.hasClass).find('.value:has(.var)').hide().siblings('.name,.type').addClass('link').once('singleclick',events.clickEvent).once('dblclick',events.dblclickEvent);
+						
 						// Done
 						return $this;
 					}
@@ -421,6 +549,13 @@
 					},
 					extension: function(Sparkle, config) {
 						var $this = $(this); var Sparkle = $.Sparkle;
+
+						// Fetch
+						var $submit = $this.findAndSelf(config.selector);
+						if ( !$submit.length ) {
+							return true;
+						}
+						
 						// Events
 						var events = {
 							clickEvent: function(event){
@@ -428,9 +563,10 @@
 								return true;
 							}
 						};
-						// Fetch
-						var $submit = $this.findAndSelf(config.selector);
+						
+						// Apply
 						$submit.once('singleclick',events.clickEvent);
+						
 						// Done
 						return $this;
 					}
@@ -442,6 +578,13 @@
 					},
 					extension: function(Sparkle, config) {
 						var $this = $(this); var Sparkle = $.Sparkle;
+						
+						// Fetch
+						var $submit = $this.findAndSelf(config.selector);
+						if ( !$submit.length ) {
+							return true;
+						}
+						
 						// Events
 						var events = {
 							clickEvent: function(event){
@@ -455,9 +598,8 @@
 								return true;
 							}
 						};
-		
-						// Fetch
-						var $submit = $this.findAndSelf(config.selector);
+						
+						// Apply
 						$submit.once('singleclick',events.clickEvent);
 						$submit.each(function(){
 							var $submit = $(this);
@@ -483,6 +625,10 @@
 						var $this = $(this); var Sparkle = $.Sparkle;
 						// Fetch
 						var $container = $this.findAndSelf(config.selector);
+						if ( !$container.length ) {
+							return true;
+						}
+						// Apply
 						var $inner = $container.findAndSelf(config.innerSelector);
 						$inner.each(function(){
 							var $this = $(this);
@@ -508,7 +654,7 @@
 						var $this = $(this); var Sparkle = $.Sparkle;
 						var $container = $this.findAndSelf(config.selector);
 						// Prepare
-						if ( $container.hasClass(config.hasClass) ) {
+						if ( $container.hasClass(config.hasClass) || !$container.length ) {
 							// Only run once
 							return true;
 						}

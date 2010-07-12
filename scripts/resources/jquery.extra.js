@@ -10,6 +10,39 @@
 (function($){
 	
 	/**
+	 * Opacity Fix for Text without Backgrounds
+	 * Fixes the text corrosion during opacity effects by forcing a background-color value on the element.
+	 * The background-color value is the the same value as the first parent div which has a background-color.
+	 * @version 1.0.0
+	 * @date June 30, 2010
+	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+	 */
+	$.fn.opacityFix = $.fn.opacityFix || function(){
+		var $this = $(this);
+		
+		// Check if this fix applies
+		var color = $this.css('background-color');
+		if ( color && color !== 'rgba(0, 0, 0, 0)' ) {
+			return this;
+		}
+		
+		// Apply the background colour of the first parent which has a background colour
+		var $parent = $this;
+		while ( $parent.inDOM() ) {
+			$parent = $parent.parent();
+			color = $parent.css('background-color');
+			if ( color && color !== 'rgba(0, 0, 0, 0)' ) {
+				$this.css('background-color',color);
+				break;
+			}
+		}
+		
+		// Chain
+		return this;
+	};
+	
+	/**
 	 * Get all elements above ourself which match the selector, and include ourself in the search
 	 * @version 1.0.0
 	 * @date June 30, 2010

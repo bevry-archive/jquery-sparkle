@@ -18,8 +18,11 @@ all:
 	$(MAKE) add;
 
 
+demo:
+	open ./demo/index.html
+
 add:
-	git add CHECKLIST.txt COPYING.txt demo Makefile README.txt scripts styles
+	git add .gitignore CHECKLIST.txt COPYING.txt demo images Makefile README.txt scripts styles
 
 push:
 	git push --all ; git push --tags ;
@@ -31,21 +34,21 @@ edithooks:
 pack:
 	cat \
 		./scripts/resources/core.array.js \
-		./scripts/resources/core.string.js \
 		./scripts/resources/core.date.js \
 		./scripts/resources/core.number.js \
-		./scripts/resources/jquery.ajaxcalendar.js \
+		./scripts/resources/core.string.js \
 		./scripts/resources/jquery.appendscriptstyle.js \
 		./scripts/resources/jquery.extra.js \
 		./scripts/resources/jquery.events.js \
 		./scripts/resources/jquery.passwordstrength.js \
 		./scripts/resources/jquery.balclass.js \
-		./scripts/resources/jquery.balclass.datetimepicker.js \
-		./scripts/resources/jquery.balclass.sparkle.js \
 		./scripts/resources/jquery.balclass.bespin.js \
+		./scripts/resources/jquery.balclass.datetimepicker.js \
+		./scripts/resources/jquery.balclass.eventcalendar.js \
+		./scripts/resources/jquery.balclass.help.js \
 		./scripts/resources/jquery.balclass.timepicker.js \
 		./scripts/resources/jquery.balclass.tinymce.js \
-		./scripts/resources/jquery.balclass.help.js \
+		./scripts/resources/jquery.balclass.sparkle.js \
 		> ./scripts/jquery.sparkle.js;
 		
 compress:

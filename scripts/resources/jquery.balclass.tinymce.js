@@ -1,5 +1,5 @@
 /**
- * @depends jquery, jquery.balclass, tinymce
+ * @depends jquery, core.console, jquery.balclass, tinymce
  * @name jquery.balclass.tinymce
  * @package jquery-sparkle
  */

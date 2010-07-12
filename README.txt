@@ -21,8 +21,8 @@
  * @name readme
  * @package jquery-sparkle
  * @category jquery-plugin
- * @version 1.2.0-beta
- * @date July 11, 2010
+ * @version 1.3.0-beta
+ * @date July 12, 2010
  * @since 1.0.0-dev (July 01, 2010)
  * @category jQuery plugin
  * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
@@ -36,13 +36,25 @@ Installation & Usage:
 1. Refer to the (demo/index.html) or http://www.balupton.com/projects/jquery-sparkle if the demo is not included.
 
 Todo:
-1. Make ajaxCalendar and passwordstrength use BalClass - Actually is this actually best, they are good the way they are...
+1. Make passwordstrength use BalClass
 
 ----
 
 Changelog:
 
-1.2.0-beta (July 11, 2010)
+1.3.0-beta (July 12, 2010)
+- Added length checks to all sparkle extensions (to prevent never-ending loops)
+- Improved demo dramatically: Now includes Bespin and EventCalendar
+- Moved $.ajaxCalendar to $.BalClass.EventCalendar now of production quality and works very well
+- Fixed bespin init issue (if bespin already loaded, would not initialise).
+- Tested in Chrome 5 OSX, Firefox 3.6 OSX, Opera 10.60 OSX
+
+1.2.1-beta (July 11, 2010)
+- Fixed typo in demo.
+- Added $.fn.opacityFix and applied to subtle sparkle.
+- Subtle sparkle now merges css and outCss for initial set.
+
+1.2.1-beta (July 11, 2010)
 - Added $.BalClass.create and $.BalClass.clone - updated BalClass extensions to use these - is it better? we have to wait to find out
 - Added demo sparkle extension
 - Added demo page, which covers installation, usage, and writing a BalClass plugin and Sparkle extension.

@@ -1,5 +1,5 @@
 /**
- * @depends jquery
+ * @depends jquery, core.console
  * @name jquery.balclass
  * @package jquery-sparkle
  */

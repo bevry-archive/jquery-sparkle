@@ -1,5 +1,5 @@
 /**
- * @depends jquery, jquery.balclass
+ * @depends jquery, core.console, jquery.balclass
  * @name jquery.balclass.datetimepicker
  * @package jquery-sparkle
  */

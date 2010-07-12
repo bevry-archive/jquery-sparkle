@@ -126,6 +126,22 @@
 		height:30px;
 		background:#4C4A41;
 		color:#D3B339;
+		position:relative;
+	}
+	div.bespin-wrap .bespin-toolbar-fullscreen {
+		cursor:pointer;
+		position:absolute;
+		right:5px;
+		top:5px;
+		width:12px;
+		height:12px;
+		display:block;
+		padding:3px;
+		border:1px solid #D3B339;
+		-webkit-border-radius: 4px 4px;
+		-moz-border-radius: 4px 4px;
+		border-radius: 4px 4px;
+		background:url("../images/bespin-fullscreen-show.gif") no-repeat 3px 3px;
 	}
 	
 	body.bespin-fullscreen {
@@ -144,3 +160,7 @@
 		top:0; right:0; left:0;
 		z-index:9999999;
 	}
+	div.bespin-wrap.bespin-fullscreen .bespin-toolbar-fullscreen {
+		background:url("../images/bespin-fullscreen-hide.gif") no-repeat 3px 3px;
+	}
+	

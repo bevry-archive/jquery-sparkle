@@ -1,0 +1,202 @@
+
+/* Disqus */
+	body #disqus_thread
+	{
+		margin-top: 20px;
+	}
+	
+	body #disqus_thread h1,
+	body #disqus_thread h2,
+	body #disqus_thread h3,
+	body #disqus_thread h4 {
+		margin:0;
+	}
+	
+	body #disqus_thread #dsq-content #dsq-subscribe a,
+	body #disqus_thread #dsq-content  #dsq-comments a,
+	body #disqus_thread #dsq-content  #dsq-new-post .dsq-request-user-info a
+	{
+		background: none !IMPORTANT;
+	}
+
+	body #disqus_thread #dsq-content #dsq-subscribe a .title,
+	body #disqus_thread #dsq-content  #dsq-comments a .title,
+	body #disqus_thread #dsq-content  #dsq-new-post .dsq-request-user-info a .title
+	{
+		-webkit-transition: none;
+		-moz-transition: none;
+		-o-transition: none;
+		transition: none;
+		color: #00ACEC;
+	}
+
+	body #disqus_thread #dsq-content #dsq-subscribe a,
+	body #disqus_thread #dsq-content #dsq-subscribe a:link, body #disqus_thread #dsq-content #dsq-subscribe a:hover, body #disqus_thread #dsq-content  #dsq-comments a, body #disqus_thread #dsq-content  #dsq-comments a:link, body #disqus_thread #dsq-content  #dsq-comments a:hover, body #disqus_thread #dsq-content  #dsq-new-post .dsq-request-user-info a, body #disqus_thread #dsq-content  #dsq-new-post .dsq-request-user-info a:link, body #disqus_thread #dsq-content  #dsq-new-post .dsq-request-user-info a:hover
+	{
+		cursor: pointer;
+		display: inline-block;
+		background: inherit;
+		text-decoration: none;
+		color: #00ACEC;
+	}
+
+	body #disqus_thread #dsq-content #dsq-subscribe a:hover, body #disqus_thread #dsq-content  #dsq-comments a:hover, body #disqus_thread #dsq-content  #dsq-new-post .dsq-request-user-info a:hover
+	{
+		background: #00ACEC;
+	}
+
+	body #disqus_thread #dsq-content #dsq-subscribe a:hover, body #disqus_thread #dsq-content #dsq-subscribe a:hover  .title, body #disqus_thread #dsq-content  #dsq-comments a:hover, body #disqus_thread #dsq-content  #dsq-comments a:hover  .title, body #disqus_thread #dsq-content  #dsq-new-post .dsq-request-user-info a:hover, body #disqus_thread #dsq-content  #dsq-new-post .dsq-request-user-info a:hover  .title
+	{
+		color: white;
+		text-decoration: none;
+	}
+
+	body #disqus_thread #dsq-content #dsq-subscribe a:hover, body #disqus_thread #dsq-content  #dsq-comments a:hover, body #disqus_thread #dsq-content  #dsq-new-post .dsq-request-user-info a:hover
+	{
+		background: #00ACEC !IMPORTANT;
+	}
+
+	body #disqus_thread #dsq-content #dsq-comments,
+	body #disqus_thread #dsq-content  #dsq-new-post
+	{
+		font-size: 16px;
+		color: #373D4A;
+	}
+
+	body #disqus_thread #dsq-content #dsq-new-post h3,
+	body #disqus_thread #dsq-content  #dsq-comments-title h3
+	{
+		font-size: 26px;
+		color: black;
+	}
+
+	body #disqus_thread #dsq-content #dsq-comments-title
+	{
+		margin-top: 20px;
+	}
+
+	body #disqus_thread #dsq-content #dsq-comments-title #dsq-num-posts
+	{
+		color: #CCC;
+	}
+
+	body #disqus_thread #dsq-content .dsq-options
+	{
+		display: none;
+	}
+
+	body #disqus_thread #dsq-content #dsq-comments .dsq-full-comment
+	{
+		border-bottom: 3px solid #EEE;
+	}
+
+	body #disqus_thread #dsq-content #dsq-comments .dsq-full-comment .dsq-comment-header
+	{
+		background-image: none;
+		background: #E5EAEF;
+	}
+
+	body #disqus_thread #dsq-content #dsq-comments .dsq-full-comment .dsq-comment-header .dsq-header-avatar
+	{
+		line-height: 0;
+	}
+
+	body #disqus_thread #dsq-content #dsq-comments .dsq-full-comment .dsq-comment-header .dsq-header-avatar a
+	{
+		padding: 4px !IMPORTANT;
+		border: none !IMPORTANT;
+	}
+
+	body #disqus_thread #dsq-content #dsq-comments .dsq-full-comment .dsq-comment-body
+	{
+		margin-left: 6px;
+	}
+
+	body #disqus_thread #dsq-content #dsq-comments .dsq-full-comment .dsq-comment-body .dsq-comment-message
+	{
+		font-size: 14px;
+		margin: 0.5em 0;
+	}
+
+	body #disqus_thread #dsq-content #dsq-comments .dsq-full-comment .dsq-comment-footer
+	{
+		margin: 0.5em 0;
+		margin-left: 6px;
+	}
+
+	body #disqus_thread #dsq-content #dsq-comments .dsq-full-comment .dsq-comment-footer .dsq-comment-footer-left
+	{
+		font-size: 12px !IMPORTANT;
+	}
+
+	body #disqus_thread #dsq-content #dsq-pagination
+	{
+		margin-bottom: 10px;
+		background: none !IMPORTANT;
+	}
+
+	body #disqus_thread #dsq-content #dsq-thread-settings
+	{
+		display: none;
+	}
+
+	body #disqus_thread #dsq-content #dsq-new-post
+	{
+		padding: 15px;
+		background-image: none;
+		background: #E5EAEF;
+		-webkit-border-radius: 8px 8px;
+		-moz-border-radius: 8px 8px;
+		border-radius: 8px 8px;
+	}
+
+	body #disqus_thread #dsq-content #dsq-new-post .dsq-login-buttons
+	{
+		background: none !IMPORTANT;
+		border-bottom: 1px solid #BBB;
+		line-height: 0;
+		padding: 0.5em 0 1em;
+	}
+
+	body #disqus_thread #dsq-content #dsq-new-post .dsq-request-user-info
+	{
+		padding-bottom: 0.5em;
+		background: none !IMPORTANT;
+		border-bottom: 1px solid #BBB;
+	}
+
+	body #disqus_thread #dsq-content #dsq-new-post .dsq-request-user-info .dsq-request-user-stats
+	{
+		font-size: 12px;
+		display: none;
+	}
+
+	body #disqus_thread #dsq-content #dsq-new-post .dsq-request-user-info .dsq-request-user-avatar
+	{
+		-webkit-border-radius: 4px 4px;
+		-moz-border-radius: 4px 4px;
+		border-radius: 4px 4px;
+		height: 35px !IMPORTANT;
+	}
+
+	body #disqus_thread #dsq-content #dsq-new-post .dsq-request-user-info table tr:first-child td:first-child
+	{
+		line-height: 0;
+	}
+
+	body #disqus_thread #dsq-content #dsq-new-post .dsq-request-user-info table tr:first-child td:first-child a:hover
+	{
+		background: none !IMPORTANT;
+	}
+
+	body #disqus_thread #dsq-content .dsq-item-trackback
+	{
+		min-height: 50px;
+		margin: 0.5em 0 1em 15px;
+		background: none;
+	}
+
+	body #disqus_thread #dsq-content .dsq-item-trackback .dsq-trackback-url
+	{
+		width: 500px;
+	}

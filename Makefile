@@ -52,7 +52,7 @@ pack:
 		> ./scripts/jquery.sparkle.js;
 		
 compress:
-	java -jar $(CLOSUREFILE) --js_output_file=./scripts/jquery.sparkle.min.js --js=./scripts/jquery.sparkle.js;
+	java -jar $(CLOSUREFILE) --create_source_map ./scripts/closure.map --js_output_file=./scripts/jquery.sparkle.min.js --js=./scripts/jquery.sparkle.js;
 	java -jar $(YUIFILE) ./styles/jquery.sparkle.css -o ./styles/jquery.sparkle.min.css
 
 build:

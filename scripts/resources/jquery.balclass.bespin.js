@@ -166,12 +166,12 @@
 	
 					// Toolbar
 					if ( config.toolbar||false ) {
-						$toolbar = $('<div class="bespin-toolbar" />');
+						var $toolbar = $('<div class="bespin-toolbar" />');
 						$toolbar.insertBefore($bespin);
 		
 						// Fullscreen
 						if (config.toolbar.fullscreen||false ) {
-							$fullscreen = $('<span class="bespin-toolbar-fullscreen" title="Toggle Fullscreen"></span>');
+							var $fullscreen = $('<span class="bespin-toolbar-fullscreen" title="Toggle Fullscreen"></span>');
 							$fullscreen.appendTo($toolbar);
 							$fullscreen.click(function(){
 								if ( $bespin_wrap.hasClass('bespin-fullscreen') ) {

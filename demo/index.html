@@ -13,6 +13,12 @@
 		
 		<!-- Include The Demo's Requirements -->
 		<link type="text/css" rel="stylesheet" media="screen" href="./styles/style.css" />
+    </head>
+    <body>
+		<!-- JSON -->
+		<script type="text/javascript"> 
+		if ( typeof JSON === "undefined" ) $.appendScript("./scripts/json2.min.js");
+		</script>
 		
 		<!-- Bespin -->
 		<link id="bespin_base" href="./scripts/bespin-0.9a1-custom" rel="" />
@@ -43,8 +49,6 @@
 		<script type="text/javascript">/*<![CDATA[*/
 		var GSFN_feedback_widget = new GSFN.feedback_widget({ display: 'overlay', company: 'balupton', placement: 'right', color: '#222', style: 'question' });
 		/*]]>*/</script> 
-    </head>
-    <body>
 		
 		<div class="section links" id="links">
 			<h1>jQuery Sparkle - jQuery's DRY Plugin/Effect Framework</h1>
@@ -56,17 +60,24 @@
 		</div>
 		
 		<div class="section about" id="about">
-			<h1>About</h1>
+			<h2>About</h2>
 			
 			<p><strong>jQuery Sparkle</strong> is a simple but powerful DRY Plugin/Effect Framework aimed to simplify your jQuery development such that you no longer have to repeat yourself.</p>
 
 			<p>It already includes such extensions as:</p>
 			<ul class="features">
-				<li><a href="#eventcalendar" title="View the EventCalendar Demo">EventCalendar</a> built upon the <a href="http://jqueryui.com/demos/datepicker/" title="View jQuery UI's Demo" target="_blank" class="help extern">jQuery UI DatePicker</a>. (It also supports AJAX for loading events)</li>
-				<li><a href="#bespin" title="View the Bespin Demo">jQuery Plugins</a> for the <a href="http://mozillalabs.com/bespin/" title="Find out More about Bespin" target="_blank" class="help extern">Bespin</a> and <a href="http://tinymce.moxiecode.com/" title="Find out More about Bespin" target="_blank" class="help extern">TinyMCE</a> <a href="http://en.wikipedia.org/wiki/WYSIWYG" title="Learn more about What-You-See-Is-What-You-Get" target="_blank" class="help extern">WYSIWYG</a> editors</a></li>
-				<li>A PasswordStrength indicator</li>
-				<li>A <a href="#sparkle-demo-time" title="View the TimePicker Demo">TimePicker</a> and <a href="#sparkle-demo-datetime" title="View the DateTimePicker Demo">DateTimePicker</a></li>
-				<li><a href="#sparkle-demo-hint" title="View the Placeholder/Hint Demo">Graceful degradation</a> for HTML5's <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/common-input-element-attributes.html#the-placeholder-attribute" title="Learn more about HTML5's Placeholder attribute" target="_blank" class="help extern">placeholder</a> attribute</li>
+				<li>An <a href="#eventcalendar" title="View the EventCalendar Demo">EventCalendar</a> built upon the <a href="http://jqueryui.com/demos/datepicker/" title="View jQuery UI's Demo" target="_blank" class="help extern">jQuery UI DatePicker</a>. (It also supports AJAX for loading events).</li>
+				<li><a href="#bespin" title="View the Bespin Demo">jQuery Plugins</a> for the <a href="http://mozillalabs.com/bespin/" title="Find out More about Bespin" target="_blank" class="help extern">Bespin</a> and <a href="http://tinymce.moxiecode.com/" title="Find out More about Bespin" target="_blank" class="help extern">TinyMCE</a> <a href="http://en.wikipedia.org/wiki/WYSIWYG" title="Learn more about What-You-See-Is-What-You-Get" target="_blank" class="help extern">WYSIWYG</a> editors.</li>
+				<li>A PasswordStrength indicator.</li>
+				<li>A <a href="#sparkle-demo-time" title="View the TimePicker Demo">TimePicker</a> and <a href="#sparkle-demo-datetime" title="View the DateTimePicker Demo">DateTimePicker</a>.</li>
+				<li>Automatic <a href="#sparkle-demo-hint" title="View the Placeholder/Hint Demo">Graceful Degradation</a> for HTML5's <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/common-input-element-attributes.html#the-placeholder-attribute" title="Learn more about HTML5's Placeholder attribute" target="_blank" class="help extern">placeholder</a> attribute.</li>
+				<li><a href="#prototype-queryStringToJSON" title="View the queryStringToJSON Demo">String.prototype.queryStringToJSON</a> to easily convert a QueryString into a JSON Object. Eg. "file.js?a=1" to {a:1}</li>
+				<li><a href="#prototype-toSlug" title="View the toSlug Demo">String.prototype.toSlug</a> to easily convert a String into a Slug. Eg. "Hello World" to "hello-world"</li>
+				<li>A <a href="#event-enter" title="View the Enter event Demo">Enter Event</a> to easily capture ENTER key presses.</li>
+				<li>A <a href="#event-cancel" title="View the Cancel event Demo">Cancel Event</a> to easily capture ESCAPE key presses.</li>
+				<li>A <a href="#event-lastclick" title="View the LastClick event Demo">LastClick Event</a> to easily capture the last click of a series of clicks.</li>
+				<li>A <a href="#event-firstclick" title="View the FirstClick event Demo">FirstClick Event</a> to easily capture the first click of a series of clicks.</li>
+				<li>A <a href="#event-singleclick" title="View the SingleClick event Demo">SingleClick Event</a> to easily capture a single click. Unlike the builtin click which fires for each and every click.</li>
 			</ul>
 			
 			<p>But at it's core it is mostly just a framework to allow you to develop faster, utilising the <a href="http://en.wikipedia.org/wiki/Don't_repeat_yourself" title="Learn more about DRY ideology" target="_blank" class="help extern">Don't-Repeat-Yourself</a> ideology.</p>
@@ -74,19 +85,21 @@
 		</div>
 		
 		<div class="section install" id="install">
-			<h1>Installation</h1>
+			<h2>Installation</h2>
 			
-			<h2>Step 1. Download jQuery Sparkle, and extract it to your hard drive</h2>
+			<h3>Step 1. Download jQuery Sparkle, and extract it to your hard drive</h3>
 			
-			<h2>Step 2. Move the extracted <code>jquery-sparkle</code> directory to somewhere on your webserver</h2>
+			<h3>Step 2. Move the extracted <code>jquery-sparkle</code> directory to somewhere on your webserver</h3>
+			<p>If all the files were extracted without being in a directory, create a new directory called <code>jquery-sparkle</code> and place the extracted files in that.</p>
 				
-			<h2>Step 3. Include jQuery (insert into your page's head tag)</h2>
+			<h3>Step 3. Include jQuery (insert into your page's head tag)</h3>
+			<p>If your page already has jQuery included then you can skip this step.</p>
 			<code class="code language-html">
 				&lt;!-- Include jQuery (Sparkle Requirement) --&gt;
 				&lt;script type="text/javascript" src="http://www.yoursite.com/somewhere/on/your/webserver/jquery-sparkle/scripts/jquery-1.4.2.min.js"&gt;&lt;/script&gt;
 			</code>
 			
-			<h2>Step 4. Include jQuery Sparkle (insert into your page's head tag)</h2>
+			<h3>Step 4. Include jQuery Sparkle (insert into your page's head tag)</h3>
 			<code class="code language-html">
 				&lt;!-- Include Sparkle (Production) --&gt;
 				&lt;script type="text/javascript" src="http://www.yoursite.com/somewhere/on/your/webserver/jquery-sparkle/scripts/jquery.sparkle.min.js"&gt;&lt;/script&gt;
@@ -95,15 +108,319 @@
 		</div>
 		
 		<div class="section demo" id="demo">
-			<h1>Using Sparkle Extensions</h1>
+			<h2>Using Sparkle Extensions</h2>
 			
 			<div class="sparkle-demo"></div>
 		</div>
 		
-		<div class="section using" id="using">
-			<h1>Using BalClass</h1>
+		<div class="section protoypes" id="events">
+			<h2>Using Included Prototype Functions</h2>
 			
-			<h2>The Benefits of BalClass</h2>
+			<div class="sparkle-demo-section" id="prototype-queryStringToJSON">
+				<h3>String.prototype.queryStringToJSON</h3>
+				<h4>Example Code</h4>
+				<code class="code language-html sparkle-demo-code">
+					&lt;textarea id="sparkle-demo-queryStringToJSON-input"&gt;file.js?a=1&amp;amp;b.c=3.1&amp;b.d=four&amp;a_false_value=false&amp;a_null_value=null&lt;/textarea&gt;
+					&lt;textarea id="sparkle-demo-queryStringToJSON-result"&gt;&lt;/textarea&gt;
+					&lt;button id="sparkle-demo-queryStringToJSON-update"&gt;Update Result&lt;/button&gt;
+				</code>
+				<code class="code language-javascript sparkle-demo-code">
+					$(function(){
+						var $input = $('#sparkle-demo-queryStringToJSON-input'),
+							$result = $('#sparkle-demo-queryStringToJSON-result'),
+							$update = $('#sparkle-demo-queryStringToJSON-update');
+						$update.click(function(){
+							var val = new String($input.val());
+							$result.val(JSON.stringify(val.queryStringToJSON()));
+						}).trigger('click');
+					});
+				</code>
+				<h4>Example Result</h4>
+				<div class="sparkle-demo-result">
+					<textarea id="sparkle-demo-queryStringToJSON-input">file.js?a=1&amp;amp;b.c=3.1&amp;b.d=four&amp;a_false_value=false&amp;a_null_value=null</textarea>
+					<textarea id="sparkle-demo-queryStringToJSON-result"></textarea>
+					<button id="sparkle-demo-queryStringToJSON-update">Update Result</button>
+					<script type="text/javascript">
+					$(function(){
+						var $input = $('#sparkle-demo-queryStringToJSON-input'),
+							$result = $('#sparkle-demo-queryStringToJSON-result'),
+							$update = $('#sparkle-demo-queryStringToJSON-update');
+						$update.click(function(){
+							var val = new String($input.val());
+							$result.val(JSON.stringify(val.queryStringToJSON()));
+						}).trigger('click');
+					});
+					</script>
+				</div>
+			</div>
+			
+			<div class="sparkle-demo-section" id="prototype-toSlug">
+				<h3>String.prototype.toSlug</h3>
+				<h4>Example Code</h4>
+				<code class="code language-html sparkle-demo-code">
+					&lt;textarea id="sparkle-demo-toSlug-input"&gt; This is a post about special chars: !@#$%^*()+&lt;/textarea&gt;
+					&lt;textarea id="sparkle-demo-toSlug-result"&gt;&lt;/textarea&gt;
+					&lt;button id="sparkle-demo-toSlug-update"&gt;Update Result&lt;/button&gt;
+				</code>
+				<code class="code language-javascript sparkle-demo-code">
+					$(function(){
+						var $input = $('#sparkle-demo-toSlug-input'),
+							$result = $('#sparkle-demo-toSlug-result'),
+							$update = $('#sparkle-demo-toSlug-update');
+						$update.click(function(){
+							var val = new String($input.val());
+							$result.val(val.toSlug());
+						}).trigger('click');
+					});
+				</code>
+				<h4>Example Result</h4>
+				<div class="sparkle-demo-result">
+					<textarea id="sparkle-demo-toSlug-input"> This is a post about special chars: !@#$%^*()+</textarea>
+					<textarea id="sparkle-demo-toSlug-result"></textarea>
+					<button id="sparkle-demo-toSlug-update">Update Result</button>
+					<script type="text/javascript">
+					$(function(){
+						var $input = $('#sparkle-demo-toSlug-input'),
+							$result = $('#sparkle-demo-toSlug-result'),
+							$update = $('#sparkle-demo-toSlug-update');
+						$update.click(function(){
+							var val = new String($input.val());
+							$result.val(val.toSlug());
+						}).trigger('click');
+					});
+					</script>
+				</div>
+			</div>
+		</div>
+			
+		<div class="section events" id="events">
+			<h2>Using Included Custom Events</h2>
+			
+			<div class="sparkle-demo-section" id="event-enter">
+				<h3>enter</h3>
+				<h4>Example Code</h4>
+				<code class="code language-html sparkle-demo-code">
+					&lt;textarea id="sparkle-demo-enter-input"&gt;&lt;/textarea&gt;
+					&lt;textarea id="sparkle-demo-enter-result"&gt;&lt;/textarea&gt;
+					&lt;button id="sparkle-demo-enter-clear"&gt;Clear Result&lt;/button&gt;
+				</code>
+				<code class="code language-javascript sparkle-demo-code">
+					$(function(){
+						var $input = $('#sparkle-demo-enter-input'),
+							$result = $('#sparkle-demo-enter-result'),
+							$clear = $('#sparkle-demo-enter-clear');
+						//$input.enter(function(){
+						$input.bind('enter', function(){
+							$result.val("Enter was pressed.\n"+$result.val());
+						});
+						$clear.click(function(){
+							$result.val('');
+						});
+					});
+				</code>
+				<h4>Example Result</h4>
+				<div class="sparkle-demo-result">
+					<textarea id="sparkle-demo-enter-input"></textarea>
+					<textarea id="sparkle-demo-enter-result"></textarea>
+					<button id="sparkle-demo-enter-clear">Clear Result</button>
+					<script type="text/javascript">
+					$(function(){
+						var $input = $('#sparkle-demo-enter-input'),
+							$result = $('#sparkle-demo-enter-result'),
+							$clear = $('#sparkle-demo-enter-clear');
+						//$input.enter(function(){
+						$input.bind('enter', function(){
+							$result.val("Enter was pressed.\n"+$result.val());
+						});
+						$clear.click(function(){
+							$result.val('');
+						});
+					});
+					</script>
+				</div>
+			</div>
+			
+			<div class="sparkle-demo-section" id="event-cancel">
+				<h3>cancel</h3>
+				<h4>Example Code</h4>
+				<code class="code language-html sparkle-demo-code">
+					&lt;textarea id="sparkle-demo-cancel-input"&gt;&lt;/textarea&gt;
+					&lt;textarea id="sparkle-demo-cancel-result"&gt;&lt;/textarea&gt;
+					&lt;button id="sparkle-demo-cancel-clear"&gt;Clear Result&lt;/button&gt;
+				</code>
+				<code class="code language-javascript sparkle-demo-code">
+					$(function(){
+						var $input = $('#sparkle-demo-cancel-input'),
+							$result = $('#sparkle-demo-cancel-result'),
+							$clear = $('#sparkle-demo-cancel-clear');
+						//$input.cancel(function(){
+						$input.bind('cancel', function(){
+							$result.val("ESC was pressed.\n"+$result.val());
+						});
+						$clear.click(function(){
+							$result.val('');
+						});
+					});
+				</code>
+				<h4>Example Result</h4>
+				<div class="sparkle-demo-result">
+					<textarea id="sparkle-demo-cancel-input"></textarea>
+					<textarea id="sparkle-demo-cancel-result"></textarea>
+					<button id="sparkle-demo-cancel-clear">Clear Result</button>
+					<script type="text/javascript">
+					$(function(){
+						var $input = $('#sparkle-demo-cancel-input'),
+							$result = $('#sparkle-demo-cancel-result'),
+							$clear = $('#sparkle-demo-cancel-clear');
+						//$input.cancel(function(){
+						$input.bind('cancel', function(){
+							$result.val("ESC was pressed.\n"+$result.val());
+						});
+						$clear.click(function(){
+							$result.val('');
+						});
+					});
+					</script>
+				</div>
+			</div>
+			
+			<div class="sparkle-demo-section" id="event-lastclick">
+				<h3>lastclick</h3>
+				<h4>Example Code</h4>
+				<code class="code language-html sparkle-demo-code">
+					&lt;button id="sparkle-demo-lastclick-input"&gt;Click Me&lt;/button&gt;
+					&lt;textarea id="sparkle-demo-lastclick-result"&gt;&lt;/textarea&gt;
+					&lt;button id="sparkle-demo-lastclick-clear"&gt;Clear Result&lt;/button&gt;
+				</code>
+				<code class="code language-javascript sparkle-demo-code">
+					$(function(){
+						var $input = $('#sparkle-demo-lastclick-input'),
+							$result = $('#sparkle-demo-lastclick-result'),
+							$clear = $('#sparkle-demo-lastclick-clear');
+						//$input.lastclick(function(){
+						$input.bind('lastclick', function(){
+							$result.val("lastclick performed.\n"+$result.val());
+						});
+						$clear.click(function(){
+							$result.val('');
+						});
+					});
+				</code>
+				<h4>Example Result</h4>
+				<div class="sparkle-demo-result">
+					<button id="sparkle-demo-lastclick-input">Click Me</button>
+					<textarea id="sparkle-demo-lastclick-result"></textarea>
+					<button id="sparkle-demo-lastclick-clear">Clear Result</button>
+					<script type="text/javascript">
+					$(function(){
+						var $input = $('#sparkle-demo-lastclick-input'),
+							$result = $('#sparkle-demo-lastclick-result'),
+							$clear = $('#sparkle-demo-lastclick-clear');
+						//$input.lastclick(function(){
+						$input.bind('lastclick', function(event,clicks){
+							$result.val("lastclick performed. Clicked ["+clicks+"] times.\n"+$result.val());
+						});
+						$clear.click(function(){
+							$result.val('');
+						});
+					});
+					</script>
+				</div>
+			</div>
+			
+			<div class="sparkle-demo-section" id="event-firstclick">
+				<h3>firstclick</h3>
+				<h4>Example Code</h4>
+				<code class="code language-html sparkle-demo-code">
+					&lt;button id="sparkle-demo-firstclick-input"&gt;Click Me&lt;/button&gt;
+					&lt;textarea id="sparkle-demo-firstclick-result"&gt;&lt;/textarea&gt;
+					&lt;button id="sparkle-demo-firstclick-clear"&gt;Clear Result&lt;/button&gt;
+				</code>
+				<code class="code language-javascript sparkle-demo-code">
+					$(function(){
+						var $input = $('#sparkle-demo-firstclick-input'),
+							$result = $('#sparkle-demo-firstclick-result'),
+							$clear = $('#sparkle-demo-firstclick-clear');
+						//$input.firstclick(function(){
+						$input.bind('firstclick', function(){
+							$result.val("firstclick performed.\n"+$result.val());
+						});
+						$clear.click(function(){
+							$result.val('');
+						});
+					});
+				</code>
+				<h4>Example Result</h4>
+				<div class="sparkle-demo-result">
+					<button id="sparkle-demo-firstclick-input">Click Me</button>
+					<textarea id="sparkle-demo-firstclick-result"></textarea>
+					<button id="sparkle-demo-firstclick-clear">Clear Result</button>
+					<script type="text/javascript">
+					$(function(){
+						var $input = $('#sparkle-demo-firstclick-input'),
+							$result = $('#sparkle-demo-firstclick-result'),
+							$clear = $('#sparkle-demo-firstclick-clear');
+						//$input.firstclick(function(){
+						$input.bind('firstclick', function(){
+							$result.val("firstclick performed.\n"+$result.val());
+						});
+						$clear.click(function(){
+							$result.val('');
+						});
+					});
+					</script>
+				</div>
+			</div>
+			
+			<div class="sparkle-demo-section" id="event-singleclick">
+				<h3>singleclick</h3>
+				<h4>Example Code</h4>
+				<code class="code language-html sparkle-demo-code">
+					&lt;button id="sparkle-demo-singleclick-input"&gt;Click Me&lt;/button&gt;
+					&lt;textarea id="sparkle-demo-singleclick-result"&gt;&lt;/textarea&gt;
+					&lt;button id="sparkle-demo-singleclick-clear"&gt;Clear Result&lt;/button&gt;
+				</code>
+				<code class="code language-javascript sparkle-demo-code">
+					$(function(){
+						var $input = $('#sparkle-demo-singleclick-input'),
+							$result = $('#sparkle-demo-singleclick-result'),
+							$clear = $('#sparkle-demo-singleclick-clear');
+						//$input.singleclick(function(){
+						$input.bind('singleclick', function(){
+							$result.val("Singleclick performed.\n"+$result.val());
+						});
+						$clear.click(function(){
+							$result.val('');
+						});
+					});
+				</code>
+				<h4>Example Result</h4>
+				<div class="sparkle-demo-result">
+					<button id="sparkle-demo-singleclick-input">Click Me</button>
+					<textarea id="sparkle-demo-singleclick-result"></textarea>
+					<button id="sparkle-demo-singleclick-clear">Clear Result</button>
+					<script type="text/javascript">
+					$(function(){
+						var $input = $('#sparkle-demo-singleclick-input'),
+							$result = $('#sparkle-demo-singleclick-result'),
+							$clear = $('#sparkle-demo-singleclick-clear');
+						//$input.singleclick(function(){
+						$input.bind('singleclick', function(){
+							$result.val("Singleclick performed.\n"+$result.val());
+						});
+						$clear.click(function(){
+							$result.val('');
+						});
+					});
+					</script>
+				</div>
+			</div>
+		</div>
+		
+		<div class="section using" id="using">
+			<h2>Using BalClass</h2>
+			
+			<h3>The Benefits of BalClass</h3>
 			<p>The major benefits of using BalClass is that you can easily work with multiple configurations for your plugin, as well as making it easily extensible by other developers. For example we can do this to have our plugin easily translatable:</p>
 			<code class="code language-javascript">
 				if ( !($.HiBye||false) ) {
@@ -203,7 +520,7 @@
 			</code>
 			<p>Now isn't that sweet and tastes like honey. Mmmm. honey...</p>
 			
-			<h2>The Benefits of Sparkle</h2>
+			<h3>The Benefits of Sparkle</h3>
 			<p>For our HiBye example, what could make it even better is if we use sparkle! Sparkle really saves us a lot of time, instead of having to do all those lengthy jQuery fn calls whenever we want to instantiate something, we can just add a CSS class and Sparkle will handle it automagically! Wow!</p>
 			<p>This has huge benefits especially for AJAX loaded in content, as say datepickers and timepickers for example will be instantiated automatically for their AJAX content without us having to instantiate each and every one manually! This is a serious life saver at times!</p>
 			<p>So let's see how we can do this. Firstly we want to modify our example to no longer use an <code>id</code> attribute, but instead a CSS <code>class</code>.</p>
@@ -241,7 +558,7 @@
 		</div>
 		
 		<div class="section plugins" id="plugins">
-			<h1>Using BalClass Plugins</h1>
+			<h2>Using BalClass Plugins</h2>
 			
 			<div class="sparkle-demo-section" id="bespin">
 				<h3>jQuery.BalClass.Bespin</h3>
@@ -478,7 +795,7 @@
 		</div>
 		
 		<div class="section">
-			<h1>Enjoy!!!</h1>
+			<h2>Enjoy!!!</h2>
 			<p> 
 				This work is licensed under a <a rel="license" href="http://www.gnu.org/licenses/agpl.html">GNU Affero General Public License</a> &nbsp;&nbsp;|&nbsp;&nbsp; Hosting generously donated by <a href="http://www.nghosting.org/">New Generation Hosting</a><br /> 
 			</p> 

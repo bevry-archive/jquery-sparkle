@@ -11,3 +11,4 @@ All Projects:
 - To push; use [git push --all] then [git push --tags]
 
 Project Specific:
+- Have you remembered to set it back to the minified version in the demo?

@@ -75,13 +75,15 @@
 			// Prepare
 			var $el = $(this);
 			// Setup
-			if ( event.keyCode !== 13 ) { // Enter
-				return;
+			var enterKey = event.keyCode === 13;
+			if ( enterKey ) {
+				// Our event
+				event.type = 'enter';
+				$.event.handle.apply(this, [event]);
+				return true;
 			}
-			// Fire
-			event.type = 'cancel';
-			$.event.handle.apply(this, arguments);
-			return true;
+			// Not our event
+			return;
 		}
 	};
 	
@@ -97,29 +99,154 @@
 	};
 	$.event.special.cancel = $.event.special.cancel || {
 		setup: function( data, namespaces ) {
-			$(this).bind('keypress', $.event.special.cancel.handler);
+			$(this).bind('keyup', $.event.special.cancel.handler);
 		},
 		teardown: function( namespaces ) {
-			$(this).unbind('keypress', $.event.special.cancel.handler);
+			$(this).unbind('keyup', $.event.special.cancel.handler);
 		},
 		handler: function( event ) {
 			// Prepare
 			var $el = $(this);
 			// Setup
-			if ( event.keyCode !== 27 ) { // ESC
-				return;
+			var moz = typeof event.DOM_VK_ESCAPE === 'undefined' ? false : event.DOM_VK_ESCAPE;
+			var escapeKey = event.keyCode === 27;
+			if ( moz || escapeKey ) {
+				// Our event
+				event.type = 'cancel';
+				$.event.handle.apply(this, [event]);
+				return true;
 			}
+			// Not our event
+			return;
+		}
+	};
+	
+	/**
+	 * Event for the last click for a series of one or more clicks
+	 * @version 1.0.0
+	 * @date July 16, 2010
+	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+	 */
+	$.fn.lastclick = $.fn.lastclick || function(data,callback){
+		return $(this).binder('lastclick',data,callback);
+	};
+	$.event.special.lastclick = $.event.special.lastclick || {
+		setup: function( data, namespaces ) {
+			$(this).bind('click', $.event.special.lastclick.handler);
+		},
+		teardown: function( namespaces ) {
+			$(this).unbind('click', $.event.special.lastclick.handler);
+		},
+		handler: function( event ) {
+			// Setup
+			var clear = function(){
+				// Fetch
+				var Me = this;
+				var $el = $(Me);
+				// Fetch Timeout
+				var timeout = $el.data('lastclick-timeout')||false;
+				// Clear Timeout
+				if ( timeout ) {
+					clearTimeout(timeout);
+				}
+				timeout = false;
+				// Store Timeout
+				$el.data('lastclick-timeout',timeout);
+			};
+			var check = function(event){
+				// Fetch
+				var Me = this;
+				clear.call(Me);
+				var $el = $(Me);
+				// Store the amount of times we have been clicked
+				$el.data('lastclick-clicks', ($el.data('lastclick-clicks')||0)+1);
+				// Handle Timeout for when All Clicks are Completed
+				var timeout = setTimeout(function(){
+					// Fetch Clicks Count
+					var clicks = $el.data('lastclick-clicks');
+					// Clear Timeout
+					clear.apply(Me,[event]);
+					// Reset Click Count
+					$el.data('lastclick-clicks',0);
+					// Fire Event
+					event.type = 'lastclick';
+					$.event.handle.apply(Me, [event,clicks])
+				},500);
+				// Store Timeout
+				$el.data('lastclick-timeout',timeout);
+			};
 			// Fire
-			event.type = 'cancel';
-			$.event.handle.apply(this, arguments);
-			return true;
+			check.apply(this,[event]);
+		}
+	};
+	
+	/**
+	 * Event for the first click for a series of one or more clicks
+	 * @version 1.0.0
+	 * @date July 16, 2010
+	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+	 */
+	$.fn.firstclick = $.fn.firstclick || function(data,callback){
+		return $(this).binder('firstclick',data,callback);
+	};
+	$.event.special.firstclick = $.event.special.firstclick || {
+		setup: function( data, namespaces ) {
+			$(this).bind('click', $.event.special.firstclick.handler);
+		},
+		teardown: function( namespaces ) {
+			$(this).unbind('click', $.event.special.firstclick.handler);
+		},
+		handler: function( event ) {
+			// Setup
+			var clear = function(event){
+				// Fetch
+				var Me = this;
+				var $el = $(Me);
+				// Fetch Timeout
+				var timeout = $el.data('firstclick-timeout')||false;
+				// Clear Timeout
+				if ( timeout ) {
+					clearTimeout(timeout);
+				}
+				timeout = false;
+				// Store Timeout
+				$el.data('firstclick-timeout',timeout);
+			};
+			var check = function(event){
+				// Fetch
+				var Me = this;
+				clear.call(Me);
+				var $el = $(Me);
+				// Update the amount of times we have been clicked
+				$el.data('firstclick-clicks', ($el.data('firstclick-clicks')||0)+1);
+				// Check we are the First of the series of many
+				if ( $el.data('firstclick-clicks') === 1 ) {
+					// Fire Event
+					event.type = 'firstclick';
+					$.event.handle.apply(Me, [event])
+				}
+				// Handle Timeout for when All Clicks are Completed
+				var timeout = setTimeout(function(){
+					// Clear Timeout
+					clear.apply(Me,[event]);
+					// Reset Click Count
+					$el.data('firstclick-clicks',0);
+				},500);
+				// Store Timeout
+				$el.data('firstclick-timeout',timeout);
+			};
+			// Fire
+			check.apply(this,[event]);
 		}
 	};
 	
 	/**
 	 * Event for performing a singleclick
-	 * @version 1.0.0
-	 * @date June 30, 2010
+	 * @version 1.1.0
+	 * @date July 16, 2010
+	 * @since 1.0.0, June 30, 2010
 	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
 	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
 	 */
@@ -134,22 +261,49 @@
 			$(this).unbind('click', $.event.special.singleclick.handler);
 		},
 		handler: function( event ) {
-			// Prepare
-			var $el = $(this);
 			// Setup
-			$el.data('clicking', $el.data('clicking')||'no');
-			if ( $el.data('clicking') === 'yes' ) {
-				return;
-			} else {
-				$el.data('clicking', 'yes');
-				setTimeout(function(){
-					$el.data('clicking', 'no');
-				},	500);
-			}
+			var clear = function(event){
+				// Fetch
+				var Me = this;
+				var $el = $(Me);
+				// Fetch Timeout
+				var timeout = $el.data('singleclick-timeout')||false;
+				// Clear Timeout
+				if ( timeout ) {
+					clearTimeout(timeout);
+				}
+				timeout = false;
+				// Store Timeout
+				$el.data('singleclick-timeout',timeout);
+			};
+			var check = function(event){
+				// Fetch
+				var Me = this;
+				clear.call(Me);
+				var $el = $(Me);
+				// Update the amount of times we have been clicked
+				$el.data('singleclick-clicks', ($el.data('singleclick-clicks')||0)+1);
+				// Handle Timeout for when All Clicks are Completed
+				var timeout = setTimeout(function(){
+					// Fetch Clicks Count
+					var clicks = $el.data('singleclick-clicks');
+					// Clear Timeout
+					clear.apply(Me,[event]);
+					// Reset Click Count
+					$el.data('singleclick-clicks',0);
+					// Check Click Status
+					if ( clicks === 1 ) {
+						// There was only a single click performed
+						// Fire Event
+						event.type = 'singleclick';
+						$.event.handle.apply(Me, [event])
+					}
+				},500);
+				// Store Timeout
+				$el.data('singleclick-timeout',timeout);
+			};
 			// Fire
-			event.type = 'singleclick';
-			$.event.handle.apply(this, arguments);
-			return true;
+			check.apply(this,[event]);
 		}
 	};
 	

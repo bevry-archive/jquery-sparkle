@@ -611,21 +611,26 @@ String.prototype.wrapSelection = String.prototype.wrapSelection || function(star
 
 /**
  * Return a new string of the slug of the old string
- * @version 1.0.0
- * @date June 30, 2010
+ * @version 1.1.0
+ * @date July 16, 2010
+ * @since 1.0.0, June 30, 2010
  * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
  * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
 String.prototype.toSlug = String.prototype.toSlug || function(){
 	// Convert a string to a slug
-	return this.toLowerCase().replace(/[\s_]/g, '-').replace(/[^-a-z0-9]/g, '').replace(/--+/g, '-');
+	return this.toLowerCase().replace(/[\s_]/g, '-').replace(/[^-a-z0-9]/g, '').replace(/--+/g, '-').replace(/^-+|-+$/g,'');
 }
 
 /**
  * Return a new JSON object of the old string.
- * Turning 'a=b&c.e=d' to {a:'b',c:{e:'d'}}
- * @version 1.0.0
- * @date June 30, 2010
+ * Turns:
+ * 		file.js?a=1&amp;b.c=3.0&b.d=four&a_false_value=false&a_null_value=null
+ * Into:
+ * 		{"a":1,"b":{"c":3,"d":"four"},"a_false_value":false,"a_null_value":null}
+ * @version 1.1.0
+ * @date July 16, 2010
+ * @since 1.0.0, June 30, 2010
  * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
  * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
@@ -644,7 +649,7 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 		return eval(decodeURIComponent(params));
 	}
 	// We have a params string
-	params = params.split(/\&|\&amp\;/);
+	params = params.split(/\&(amp\;)?/);
 	var json = {};
 	// We have params
 	for ( var i = 0, n = params.length; i < n; ++i )
@@ -681,15 +686,26 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 			json[key] = value;
 		}
 		else
-		{	// Advanced
-			var path = '';
-			for ( ii in keys )
-			{	//
-				key = keys[ii];
-				path += '.'+key;
-				eval('json'+path+' = json'+path+' || {}');
-			}
-			eval('json'+path+' = value');
+		{	// Advanced (Recreating an object)
+			var path = '',
+				cmd = '';
+			// Ensure Path Exists
+			$.each(keys,function(ii,key){
+				path += '["'+key.replace(/"/g,'\\"')+'"]';
+				jsonCLOSUREGLOBAL = json; // we have made this a global as closure compiler struggles with evals
+				cmd = 'if ( typeof jsonCLOSUREGLOBAL'+path+' === "undefined" ) jsonCLOSUREGLOBAL'+path+' = {}';
+				eval(cmd);
+				json = jsonCLOSUREGLOBAL;
+				delete jsonCLOSUREGLOBAL;
+			});
+			// Apply Value
+			jsonCLOSUREGLOBAL = json; // we have made this a global as closure compiler struggles with evals
+			valueCLOSUREGLOBAL = value; // we have made this a global as closure compiler struggles with evals
+			cmd = 'jsonCLOSUREGLOBAL'+path+' = valueCLOSUREGLOBAL';
+			eval(cmd);
+			json = jsonCLOSUREGLOBAL;
+			delete jsonCLOSUREGLOBAL;
+			delete valueCLOSUREGLOBAL;
 		}
 		// ^ We now have the parts added to your JSON object
 	}
@@ -1159,13 +1175,15 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 			// Prepare
 			var $el = $(this);
 			// Setup
-			if ( event.keyCode !== 13 ) { // Enter
-				return;
+			var enterKey = event.keyCode === 13;
+			if ( enterKey ) {
+				// Our event
+				event.type = 'enter';
+				$.event.handle.apply(this, [event]);
+				return true;
 			}
-			// Fire
-			event.type = 'cancel';
-			$.event.handle.apply(this, arguments);
-			return true;
+			// Not our event
+			return;
 		}
 	};
 	
@@ -1181,29 +1199,154 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 	};
 	$.event.special.cancel = $.event.special.cancel || {
 		setup: function( data, namespaces ) {
-			$(this).bind('keypress', $.event.special.cancel.handler);
+			$(this).bind('keyup', $.event.special.cancel.handler);
 		},
 		teardown: function( namespaces ) {
-			$(this).unbind('keypress', $.event.special.cancel.handler);
+			$(this).unbind('keyup', $.event.special.cancel.handler);
 		},
 		handler: function( event ) {
 			// Prepare
 			var $el = $(this);
 			// Setup
-			if ( event.keyCode !== 27 ) { // ESC
-				return;
+			var moz = typeof event.DOM_VK_ESCAPE === 'undefined' ? false : event.DOM_VK_ESCAPE;
+			var escapeKey = event.keyCode === 27;
+			if ( moz || escapeKey ) {
+				// Our event
+				event.type = 'cancel';
+				$.event.handle.apply(this, [event]);
+				return true;
 			}
+			// Not our event
+			return;
+		}
+	};
+	
+	/**
+	 * Event for the last click for a series of one or more clicks
+	 * @version 1.0.0
+	 * @date July 16, 2010
+	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+	 */
+	$.fn.lastclick = $.fn.lastclick || function(data,callback){
+		return $(this).binder('lastclick',data,callback);
+	};
+	$.event.special.lastclick = $.event.special.lastclick || {
+		setup: function( data, namespaces ) {
+			$(this).bind('click', $.event.special.lastclick.handler);
+		},
+		teardown: function( namespaces ) {
+			$(this).unbind('click', $.event.special.lastclick.handler);
+		},
+		handler: function( event ) {
+			// Setup
+			var clear = function(){
+				// Fetch
+				var Me = this;
+				var $el = $(Me);
+				// Fetch Timeout
+				var timeout = $el.data('lastclick-timeout')||false;
+				// Clear Timeout
+				if ( timeout ) {
+					clearTimeout(timeout);
+				}
+				timeout = false;
+				// Store Timeout
+				$el.data('lastclick-timeout',timeout);
+			};
+			var check = function(event){
+				// Fetch
+				var Me = this;
+				clear.call(Me);
+				var $el = $(Me);
+				// Store the amount of times we have been clicked
+				$el.data('lastclick-clicks', ($el.data('lastclick-clicks')||0)+1);
+				// Handle Timeout for when All Clicks are Completed
+				var timeout = setTimeout(function(){
+					// Fetch Clicks Count
+					var clicks = $el.data('lastclick-clicks');
+					// Clear Timeout
+					clear.apply(Me,[event]);
+					// Reset Click Count
+					$el.data('lastclick-clicks',0);
+					// Fire Event
+					event.type = 'lastclick';
+					$.event.handle.apply(Me, [event,clicks])
+				},500);
+				// Store Timeout
+				$el.data('lastclick-timeout',timeout);
+			};
 			// Fire
-			event.type = 'cancel';
-			$.event.handle.apply(this, arguments);
-			return true;
+			check.apply(this,[event]);
+		}
+	};
+	
+	/**
+	 * Event for the first click for a series of one or more clicks
+	 * @version 1.0.0
+	 * @date July 16, 2010
+	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+	 */
+	$.fn.firstclick = $.fn.firstclick || function(data,callback){
+		return $(this).binder('firstclick',data,callback);
+	};
+	$.event.special.firstclick = $.event.special.firstclick || {
+		setup: function( data, namespaces ) {
+			$(this).bind('click', $.event.special.firstclick.handler);
+		},
+		teardown: function( namespaces ) {
+			$(this).unbind('click', $.event.special.firstclick.handler);
+		},
+		handler: function( event ) {
+			// Setup
+			var clear = function(event){
+				// Fetch
+				var Me = this;
+				var $el = $(Me);
+				// Fetch Timeout
+				var timeout = $el.data('firstclick-timeout')||false;
+				// Clear Timeout
+				if ( timeout ) {
+					clearTimeout(timeout);
+				}
+				timeout = false;
+				// Store Timeout
+				$el.data('firstclick-timeout',timeout);
+			};
+			var check = function(event){
+				// Fetch
+				var Me = this;
+				clear.call(Me);
+				var $el = $(Me);
+				// Update the amount of times we have been clicked
+				$el.data('firstclick-clicks', ($el.data('firstclick-clicks')||0)+1);
+				// Check we are the First of the series of many
+				if ( $el.data('firstclick-clicks') === 1 ) {
+					// Fire Event
+					event.type = 'firstclick';
+					$.event.handle.apply(Me, [event])
+				}
+				// Handle Timeout for when All Clicks are Completed
+				var timeout = setTimeout(function(){
+					// Clear Timeout
+					clear.apply(Me,[event]);
+					// Reset Click Count
+					$el.data('firstclick-clicks',0);
+				},500);
+				// Store Timeout
+				$el.data('firstclick-timeout',timeout);
+			};
+			// Fire
+			check.apply(this,[event]);
 		}
 	};
 	
 	/**
 	 * Event for performing a singleclick
-	 * @version 1.0.0
-	 * @date June 30, 2010
+	 * @version 1.1.0
+	 * @date July 16, 2010
+	 * @since 1.0.0, June 30, 2010
 	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
 	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
 	 */
@@ -1218,22 +1361,49 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 			$(this).unbind('click', $.event.special.singleclick.handler);
 		},
 		handler: function( event ) {
-			// Prepare
-			var $el = $(this);
 			// Setup
-			$el.data('clicking', $el.data('clicking')||'no');
-			if ( $el.data('clicking') === 'yes' ) {
-				return;
-			} else {
-				$el.data('clicking', 'yes');
-				setTimeout(function(){
-					$el.data('clicking', 'no');
-				},	500);
-			}
+			var clear = function(event){
+				// Fetch
+				var Me = this;
+				var $el = $(Me);
+				// Fetch Timeout
+				var timeout = $el.data('singleclick-timeout')||false;
+				// Clear Timeout
+				if ( timeout ) {
+					clearTimeout(timeout);
+				}
+				timeout = false;
+				// Store Timeout
+				$el.data('singleclick-timeout',timeout);
+			};
+			var check = function(event){
+				// Fetch
+				var Me = this;
+				clear.call(Me);
+				var $el = $(Me);
+				// Update the amount of times we have been clicked
+				$el.data('singleclick-clicks', ($el.data('singleclick-clicks')||0)+1);
+				// Handle Timeout for when All Clicks are Completed
+				var timeout = setTimeout(function(){
+					// Fetch Clicks Count
+					var clicks = $el.data('singleclick-clicks');
+					// Clear Timeout
+					clear.apply(Me,[event]);
+					// Reset Click Count
+					$el.data('singleclick-clicks',0);
+					// Check Click Status
+					if ( clicks === 1 ) {
+						// There was only a single click performed
+						// Fire Event
+						event.type = 'singleclick';
+						$.event.handle.apply(Me, [event])
+					}
+				},500);
+				// Store Timeout
+				$el.data('singleclick-timeout',timeout);
+			};
 			// Fire
-			event.type = 'singleclick';
-			$.event.handle.apply(this, arguments);
-			return true;
+			check.apply(this,[event]);
 		}
 	};
 	
@@ -1705,12 +1875,12 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 	
 					// Toolbar
 					if ( config.toolbar||false ) {
-						$toolbar = $('<div class="bespin-toolbar" />');
+						var $toolbar = $('<div class="bespin-toolbar" />');
 						$toolbar.insertBefore($bespin);
 		
 						// Fullscreen
 						if (config.toolbar.fullscreen||false ) {
-							$fullscreen = $('<span class="bespin-toolbar-fullscreen" title="Toggle Fullscreen"></span>');
+							var $fullscreen = $('<span class="bespin-toolbar-fullscreen" title="Toggle Fullscreen"></span>');
 							$fullscreen.appendTo($toolbar);
 							$fullscreen.click(function(){
 								if ( $bespin_wrap.hasClass('bespin-fullscreen') ) {

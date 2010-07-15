@@ -21,8 +21,8 @@
  * @name readme
  * @package jquery-sparkle
  * @category jquery-plugin
- * @version 1.3.0-beta
- * @date July 12, 2010
+ * @version 1.4.0-beta
+ * @date July 16, 2010
  * @since 1.0.0-dev (July 01, 2010)
  * @category jQuery plugin
  * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
@@ -37,17 +37,32 @@ Installation & Usage:
 
 Todo:
 1. Make passwordstrength use BalClass
+2. Add a opt-in email catcher so people can be notified of new releases
 
 ----
 
 Changelog:
+
+1.4.0-beta (July 16, 2010)
+- Added firstclick and lastclick events.
+- Fixed singleclick event
+- Fixed escape and enter events
+- Prevented "-"s from being added to the front and back of slugs
+- Fixed queryStringToJSON in the case of object recreation
+- Added demos for the events, querySTringToJSON and toSlug
+- Added JSON detection and auto-include if needed
+- Moved the demo resources/scripts into the BODY element, such that it will load asynchronously and fix unmatched warnings in chrome
+- Fixed global variable leaks in jquery.balclass.bespin
+- Added a google closure inspector map to the google closure compilation
+- Known Issue: Demo page is including the yoursite example stylesheet in Google Chrome. This is due to either Bespin or Syntax Highlighter. Only a minor issue which only applies to the demo. So no worries.
+- Tested in Chrome 5 OSX, Safari 5.0, Firefox 3.6 OSX, Opera 10.60 OSX } Opera does not support the cancel event, or bespin.
 
 1.3.0-beta (July 12, 2010)
 - Added length checks to all sparkle extensions (to prevent never-ending loops)
 - Improved demo dramatically: Now includes Bespin and EventCalendar
 - Moved $.ajaxCalendar to $.BalClass.EventCalendar now of production quality and works very well
 - Fixed bespin init issue (if bespin already loaded, would not initialise).
-- Tested in Chrome 5 OSX, Firefox 3.6 OSX, Opera 10.60 OSX
+- Tested in Chrome 5 OSX, Safari 5.0, Firefox 3.6 OSX, Opera 10.60 OSX
 
 1.2.1-beta (July 11, 2010)
 - Fixed typo in demo.

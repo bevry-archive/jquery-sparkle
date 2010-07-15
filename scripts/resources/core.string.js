@@ -98,21 +98,26 @@ String.prototype.wrapSelection = String.prototype.wrapSelection || function(star
 
 /**
  * Return a new string of the slug of the old string
- * @version 1.0.0
- * @date June 30, 2010
+ * @version 1.1.0
+ * @date July 16, 2010
+ * @since 1.0.0, June 30, 2010
  * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
  * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
 String.prototype.toSlug = String.prototype.toSlug || function(){
 	// Convert a string to a slug
-	return this.toLowerCase().replace(/[\s_]/g, '-').replace(/[^-a-z0-9]/g, '').replace(/--+/g, '-');
+	return this.toLowerCase().replace(/[\s_]/g, '-').replace(/[^-a-z0-9]/g, '').replace(/--+/g, '-').replace(/^-+|-+$/g,'');
 }
 
 /**
  * Return a new JSON object of the old string.
- * Turning 'a=b&c.e=d' to {a:'b',c:{e:'d'}}
- * @version 1.0.0
- * @date June 30, 2010
+ * Turns:
+ * 		file.js?a=1&amp;b.c=3.0&b.d=four&a_false_value=false&a_null_value=null
+ * Into:
+ * 		{"a":1,"b":{"c":3,"d":"four"},"a_false_value":false,"a_null_value":null}
+ * @version 1.1.0
+ * @date July 16, 2010
+ * @since 1.0.0, June 30, 2010
  * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
  * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
@@ -131,7 +136,7 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 		return eval(decodeURIComponent(params));
 	}
 	// We have a params string
-	params = params.split(/\&|\&amp\;/);
+	params = params.split(/\&(amp\;)?/);
 	var json = {};
 	// We have params
 	for ( var i = 0, n = params.length; i < n; ++i )
@@ -168,15 +173,26 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 			json[key] = value;
 		}
 		else
-		{	// Advanced
-			var path = '';
-			for ( ii in keys )
-			{	//
-				key = keys[ii];
-				path += '.'+key;
-				eval('json'+path+' = json'+path+' || {}');
-			}
-			eval('json'+path+' = value');
+		{	// Advanced (Recreating an object)
+			var path = '',
+				cmd = '';
+			// Ensure Path Exists
+			$.each(keys,function(ii,key){
+				path += '["'+key.replace(/"/g,'\\"')+'"]';
+				jsonCLOSUREGLOBAL = json; // we have made this a global as closure compiler struggles with evals
+				cmd = 'if ( typeof jsonCLOSUREGLOBAL'+path+' === "undefined" ) jsonCLOSUREGLOBAL'+path+' = {}';
+				eval(cmd);
+				json = jsonCLOSUREGLOBAL;
+				delete jsonCLOSUREGLOBAL;
+			});
+			// Apply Value
+			jsonCLOSUREGLOBAL = json; // we have made this a global as closure compiler struggles with evals
+			valueCLOSUREGLOBAL = value; // we have made this a global as closure compiler struggles with evals
+			cmd = 'jsonCLOSUREGLOBAL'+path+' = valueCLOSUREGLOBAL';
+			eval(cmd);
+			json = jsonCLOSUREGLOBAL;
+			delete jsonCLOSUREGLOBAL;
+			delete valueCLOSUREGLOBAL;
 		}
 		// ^ We now have the parts added to your JSON object
 	}

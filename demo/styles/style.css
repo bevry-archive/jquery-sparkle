@@ -4,12 +4,12 @@
 /* CSS */
 
 h1 {
-	font-size: 2em;
+	font-size: 2.5em;
 	font-weight: bold;
 	margin: 0.67em 0px;
 }
 h2 {
-	font-size: 1.5em;
+	font-size: 2em;
 	font-weight: bold;
 	margin: 0.83em 0px;
 }
@@ -87,6 +87,9 @@ a.help:visited {
 
 .section.about p {
 	margin:1em 0;
+}
+.section.install h3 {
+	margin: 0.83em 0px 0.2em;
 }
 .section ul.features {
 	display: block;

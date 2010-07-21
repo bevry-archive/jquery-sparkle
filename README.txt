@@ -21,7 +21,7 @@
  * @name readme
  * @package jquery-sparkle
  * @category jquery-plugin
- * @version 1.4.1-beta
+ * @version 1.4.2-beta
  * @date July 22, 2010
  * @since 1.0.0-dev, July 01, 2010
  * @category jQuery plugin
@@ -42,6 +42,9 @@ Todo:
 ----
 
 Changelog:
+
+1.4.2-beta, July 22, 2010
+- core.string strip functions now still work if even if they weren't passed anything
 
 1.4.1-beta, July 22, 2010
 - Converted all console. to window.console.

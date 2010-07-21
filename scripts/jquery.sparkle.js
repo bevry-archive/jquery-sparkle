@@ -531,42 +531,57 @@ String.prototype.trim = String.prototype.trim || function() {
 
 /**
  * Return a new string with the value stripped from the left and right of the string
- * @version 1.0.0
- * @date June 30, 2010
+ * @version 1.1.0
+ * @date July 22, 2010
+ * @since 1.0.0, June 30, 2010
  * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
  * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
-String.prototype.strip = String.prototype.strip || function(value){
-	// Strip a value from left and right
+String.prototype.strip = String.prototype.strip || function(value,regex){
+	// Strip a value from left and right, with optional regex support (defaults to false)
 	value = String(value);
+	if ( !(regex||false) ) {
+		// We must escape value as we do not want regex support
+		value = value.replace(/([\[\]\(\)\^\$\.\?\|\/\\])/g, '\\$1');
+	}
 	var str = this.replace(eval('/^'+value+'+|'+value+'+$/g'), '');
 	return String(str);
 }
 
 /**
  * Return a new string with the value stripped from the left of the string
- * @version 1.0.0
- * @date June 30, 2010
+ * @version 1.1.0
+ * @date July 22, 2010
+ * @since 1.0.0, June 30, 2010
  * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
  * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
-String.prototype.stripLeft = String.prototype.stripLeft || function(value){
-	// Strip a value from the left
+String.prototype.stripLeft = String.prototype.stripLeft || function(value,regex){
+	// Strip a value from the left, with optional regex support (defaults to false)
 	value = String(value);
+	if ( !(regex||false) ) {
+		// We must escape value as we do not want regex support
+		value = value.replace(/([\[\]\(\)\^\$\.\?\|\/\\])/g, '\\$1');
+	}
 	var str = this.replace(eval('/^'+value+'+/g'), '');
 	return String(str);
 }
 
 /**
  * Return a new string with the value stripped from the right of the string
- * @version 1.0.0
- * @date June 30, 2010
+ * @version 1.1.0
+ * @date July 22, 2010
+ * @since 1.0.0, June 30, 2010
  * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
  * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
-String.prototype.stripRight = String.prototype.stripRight || function(value){
-	// Strip a value from the right
+String.prototype.stripRight = String.prototype.stripRight || function(value,regex){
+	// Strip a value from the right, with optional regex support (defaults to false)
 	value = String(value);
+	if ( !(regex||false) ) {
+		// We must escape value as we do not want regex support
+		value = value.replace(/([\[\]\(\)\^\$\.\?\|\/\\])/g, '\\$1');
+	}
 	var str = this.replace(eval('/'+value+'+$/g'), '');
 	return String(str);
 }
@@ -679,7 +694,7 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 		}
 		
 		// Set
-		// console.log({'key':key,'value':value}, split);
+		// window.console.log({'key':key,'value':value}, split);
 		var keys = key.split('.');
 		if ( keys.length === 1 )
 		{	// Simple
@@ -1574,7 +1589,7 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 		}
 	}
 	else {
-		console.warn("$.fn.passwordstrength has already been defined...");
+		window.console.warn("$.fn.passwordstrength has already been defined...");
 	}
 	
 
@@ -1703,7 +1718,7 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 		//   however we do not want to create a full instance yet...
 	}
 	else {
-		console.warn("$.BalClass has already been defined...");
+		window.console.warn("$.BalClass has already been defined...");
 	}
 
 
@@ -1914,7 +1929,7 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 		);
 	}
 	else {
-		console.warn("$.Bespin has already been defined...");
+		window.console.warn("$.Bespin has already been defined...");
 	}
 
 
@@ -2029,7 +2044,7 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 		);
 	}
 	else {
-		console.warn("$.datetimepicker has already been defined...");
+		window.console.warn("$.datetimepicker has already been defined...");
 	}
 
 	
@@ -2540,7 +2555,7 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 		);
 	}
 	else {
-		console.warn("$.EventCalendar has already been defined...");
+		window.console.warn("$.EventCalendar has already been defined...");
 	}
 
 
@@ -2615,7 +2630,7 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 		);	
 	}
 	else {
-		console.warn("$.Help has already been defined...");
+		window.console.warn("$.Help has already been defined...");
 	}
 
 
@@ -2741,7 +2756,7 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 		);
 	}
 	else {
-		console.warn("$.timepicker has already been defined...");
+		window.console.warn("$.timepicker has already been defined...");
 	}
 
 	
@@ -2830,7 +2845,7 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 		);
 	}
 	else {
-		console.warn("$.Tinymce has already been defined...");
+		window.console.warn("$.Tinymce has already been defined...");
 	}
 
 })(jQuery);/**
@@ -2981,7 +2996,7 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 						
 						// Check
 						if ( typeof $elements.timepicker === 'undefined' ) {
-							console.warn('datepicker not loaded. Did you forget to include it?');
+							window.console.warn('datepicker not loaded. Did you forget to include it?');
 							return false;
 						}
 						
@@ -3010,7 +3025,7 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 						
 						// Check
 						if ( typeof $elements.timepicker === 'undefined' ) {
-							console.warn('timepicker not loaded. Did you forget to include it?');
+							window.console.warn('timepicker not loaded. Did you forget to include it?');
 							return false;
 						}
 						
@@ -3041,7 +3056,7 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 						
 						// Check
 						if ( typeof $elements.datetimepicker === 'undefined' ) {
-							console.warn('datetimepicker not loaded. Did you forget to include it?');
+							window.console.warn('datetimepicker not loaded. Did you forget to include it?');
 							return false;
 						}
 						
@@ -3216,7 +3231,7 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 						
 						// Check
 						if (typeof $.fn.autogrow === 'undefined') {
-							console.warn('autogrow not loaded. Did you forget to include it?');
+							window.console.warn('autogrow not loaded. Did you forget to include it?');
 							return false;
 						}
 						
@@ -3239,7 +3254,7 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 						var events = {
 							clickEvent: function(event) {
 								if ( typeof GSFN_feedback_widget === 'undefined' ) {
-									console.warn('GSFN not loaded. Did you forget to include it?');
+									window.console.warn('GSFN not loaded. Did you forget to include it?');
 									return true; // continue with click event
 								}
 								GSFN_feedback_widget.show();
@@ -3534,7 +3549,7 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 		);
 	}
 	else {
-		console.warn("$.Sparkle has already been defined...");
+		window.console.warn('$.Sparkle has already been defined...');
 	}
 
 })(jQuery);

@@ -83,7 +83,7 @@
 		);
 	}
 	else {
-		console.warn("$.Tinymce has already been defined...");
+		window.console.warn("$.Tinymce has already been defined...");
 	}
 
 })(jQuery);

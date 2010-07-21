@@ -123,7 +123,7 @@
 		//   however we do not want to create a full instance yet...
 	}
 	else {
-		console.warn("$.BalClass has already been defined...");
+		window.console.warn("$.BalClass has already been defined...");
 	}
 
 

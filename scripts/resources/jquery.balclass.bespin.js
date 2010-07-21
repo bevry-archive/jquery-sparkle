@@ -205,7 +205,7 @@
 		);
 	}
 	else {
-		console.warn("$.Bespin has already been defined...");
+		window.console.warn("$.Bespin has already been defined...");
 	}
 
 

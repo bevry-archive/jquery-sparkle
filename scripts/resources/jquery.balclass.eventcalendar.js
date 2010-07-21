@@ -505,7 +505,7 @@
 		);
 	}
 	else {
-		console.warn("$.EventCalendar has already been defined...");
+		window.console.warn("$.EventCalendar has already been defined...");
 	}
 
 

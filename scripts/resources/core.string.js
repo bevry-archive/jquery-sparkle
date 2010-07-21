@@ -18,42 +18,57 @@ String.prototype.trim = String.prototype.trim || function() {
 
 /**
  * Return a new string with the value stripped from the left and right of the string
- * @version 1.0.0
- * @date June 30, 2010
+ * @version 1.1.0
+ * @date July 22, 2010
+ * @since 1.0.0, June 30, 2010
  * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
  * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
-String.prototype.strip = String.prototype.strip || function(value){
-	// Strip a value from left and right
+String.prototype.strip = String.prototype.strip || function(value,regex){
+	// Strip a value from left and right, with optional regex support (defaults to false)
 	value = String(value);
+	if ( !(regex||false) ) {
+		// We must escape value as we do not want regex support
+		value = value.replace(/([\[\]\(\)\^\$\.\?\|\/\\])/g, '\\$1');
+	}
 	var str = this.replace(eval('/^'+value+'+|'+value+'+$/g'), '');
 	return String(str);
 }
 
 /**
  * Return a new string with the value stripped from the left of the string
- * @version 1.0.0
- * @date June 30, 2010
+ * @version 1.1.0
+ * @date July 22, 2010
+ * @since 1.0.0, June 30, 2010
  * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
  * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
-String.prototype.stripLeft = String.prototype.stripLeft || function(value){
-	// Strip a value from the left
+String.prototype.stripLeft = String.prototype.stripLeft || function(value,regex){
+	// Strip a value from the left, with optional regex support (defaults to false)
 	value = String(value);
+	if ( !(regex||false) ) {
+		// We must escape value as we do not want regex support
+		value = value.replace(/([\[\]\(\)\^\$\.\?\|\/\\])/g, '\\$1');
+	}
 	var str = this.replace(eval('/^'+value+'+/g'), '');
 	return String(str);
 }
 
 /**
  * Return a new string with the value stripped from the right of the string
- * @version 1.0.0
- * @date June 30, 2010
+ * @version 1.1.0
+ * @date July 22, 2010
+ * @since 1.0.0, June 30, 2010
  * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
  * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  */
-String.prototype.stripRight = String.prototype.stripRight || function(value){
-	// Strip a value from the right
+String.prototype.stripRight = String.prototype.stripRight || function(value,regex){
+	// Strip a value from the right, with optional regex support (defaults to false)
 	value = String(value);
+	if ( !(regex||false) ) {
+		// We must escape value as we do not want regex support
+		value = value.replace(/([\[\]\(\)\^\$\.\?\|\/\\])/g, '\\$1');
+	}
 	var str = this.replace(eval('/'+value+'+$/g'), '');
 	return String(str);
 }
@@ -166,7 +181,7 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 		}
 		
 		// Set
-		// console.log({'key':key,'value':value}, split);
+		// window.console.log({'key':key,'value':value}, split);
 		var keys = key.split('.');
 		if ( keys.length === 1 )
 		{	// Simple

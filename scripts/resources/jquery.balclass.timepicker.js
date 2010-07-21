@@ -120,7 +120,7 @@
 		);
 	}
 	else {
-		console.warn("$.timepicker has already been defined...");
+		window.console.warn("$.timepicker has already been defined...");
 	}
 
 	

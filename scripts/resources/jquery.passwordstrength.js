@@ -164,7 +164,7 @@
 		}
 	}
 	else {
-		console.warn("$.fn.passwordstrength has already been defined...");
+		window.console.warn("$.fn.passwordstrength has already been defined...");
 	}
 	
 

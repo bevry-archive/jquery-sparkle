@@ -109,7 +109,7 @@
 		);
 	}
 	else {
-		console.warn("$.datetimepicker has already been defined...");
+		window.console.warn("$.datetimepicker has already been defined...");
 	}
 
 	

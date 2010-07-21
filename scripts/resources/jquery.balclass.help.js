@@ -69,7 +69,7 @@
 		);	
 	}
 	else {
-		console.warn("$.Help has already been defined...");
+		window.console.warn("$.Help has already been defined...");
 	}
 
 

@@ -146,7 +146,7 @@
 						
 						// Check
 						if ( typeof $elements.timepicker === 'undefined' ) {
-							console.warn('datepicker not loaded. Did you forget to include it?');
+							window.console.warn('datepicker not loaded. Did you forget to include it?');
 							return false;
 						}
 						
@@ -175,7 +175,7 @@
 						
 						// Check
 						if ( typeof $elements.timepicker === 'undefined' ) {
-							console.warn('timepicker not loaded. Did you forget to include it?');
+							window.console.warn('timepicker not loaded. Did you forget to include it?');
 							return false;
 						}
 						
@@ -206,7 +206,7 @@
 						
 						// Check
 						if ( typeof $elements.datetimepicker === 'undefined' ) {
-							console.warn('datetimepicker not loaded. Did you forget to include it?');
+							window.console.warn('datetimepicker not loaded. Did you forget to include it?');
 							return false;
 						}
 						
@@ -381,7 +381,7 @@
 						
 						// Check
 						if (typeof $.fn.autogrow === 'undefined') {
-							console.warn('autogrow not loaded. Did you forget to include it?');
+							window.console.warn('autogrow not loaded. Did you forget to include it?');
 							return false;
 						}
 						
@@ -404,7 +404,7 @@
 						var events = {
 							clickEvent: function(event) {
 								if ( typeof GSFN_feedback_widget === 'undefined' ) {
-									console.warn('GSFN not loaded. Did you forget to include it?');
+									window.console.warn('GSFN not loaded. Did you forget to include it?');
 									return true; // continue with click event
 								}
 								GSFN_feedback_widget.show();
@@ -699,7 +699,7 @@
 		);
 	}
 	else {
-		console.warn("$.Sparkle has already been defined...");
+		window.console.warn('$.Sparkle has already been defined...');
 	}
 
 })(jQuery);

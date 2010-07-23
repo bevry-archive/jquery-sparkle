@@ -748,12 +748,22 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 	
 	/**
 	 * Append a Stylesheet to the DOM
-	 * @version 1.0.0
-	 * @date June 30, 2010
+	 * @version 1.1.0
+	 * @date July 23, 2010
+	 * @since 1.0.0, June 30, 2010
 	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
 	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
 	 */
 	$.appendStylesheet = $.appendStylesheet || function(url, overwrite){
+		// Check
+		if ( !(document.body||false) ) {
+			setTimeout(function(){
+				$.appendStylesheet.apply($,[url,overwrite]);
+			},500);
+			// Chain
+			return $;
+		}
+		
 		// Prepare
 		var id = 'stylesheet-'+url.replace(/[^a-zA-Z0-9]/g, '');;
 		var $old = $('#'+id);
@@ -788,12 +798,22 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 	
 	/**
 	 * Append a Script to the DOM
-	 * @version 1.0.0
-	 * @date June 30, 2010
+	 * @version 1.1.0
+	 * @date July 23, 2010
+	 * @since 1.0.0, June 30, 2010
 	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
 	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
 	 */
 	$.appendScript = $.appendScript || function(url, overwrite){
+		// Check
+		if ( !(document.body||false) ) {
+			setTimeout(function(){
+				$.appendScript.apply($,[url,overwrite]);
+			},500);
+			// Chain
+			return $;
+		}
+		
 		// Prepare
 		var id = 'script-'+url.replace(/[^a-zA-Z0-9]/g, '');;
 		var $old = $('#'+id);

@@ -21,8 +21,8 @@
  * @name readme
  * @package jquery-sparkle
  * @category jquery-plugin
- * @version 1.4.2-beta
- * @date July 22, 2010
+ * @version 1.4.3-beta
+ * @date July 23, 2010
  * @since 1.0.0-dev, July 01, 2010
  * @category jQuery plugin
  * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
@@ -42,6 +42,9 @@ Todo:
 ----
 
 Changelog:
+
+1.4.3-beta, July 23, 2010
+- $.appendScript and $.appendStylesheet now setTimeout if body has not yet loaded.
 
 1.4.2-beta, July 22, 2010
 - core.string strip functions now still work if even if they weren't passed anything

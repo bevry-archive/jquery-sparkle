@@ -1,7 +1,7 @@
 /**
  * @depends jquery
  * @name jquery.passwordstrength
- * @package jquery-sparkle
+ * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
  */
 
 /**
@@ -13,17 +13,13 @@
 	 * String.prototype.passwordStrength
 	 * @version 1.0.0
 	 * @date June 30, 2010
- 	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
- 	 * @license GNU Affero General Public License - {@link http://www.gnu.org/licenses/agpl.html}
+     * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
+	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+	 * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
 	 */
 	String.prototype.passwordstrength = String.prototype.passwordstrength || function(confirm,username){
-		/**
-		 * Checks the string as a password to identify it's strength
-		 * @copyright (c) Wordpress
-			 * @copyright (c) 2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
-			 * @license GNU General Public License - {@link http://wordpress.org/about/gpl/}
-			 */
-	    var password = this.toString(), symbolSize = 0, natLog, score;
+		var password = this.toString(), symbolSize = 0, natLog, score;
 		confirm = confirm||'';
 		username = username||'';
 	
@@ -68,8 +64,10 @@
 	 * jQuery Password Strength
 	 * @version 1.0.0
 	 * @date June 30, 2010
- 	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
- 	 * @license GNU Affero General Public License - {@link http://www.gnu.org/licenses/agpl.html}
+     * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
+	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+	 * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
 	 */
 	if ( !($.fn.passwordstrength||false) ) {
 		$.fn.passwordstrength = function(options) {

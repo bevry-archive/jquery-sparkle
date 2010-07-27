@@ -1,14 +1,15 @@
 /**
  * @depends nothing
  * @name core.array
- * @package jquery-sparkle
+ * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
  */
 
 /**
  * Remove a element, or a set of elements from an array
  * @version 1.0.0
  * @date June 30, 2010
- * @copyright John Resig (MIT Licensed)
+ * @copyright John Resig
+ * @license MIT License - {@link http://opensource.org/licenses/mit-license.php}
  */
 Array.prototype.remove = function(from, to) {
 	var rest = this.slice((to || from) + 1 || this.length);
@@ -22,8 +23,10 @@ Array.prototype.remove = function(from, to) {
  * @version 1.0.1
  * @date July 09, 2010
  * @since 1.0.0 June 30, 2010
+ * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
  * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
  * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+ * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
  */
 Array.prototype.get = function(index, current) {
 	// Determine
@@ -52,8 +55,10 @@ Array.prototype.get = function(index, current) {
  * Apply the function [fn] to each element in the array
  * @version 1.0.0
  * @date June 30, 2010
+ * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
  * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
  * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+ * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
  */
 Array.prototype.each = function(fn){
 	for (var i = 0; i < this.length; ++i) {
@@ -67,8 +72,10 @@ Array.prototype.each = function(fn){
  * Checks whether the index is a valid index
  * @version 1.0.0
  * @date July 09, 2010
+ * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
  * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
  * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+ * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
  */
 Array.prototype.validIndex = function(index){
 	return index >= 0 && index < this.length;
@@ -78,8 +85,10 @@ Array.prototype.validIndex = function(index){
  * Set the current index of the array
  * @version 1.0.0
  * @date June 30, 2010
+ * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
  * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
  * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+ * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
  */
 Array.prototype.setIndex = function(index){
 	if ( this.validIndex(index) ) {
@@ -95,8 +104,10 @@ Array.prototype.setIndex = function(index){
  * If [index] is passed then set that as the current, and return it's value
  * @version 1.0.0
  * @date June 30, 2010
+ * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
  * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
  * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+ * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
  */
 Array.prototype.current = function(index){
 	return this.get(index, true);
@@ -106,8 +117,10 @@ Array.prototype.current = function(index){
  * Get whether or not the array is empty
  * @version 1.0.0
  * @date June 30, 2010
+ * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
  * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
  * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+ * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
  */
 Array.prototype.isEmpty = function(){
 	return this.length === 0;
@@ -117,8 +130,10 @@ Array.prototype.isEmpty = function(){
  * Get whether or not the array has only one item
  * @version 1.0.0
  * @date June 30, 2010
+ * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
  * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
  * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+ * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
  */
 Array.prototype.isSingle = function(){
 	return this.length === 1;
@@ -128,8 +143,10 @@ Array.prototype.isSingle = function(){
  * Get whether or not the array is not empty
  * @version 1.0.0
  * @date June 30, 2010
+ * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
  * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
  * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+ * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
  */
 Array.prototype.isNotEmpty = function(){
 	return this.length !== 0;
@@ -139,8 +156,10 @@ Array.prototype.isNotEmpty = function(){
  * Get whether or not the array has more than one item
  * @version 1.0.0
  * @date June 30, 2010
+ * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
  * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
  * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+ * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
  */
 Array.prototype.isNotEmpty = function(){
 	return this.length > 1;
@@ -150,8 +169,10 @@ Array.prototype.isNotEmpty = function(){
  * Get whether or not the current index is the last one
  * @version 1.0.0
  * @date June 30, 2010
+ * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
  * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
  * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+ * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
  */
 Array.prototype.isLast = function(index){
 	index = typeof index === 'undefined' ? this.index : index;
@@ -162,8 +183,10 @@ Array.prototype.isLast = function(index){
  * Get whether or not the current index is the first one
  * @version 1.0.0
  * @date June 30, 2010
+ * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
  * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
  * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+ * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
  */
 Array.prototype.isFirst = function(index){
 	index = typeof index === 'undefined' ? this.index : index;
@@ -174,8 +197,10 @@ Array.prototype.isFirst = function(index){
  * Clear the array
  * @version 1.0.0
  * @date June 30, 2010
+ * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
  * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
  * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+ * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
  */
 Array.prototype.clear = function(){
 	this.length = 0;
@@ -185,8 +210,10 @@ Array.prototype.clear = function(){
  * Set the index as the next one, and get the item
  * @version 1.0.0
  * @date June 30, 2010
+ * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
  * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
  * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+ * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
  */
 Array.prototype.next = function(update){
 	return this.get(this.index+1, update);
@@ -196,8 +223,10 @@ Array.prototype.next = function(update){
  * Set the index as the previous one, and get the item
  * @version 1.0.0
  * @date June 30, 2010
+ * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
  * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
  * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+ * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
  */
 Array.prototype.prev = function(update){
 	return this.get(this.index-1, update);
@@ -207,8 +236,10 @@ Array.prototype.prev = function(update){
  * Reset the index
  * @version 1.0.0
  * @date June 30, 2010
+ * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
  * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
  * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+ * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
  */
 Array.prototype.reset = function(){
 	this.index = null;
@@ -219,8 +250,10 @@ Array.prototype.reset = function(){
  * Set the [index] to the [item]
  * @version 1.0.0
  * @date June 30, 2010
+ * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
  * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
  * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+ * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
  */
 Array.prototype.set = function(index, item){
 	// We want to set the item
@@ -238,8 +271,10 @@ Array.prototype.set = function(index, item){
  * If we reach the end, then start back at the beginning.
  * @version 1.0.0
  * @date June 30, 2010
+ * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
  * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
  * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+ * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
  */
 Array.prototype.loop = function(){
 	if ( !this.index && this.index !== 0 ) {
@@ -253,8 +288,10 @@ Array.prototype.loop = function(){
  * Add the [arguments] to the array
  * @version 1.0.0
  * @date June 30, 2010
+ * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
  * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
  * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+ * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
  */
 Array.prototype.add = function(){
 	this.push.apply(this,arguments);
@@ -265,8 +302,10 @@ Array.prototype.add = function(){
  * Insert the [item] at the [index] or at the end of the array
  * @version 1.0.0
  * @date June 30, 2010
+ * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
  * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
  * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+ * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
  */
 Array.prototype.insert = function(index, item){
 	if ( typeof index !== 'number' ) {
@@ -284,8 +323,10 @@ Array.prototype.insert = function(index, item){
  * Get whether or not the index exists in the array
  * @version 1.0.0
  * @date July 09, 2010
+ * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
  * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
  * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+ * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
  */
 Array.prototype.exists = Array.prototype.exists || function(index){
 	return typeof this[index] !== 'undefined';
@@ -295,8 +336,10 @@ Array.prototype.exists = Array.prototype.exists || function(index){
  * Get whether or not the value exists in the array
  * @version 1.0.0
  * @date June 30, 2010
+ * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
  * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
  * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+ * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
  */
 Array.prototype.has = Array.prototype.has || function(value){
 	var has = false;
@@ -311,7 +354,7 @@ Array.prototype.has = Array.prototype.has || function(value){
 /**
  * @depends nothing
  * @name core.date
- * @package jquery-sparkle
+ * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
  */
 
 /**
@@ -319,8 +362,10 @@ Array.prototype.has = Array.prototype.has || function(value){
  * Datetime string in the format of "year month day hour min sec". "hour min sec" all optional.
  * @version 1.0.0
  * @date June 30, 2010
+ * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
  * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
  * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+ * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
  */
 Date.prototype.setDatetimestr = Date.prototype.setDatetimestr || function(timestamp){
 	// Set the datetime from a string
@@ -343,8 +388,10 @@ Date.prototype.setDatetimestr = Date.prototype.setDatetimestr || function(timest
  * Date string in the format of "year month day". "year month day" all optional.
  * @version 1.0.0
  * @date June 30, 2010
+ * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
  * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
  * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+ * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
  */
 Date.prototype.setDatestr = Date.prototype.setDatestr || function(timestamp){
 	// Set the date from a string
@@ -361,8 +408,10 @@ Date.prototype.setDatestr = Date.prototype.setDatestr || function(timestamp){
  * Time string in the format of "hour min sec". "hour min sec" all optional.
  * @version 1.0.0
  * @date June 30, 2010
+ * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
  * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
  * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+ * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
  */
 Date.prototype.setTimestr = Date.prototype.setTimestr || function(timestamp){
 	// Set the time from a string
@@ -381,8 +430,10 @@ Date.prototype.setTimestr = Date.prototype.setTimestr || function(timestamp){
  * Datetime string in the format of "year-month-date hours:minutes:seconds".
  * @version 1.0.0
  * @date June 30, 2010
+ * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
  * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
  * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+ * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
  */
 Date.prototype.getDatetimestr = Date.prototype.getDatetimestr || function() {
 	// Get the datetime as a string
@@ -395,8 +446,10 @@ Date.prototype.getDatetimestr = Date.prototype.getDatetimestr || function() {
  * Datetime string in the format of "year-month-date".
  * @version 1.0.0
  * @date June 30, 2010
+ * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
  * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
  * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+ * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
  */
 Date.prototype.getDatestr = Date.prototype.getDatestr || function() {
 	// Get the date as a string
@@ -412,8 +465,10 @@ Date.prototype.getDatestr = Date.prototype.getDatestr || function() {
  * Datetime string in the format of "hours:minutes:seconds".
  * @version 1.0.0
  * @date June 30, 2010
+ * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
  * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
  * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+ * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
  */
 Date.prototype.getTimestr = Date.prototype.getTimestr || function(){
 	// Get the time as a string
@@ -428,8 +483,10 @@ Date.prototype.getTimestr = Date.prototype.getTimestr || function(){
  * Return the Date as a ISO 8601 date string
  * @version 1.0.0
  * @date June 30, 2010
+ * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
  * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
  * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+ * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
  */
 Date.prototype.getDatetime = String.prototype.getDatetime || function(){
 	// Get a ISO 8601 date
@@ -444,15 +501,17 @@ Date.prototype.getDatetime = String.prototype.getDatetime || function(){
 };/**
  * @depends nothing
  * @name core.number
- * @package jquery-sparkle
+ * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
  */
 
 /**
  * Return a new string with zeroes added correctly to the front of the number, given the threshold
  * @version 1.0.0
  * @date June 30, 2010
+ * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
  * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
  * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+ * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
  */
 Number.prototype.zeroise = String.prototype.zeroise = String.prototype.zeroise ||function(threshold){
 	var number = this,
@@ -467,8 +526,10 @@ Number.prototype.zeroise = String.prototype.zeroise = String.prototype.zeroise |
  * Return a new string with the string/number padded left using [ch] of [num] length
  * @version 1.0.0
  * @date June 30, 2010
+ * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
  * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
  * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+ * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
  */
 Number.prototype.padLeft = String.prototype.padLeft = String.prototype.padLeft ||function(ch, num){
 	var val = String(this);
@@ -485,8 +546,10 @@ Number.prototype.padLeft = String.prototype.padLeft = String.prototype.padLeft |
  * Return a new string with the string/number padded right using [ch] of [num] length
  * @version 1.0.0
  * @date June 30, 2010
+ * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
  * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
  * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+ * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
  */
 Number.prototype.padRight = String.prototype.padRight = String.prototype.padRight ||function(ch, num){
 	var val = String(this);
@@ -503,8 +566,10 @@ Number.prototype.padRight = String.prototype.padRight = String.prototype.padRigh
  * Return a new number with the current number rounded to [to]
  * @version 1.0.0
  * @date June 30, 2010
+ * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
  * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
  * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+ * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
  */
 Number.prototype.roundTo = String.prototype.roundTo = String.prototype.roundTo || function(to){
 	var val = String(parseInt(this,10));
@@ -514,15 +579,17 @@ Number.prototype.roundTo = String.prototype.roundTo = String.prototype.roundTo |
 /**
  * @depends nothing
  * @name core.string
- * @package jquery-sparkle
+ * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
  */
 
 /**
  * Return a new string with any spaces trimmed the left and right of the string
  * @version 1.0.0
  * @date June 30, 2010
+ * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
  * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
  * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+ * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
  */
 String.prototype.trim = String.prototype.trim || function() {
 	// Trim off any whitespace from the front and back
@@ -534,8 +601,10 @@ String.prototype.trim = String.prototype.trim || function() {
  * @version 1.1.1
  * @date July 22, 2010
  * @since 1.0.0, June 30, 2010
+ * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
  * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
  * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+ * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
  */
 String.prototype.strip = String.prototype.strip || function(value,regex){
 	// Strip a value from left and right, with optional regex support (defaults to false)
@@ -555,9 +624,10 @@ String.prototype.strip = String.prototype.strip || function(value,regex){
  * Return a new string with the value stripped from the left of the string
  * @version 1.1.1
  * @date July 22, 2010
- * @since 1.0.0, June 30, 2010
+ * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
  * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
  * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+ * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
  */
 String.prototype.stripLeft = String.prototype.stripLeft || function(value,regex){
 	// Strip a value from the left, with optional regex support (defaults to false)
@@ -577,9 +647,10 @@ String.prototype.stripLeft = String.prototype.stripLeft || function(value,regex)
  * Return a new string with the value stripped from the right of the string
  * @version 1.1.1
  * @date July 22, 2010
- * @since 1.0.0, June 30, 2010
+ * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
  * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
  * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+ * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
  */
 String.prototype.stripRight = String.prototype.stripRight || function(value,regex){
 	// Strip a value from the right, with optional regex support (defaults to false)
@@ -599,8 +670,10 @@ String.prototype.stripRight = String.prototype.stripRight || function(value,rege
  * Return a int of the string
  * @version 1.0.0
  * @date June 30, 2010
+ * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
  * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
  * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+ * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
  */
 String.prototype.toInt = String.prototype.toInt || function(){
 	// Convert to a Integer
@@ -611,8 +684,10 @@ String.prototype.toInt = String.prototype.toInt || function(){
  * Return a new string of the old string wrapped with the start and end values
  * @version 1.0.0
  * @date June 30, 2010
+ * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
  * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
  * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+ * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
  */
 String.prototype.wrap = String.prototype.wrap || function(start,end){
 	// Wrap the string
@@ -623,8 +698,10 @@ String.prototype.wrap = String.prototype.wrap || function(start,end){
  * Return a new string of a selection of the old string wrapped with the start and end values
  * @version 1.0.0
  * @date June 30, 2010
+ * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
  * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
  * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+ * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
  */
 String.prototype.wrapSelection = String.prototype.wrapSelection || function(start,end,a,z){
 	// Wrap the selection
@@ -638,8 +715,10 @@ String.prototype.wrapSelection = String.prototype.wrapSelection || function(star
  * @version 1.1.0
  * @date July 16, 2010
  * @since 1.0.0, June 30, 2010
+ * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
  * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
  * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+ * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
  */
 String.prototype.toSlug = String.prototype.toSlug || function(){
 	// Convert a string to a slug
@@ -655,8 +734,10 @@ String.prototype.toSlug = String.prototype.toSlug || function(){
  * @version 1.1.0
  * @date July 16, 2010
  * @since 1.0.0, June 30, 2010
+ * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
  * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
  * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+ * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
  */
 String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || function ( )
 {	// Turns a params string or url into an array of params
@@ -738,7 +819,7 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 /**
  * @depends jquery
  * @name jquery.appendscriptstyle
- * @package jquery-sparkle
+ * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
  */
 
 /**
@@ -751,8 +832,10 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 	 * @version 1.1.0
 	 * @date July 23, 2010
 	 * @since 1.0.0, June 30, 2010
+     * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
 	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
 	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+	 * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
 	 */
 	$.appendStylesheet = $.appendStylesheet || function(url, overwrite){
 		// Check
@@ -803,6 +886,7 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 	 * @since 1.0.0, June 30, 2010
 	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
 	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+	 * @license GNU Affero General Public License version 3 - {@link http://www.gnu.org/licenses/agpl-3.0.html}
 	 */
 	$.appendScript = $.appendScript || function(url, overwrite){
 		// Check
@@ -848,7 +932,7 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 })(jQuery);/**
  * @depends jquery
  * @name jquery.extra
- * @package jquery-sparkle
+ * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
  */
 
 /**
@@ -862,8 +946,10 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 	 * The background-color value is the the same value as the first parent div which has a background-color.
 	 * @version 1.0.0
 	 * @date June 30, 2010
+     * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
 	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
 	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+	 * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
 	 */
 	$.fn.opacityFix = $.fn.opacityFix || function(){
 		var $this = $(this);
@@ -893,8 +979,10 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 	 * Get all elements above ourself which match the selector, and include ourself in the search
 	 * @version 1.0.0
 	 * @date June 30, 2010
+     * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
 	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
 	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+	 * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
 	 */
 	$.fn.parentsAndSelf = $.fn.parentsAndSelf || function(selector){
 		var $this = $(this);
@@ -905,8 +993,10 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 	 * Get all elements within ourself which match the selector, and include ourself in the search
 	 * @version 1.0.0
 	 * @date June 30, 2010
+     * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
 	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
 	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+	 * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
 	 */
 	$.fn.findAndSelf = $.fn.findAndSelf || function(selector){
 		var $this = $(this);
@@ -917,8 +1007,10 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 	 * Find the first input, and include ourself in the search
 	 * @version 1.0.0
 	 * @date June 30, 2010
+     * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
 	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
 	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+	 * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
 	 */
 	$.fn.firstInput = $.fn.firstInput || function(){
 		var $this = $(this);
@@ -930,8 +1022,10 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 	 * Rather than setting the actual value of a element which $el.val does.
 	 * @version 1.0.0
 	 * @date June 30, 2010
+     * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
 	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
 	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+	 * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
 	 */
 	$.fn.choose = $.fn.choose||function(value){
 		var $this = $(this);
@@ -964,8 +1058,10 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 	 * Deselect a option within options, checkboxes, radios and selects.
 	 * @version 1.0.0
 	 * @date June 30, 2010
+     * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
 	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
 	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+	 * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
 	 */
 	$.fn.unchoose = $.fn.unchoose||function(){
 		var $this = $(this);
@@ -992,8 +1088,10 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 	 * Checks if the element would be passed with the form if the form was submitted.
 	 * @version 1.0.0
 	 * @date June 30, 2010
+     * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
 	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
 	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+	 * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
 	 */
 	$.fn.wouldSubmit = $.fn.wouldSubmit || function(){
 		var $input = $(this).findAndSelf(':input');
@@ -1008,8 +1106,10 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 	 * Grab all the values of a form in JSON format if the form would be submitted.
 	 * @version 1.0.0
 	 * @date June 30, 2010
+     * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
 	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
 	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+	 * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
 	 */
 	$.fn.values = $.fn.values || function(){
 		var $inputs = $(this).findAndSelf(':input');
@@ -1041,8 +1141,10 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 	 * Submit the form which the element is associated with.
 	 * @version 1.0.0
 	 * @date June 30, 2010
+     * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
 	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
 	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+	 * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
 	 */
 	$.fn.submitForm = $.fn.submitForm || function(){
 		// Submit the parent form or our form
@@ -1057,8 +1159,10 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 	 * Checks if the element is attached within the DOM
 	 * @version 1.0.0
 	 * @date June 30, 2010
+     * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
 	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
 	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+	 * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
 	 */
 	$.fn.inDOM = function(){
 		var $ancestor = $(this).parent().parent();
@@ -1069,8 +1173,10 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 	 * Wrap the element's value with the passed start and end text
 	 * @version 1.0.0
 	 * @date June 30, 2010
+     * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
 	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
 	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+	 * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
 	 */
 	$.fn.valWrap = function(start,end){
 		// Wrap a value
@@ -1082,8 +1188,10 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 	 * Wrap a selection of the element's value with the passed start and end text
 	 * @version 1.0.0
 	 * @date June 30, 2010
+     * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
 	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
 	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+	 * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
 	 */
 	$.fn.valWrapSelection = function(start,end,a,z){
 		// Wrap the selected text
@@ -1118,8 +1226,10 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 	 * Find (with regards to the element) the first visible input element, and give focus to it
 	 * @version 1.0.0
 	 * @date June 30, 2010
+     * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
 	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
 	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+	 * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
 	 */
 	$.fn.giveFocus = function(){
 		// Give focus to the current element
@@ -1133,8 +1243,10 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 	 * Perform the highlight effect
 	 * @version 1.0.0
 	 * @date June 30, 2010
+     * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
 	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
 	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+	 * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
 	 */
 	$.fn.highlight = function(duration){
 		// Perform the Highlight Effect
@@ -1145,7 +1257,7 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 })(jQuery);/**
  * @depends jquery
  * @name jquery.events
- * @package jquery-sparkle
+ * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
  */
 
 /**
@@ -1158,8 +1270,10 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 	 * Benefit over $.bind, is that $.binder(event, callback, false|{}|''|false) works.
 	 * @version 1.0.0
 	 * @date June 30, 2010
+     * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
 	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
 	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+	 * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
 	 */
 	$.fn.binder = $.fn.binder || function(event, data, callback){
 		// Help us bind events properly
@@ -1179,8 +1293,10 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 	 * Bind a event only once
 	 * @version 1.0.0
 	 * @date June 30, 2010
+     * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
 	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
 	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+	 * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
 	 */
 	$.fn.once = $.fn.once || function(event, data, callback){
 		// Only apply a event handler once
@@ -1202,8 +1318,10 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 	 * Event for pressing the enter key
 	 * @version 1.0.0
 	 * @date June 30, 2010
+     * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
 	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
 	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+	 * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
 	 */
 	$.fn.enter = $.fn.enter || function(data,callback){
 		return $(this).binder('enter',data,callback);
@@ -1235,8 +1353,10 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 	 * Event for pressing the escape key
 	 * @version 1.0.0
 	 * @date June 30, 2010
+     * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
 	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
 	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+	 * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
 	 */
 	$.fn.cancel = $.fn.cancel || function(data,callback){
 		return $(this).binder('cancel',data,callback);
@@ -1269,8 +1389,10 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 	 * Event for the last click for a series of one or more clicks
 	 * @version 1.0.0
 	 * @date July 16, 2010
+     * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
 	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
 	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+	 * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
 	 */
 	$.fn.lastclick = $.fn.lastclick || function(data,callback){
 		return $(this).binder('lastclick',data,callback);
@@ -1329,8 +1451,10 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 	 * Event for the first click for a series of one or more clicks
 	 * @version 1.0.0
 	 * @date July 16, 2010
+     * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
 	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
 	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+	 * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
 	 */
 	$.fn.firstclick = $.fn.firstclick || function(data,callback){
 		return $(this).binder('firstclick',data,callback);
@@ -1391,8 +1515,10 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 	 * @version 1.1.0
 	 * @date July 16, 2010
 	 * @since 1.0.0, June 30, 2010
+     * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
 	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
 	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+	 * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
 	 */
 	$.fn.singleclick = $.fn.singleclick || function(data,callback){
 		return $(this).binder('singleclick',data,callback);
@@ -1455,7 +1581,7 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 })(jQuery);/**
  * @depends jquery
  * @name jquery.passwordstrength
- * @package jquery-sparkle
+ * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
  */
 
 /**
@@ -1467,17 +1593,13 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 	 * String.prototype.passwordStrength
 	 * @version 1.0.0
 	 * @date June 30, 2010
- 	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
- 	 * @license GNU Affero General Public License - {@link http://www.gnu.org/licenses/agpl.html}
+     * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
+	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+	 * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
 	 */
 	String.prototype.passwordstrength = String.prototype.passwordstrength || function(confirm,username){
-		/**
-		 * Checks the string as a password to identify it's strength
-		 * @copyright (c) Wordpress
-			 * @copyright (c) 2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
-			 * @license GNU General Public License - {@link http://wordpress.org/about/gpl/}
-			 */
-	    var password = this.toString(), symbolSize = 0, natLog, score;
+		var password = this.toString(), symbolSize = 0, natLog, score;
 		confirm = confirm||'';
 		username = username||'';
 	
@@ -1522,8 +1644,10 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 	 * jQuery Password Strength
 	 * @version 1.0.0
 	 * @date June 30, 2010
- 	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
- 	 * @license GNU Affero General Public License - {@link http://www.gnu.org/licenses/agpl.html}
+     * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
+	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+	 * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
 	 */
 	if ( !($.fn.passwordstrength||false) ) {
 		$.fn.passwordstrength = function(options) {
@@ -1625,7 +1749,7 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 })(jQuery);/**
  * @depends jquery, core.console
  * @name jquery.balclass
- * @package jquery-sparkle
+ * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
  */
 
 /**
@@ -1638,8 +1762,10 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 	 * @version 1.2.0
 	 * @date July 11, 2010
 	 * @since 1.0.0, June 30, 2010
- 	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
- 	 * @license GNU Affero General Public License - {@link http://www.gnu.org/licenses/agpl.html}
+     * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
+	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+	 * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
 	 */
 	if ( !($.BalClass||false) ) {
 		// Constructor
@@ -1754,7 +1880,7 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 })(jQuery);/**
  * @depends jquery, core.console, jquery.balclass, bespin
  * @name jquery.balclass.bespin
- * @package jquery-sparkle
+ * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
  */
 
 /**
@@ -1767,8 +1893,10 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 	 * @version 1.2.0
 	 * @date July 11, 2010
 	 * @since 1.0.0, June 30, 2010
- 	 * @copyright (c) 2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
- 	 * @license GNU Affero General Public License - {@link http://www.gnu.org/licenses/agpl.html}
+     * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
+	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+	 * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
 	 */
 	if ( !($.Bespin||false) ) {
 		$.Bespin = $.BalClass.create(
@@ -1965,7 +2093,7 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 })(jQuery);/**
  * @depends jquery, core.console, jquery.balclass
  * @name jquery.balclass.datetimepicker
- * @package jquery-sparkle
+ * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
  */
 
 /**
@@ -1978,8 +2106,10 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 	 * @version 1.2.0
 	 * @date July 11, 2010
 	 * @since 1.0.0, June 30, 2010
- 	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
- 	 * @license GNU Affero General Public License - {@link http://www.gnu.org/licenses/agpl.html}
+     * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
+	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+	 * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
 	 */
 	if ( !($.Help||false) ) {
 		$.datetimepicker = $.BalClass.create(
@@ -2080,7 +2210,7 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 })(jQuery);/**
  * @depends jquery, core.console, jquery.balclass
  * @name jquery.balclass.eventcalendar
- * @package jquery-sparkle
+ * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
  */
 
 /**
@@ -2093,8 +2223,10 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 	 * @version 1.1.0
 	 * @date July 12, 2010
 	 * @since 1.0.0, June 30, 2010
- 	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
- 	 * @license GNU Affero General Public License - {@link http://www.gnu.org/licenses/agpl.html}
+     * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
+	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+	 * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
 	 */
 	if ( !($.EventCalendar||false) ) {
 		$.EventCalendar = $.BalClass.create(
@@ -2591,7 +2723,7 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 })(jQuery);/**
  * @depends jquery, core.console, jquery.balclass
  * @name jquery.balclass.help
- * @package jquery-sparkle
+ * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
  */
 
 /**
@@ -2604,8 +2736,10 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 	 * @version 1.2.0
 	 * @date July 11, 2010
 	 * @since 1.0.0, June 30, 2010
- 	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
- 	 * @license GNU Affero General Public License - {@link http://www.gnu.org/licenses/agpl.html}
+     * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
+	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+	 * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
 	 */
 	if ( !($.Help||false) ) {
 		$.Help = $.BalClass.create(
@@ -2666,7 +2800,7 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 })(jQuery);/**
  * @depends jquery, core.console, jquery.balclass
  * @name jquery.balclass.timepicker
- * @package jquery-sparkle
+ * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
  */
 
 /**
@@ -2679,8 +2813,10 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 	 * @version 1.2.0
 	 * @date July 11, 2010
 	 * @since 1.0.0, June 30, 2010
- 	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
- 	 * @license GNU Affero General Public License - {@link http://www.gnu.org/licenses/agpl.html}
+     * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
+	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+	 * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
 	 */
 	if ( !($.timepicker||false) ) {
 		/**
@@ -2792,7 +2928,7 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 })(jQuery);/**
  * @depends jquery, core.console, jquery.balclass, tinymce
  * @name jquery.balclass.tinymce
- * @package jquery-sparkle
+ * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
  */
 
 /**
@@ -2805,8 +2941,10 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 	 * @version 1.2.0
 	 * @date July 11, 2010
 	 * @since 1.0.0, June 30, 2010
- 	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
- 	 * @license GNU Affero General Public License - {@link http://www.gnu.org/licenses/agpl.html}
+     * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
+	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+	 * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
 	 */
 	if ( !($.Tinymce||false) ) {
 		$.Tinymce = $.BalClass.create(
@@ -2880,7 +3018,7 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 })(jQuery);/**
  * @depends jquery, core.console, jquery.extra, jquery.balclass
  * @name jquery.balclass.bespin.sparkle
- * @package jquery-sparkle
+ * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
  */
 
 /**
@@ -2898,8 +3036,10 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 	 * @version 1.2.0
 	 * @date July 11, 2010
 	 * @since 1.0.0, June 30, 2010
- 	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
- 	 * @license GNU Affero General Public License - {@link http://www.gnu.org/licenses/agpl.html}
+     * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
+	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+	 * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
 	 */
 	if ( !($.Sparkle||false) ) {
 		/**

@@ -1,33 +1,32 @@
+----
 /**
- * jQuery Sparkle - jQuery's DRY Plugin/Effect Framework
+ * This file is part of jQuery Sparkle
  * Copyright (C) 2009-2010 Benjamin Arthur Lupton
  * http://www.balupton.com/projects/jquery-sparkle
  *
- * This file is part of jQuery Sparkle.
+ * jQuery Sparkle is free software; You can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License version 3 as published by the Free Software Foundation.
+ * You don't have to do anything special to accept the license and you don’t have to notify
+ * anyone which that you have made that decision.
  * 
- * jQuery Sparkle is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * jQuery Sparkle is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See your chosen license for more details.
  * 
- * jQuery Sparkle is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
+ * You should have received along with jQuery Sparkle:
+ * - A copy of the license used.
+ *   If not, see <http://www.gnu.org/licenses/agpl-3.0.html>.
+ * - A copy of our interpretation of the license used.
+ *   If not, see <http://github.com/balupton/jquery-sparkle/blob/master/COPYING.txt>.
  * 
- * You should have received a copy of the GNU Affero General Public License
- * along with jQuery Sparkle.  If not, see <http://www.gnu.org/licenses/>.
- *
- * @name readme
- * @package jquery-sparkle
+ * @version 1.4.4-beta
+ * @date July 28, 2010
+ * @since 0.1.0-dev, December 01, 2009
  * @category jquery-plugin
- * @version 1.4.3-beta
- * @date July 23, 2010
- * @since 1.0.0-dev, July 01, 2010
- * @category jQuery plugin
+ * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
  * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
  * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
- * @license GNU Affero General Public License - {@link http://www.gnu.org/licenses/agpl.html}
+ * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
  * @example Visit {@link http://www.balupton.com/projects/jquery-sparkle} for more information.
  */
 ----
@@ -42,6 +41,9 @@ Todo:
 ----
 
 Changelog:
+
+1.4.4-beta, July 28, 2010
+- Updated licensing information. Still using the same license, as it is the best there is, but just provided some more information on it to make life simpler.
 
 1.4.3-beta, July 23, 2010
 - $.appendScript and $.appendStylesheet now setTimeout if body has not yet loaded.
@@ -94,5 +96,8 @@ Changelog:
 
 1.0.0-dev, July 01, 2010
 - Split and cleaned Sparkle into multiple files, added Makefile
+
+0.1.0-dev, December 01, 2009
+- Initial release
 
 ----

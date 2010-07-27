@@ -1,7 +1,7 @@
 /**
  * @depends jquery
  * @name jquery.appendscriptstyle
- * @package jquery-sparkle
+ * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
  */
 
 /**
@@ -14,8 +14,10 @@
 	 * @version 1.1.0
 	 * @date July 23, 2010
 	 * @since 1.0.0, June 30, 2010
+     * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
 	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
 	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+	 * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
 	 */
 	$.appendStylesheet = $.appendStylesheet || function(url, overwrite){
 		// Check
@@ -66,6 +68,7 @@
 	 * @since 1.0.0, June 30, 2010
 	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
 	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+	 * @license GNU Affero General Public License version 3 - {@link http://www.gnu.org/licenses/agpl-3.0.html}
 	 */
 	$.appendScript = $.appendScript || function(url, overwrite){
 		// Check

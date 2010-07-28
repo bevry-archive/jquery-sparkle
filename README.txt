@@ -19,7 +19,7 @@
  * - A copy of our interpretation of the license used.
  *   If not, see <http://github.com/balupton/jquery-sparkle/blob/master/COPYING.txt>.
  * 
- * @version 1.4.5-beta
+ * @version 1.4.6-beta
  * @date July 29, 2010
  * @since v0.1.0-dev, December 01, 2009
  * @category jquery-plugin
@@ -41,6 +41,9 @@ Todo:
 ----
 
 Changelog:
+
+v1.4.6-beta, July 29, 2010
+- The demo now uses the minified version again. Forgot to change it back. Minor change.
 
 v1.4.5-beta, July 29, 2010
 - Fixed incorrect docs in jquery.appendscriptstyle.js

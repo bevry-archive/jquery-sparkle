@@ -594,12 +594,14 @@
 			</div>
 			
 			<div class="sparkle-demo-section" id="eventcalendar">
-				<h3>jQuery.BalClass.EventCalendar</h3>
+				<h3>jQuery.BalClass.EventCalendar: Passing Events Directly</h3>
 				<h4>Example Code</h4>
+				<p>the html:</p>
 				<code class="code language-html sparkle-demo-code">
 					&lt;div id="eventCal"&gt;&lt;/div&gt;
 					&lt;div id="eventsInfo"&gt;&lt;/div&gt;
 				</code>
+				<p>the javascript:</p>
 				<code class="code language-javascript sparkle-demo-code">
 					$(function(){
 						var $eventCal = $('#eventCal'),
@@ -755,6 +757,179 @@
 								}
 							],
 			
+							// Customisation Variables
+							/** The CSS class which will be assigned to the Event Calendar */
+							calendarClass: 'hasEventCalendar',
+							/** The CSS class which will be assigned to day when the day contains a entry */
+							dayEventClass: 'ui-state-active hasEvent',
+							/** The standard options to send to the datepicker */
+							datepickerOptions: {
+								firstDay: 1 /* Monday */
+							},
+							/** Whether or not to disable the datepicker date selection click */
+							disableClick: true,
+							/**
+							 * Whatever events you would like to assign to a $day
+							 * You will recieve the arguments: domEvent, day, dayEvents, monthEvents
+							 */
+							domEvents: {
+								mouseenter: function(domEvent, day, dayEvents, monthEvents) {
+									// Prepare
+									var $day = $(this);
+									// Output
+									$.each(dayEvents,function(i,event){
+										$eventsInfo.append(
+											'<p>'+
+												'<strong>'+event.title+'</strong> ~'+event.user.name+'<br/>'+
+												'<em>'+event.start.toLocaleDateString()+'</em> to <em>'+event.finish.toLocaleDateString()+'</em>'+
+											'</p>'
+										);
+									});
+								},
+								mouseleave: function(domEvent, day, dayEvents, monthEvents) {
+									// Clear
+									$eventsInfo.empty();
+								}
+							}
+						});
+					});
+					</script>
+				</div>
+			</div>
+
+			<div class="sparkle-demo-section" id="eventcalendar">
+				<h3>jQuery.BalClass.EventCalendar: Passing Events with Ajax</h3>
+				<h4>Example Code</h4>
+				<p>./eventcalendar.json</p>
+				<code class="code language-javascript sparkle-demo-code">
+				{
+					"entries": [
+						{
+							"id": 1,
+							"title": "My First Entry",
+							"start": "2010-07-14 11:11:00",
+							"finish": "2010-07-14 14:23:18",
+							"user": {
+								"name": "Joe"
+							}
+						},
+						{
+							"id": 2,
+							"title": "My Second Entry",
+							"start": "2010-07-14 11:11:00",
+							"finish": "2010-07-15 14:23:18",
+							"user": {
+								"name": "Joe"
+							}
+						},
+						{
+							"id": 3,
+							"title": "My Third Entry",
+							"start": "2010-08-11 11:11:00",
+							"finish": "2010-08-12 14:23:18",
+							"user": {
+								"name": "Joe"
+							}
+						},
+						{
+							"id": 4,
+							"title": "My Fourth Entry",
+							"start": "2010-06-15 11:11:00",
+							"finish": "2010-06-15 14:23:18",
+							"user": {
+								"name": "Joe"
+							}
+						}
+					]
+				}
+				</code>
+				<p>the html:</p>
+				<code class="code language-html sparkle-demo-code">
+					&lt;div id="eventCalAjax"&gt;&lt;/div&gt;
+					&lt;div id="eventsInfoAjax"&gt;&lt;/div&gt;
+				</code>
+				<p>the javascript:</p>
+				<code class="code language-javascript sparkle-demo-code">
+					$(function(){
+						var $eventCal = $('#eventCalAjax'),
+							$eventsInfo = $('#eventsInfoAjax');
+						var now = new Date();
+						$eventCal.EventCalendar({
+							// Ajax Variables
+							/** The JSON variable that will be return on the AJAX request which will contain our entries */
+							ajaxEntriesVariable: 'entries',
+							/** The AJAX url to request for our entries */
+							ajaxEntriesUrl: './eventcalendar.json',
+							/** The JSON Object to send via POST to our AJAX request */
+							ajaxPostData: {},
+							/** Whether or not to Cache the AJAX data */
+							ajaxCache: true,
+							
+							// Data Variables
+							/* If you are not using AJAX, you can define your entries here */
+							//calendarEntries: [],
+							
+							// Customisation Variables
+							/** The CSS class which will be assigned to the Event Calendar */
+							calendarClass: 'hasEventCalendar',
+							/** The CSS class which will be assigned to day when the day contains a entry */
+							dayEventClass: 'ui-state-active hasEvent',
+							/** The standard options to send to the datepicker */
+							datepickerOptions: {
+								firstDay: 1 /* Monday */
+							},
+							/** Whether or not to disable the datepicker date selection click */
+							disableClick: true,
+							/**
+							 * Whatever events you would like to assign to a $day
+							 * You will recieve the arguments: domEvent, day, dayEvents, monthEvents
+							 */
+							domEvents: {
+								mouseenter: function(domEvent, day, dayEvents, monthEvents) {
+									// Prepare
+									var $day = $(this);
+									// Output
+									$.each(dayEvents,function(i,event){
+										$eventsInfo.append(
+											'&lt;p&gt;'+
+												'&lt;strong&gt;'+event.title+'&lt;/strong&gt; ~'+event.user.name+'&lt;br/&gt;'+
+												'&lt;em&gt;'+event.start.toLocaleDateString()+'&lt;/em&gt; to &lt;em&gt;'+event.finish.toLocaleDateString()+'&lt;/em&gt;'+
+											'&lt;/p&gt;'
+										);
+									});
+								},
+								mouseleave: function(domEvent, day, dayEvents, monthEvents) {
+									// Clear
+									$eventsInfo.empty();
+								}
+							}
+						});
+					});
+				</code>
+				<h4>Example Result</h4>
+				<div class="sparkle-demo-result">
+					<div id="eventCalAjax"></div>
+					<div id="eventsInfoAjax"></div>
+					<script type="text/javascript">
+					$(function(){
+						var $eventCal = $('#eventCalAjax'),
+							$eventsInfo = $('#eventsInfoAjax');
+						var now = new Date();
+						$eventCal.EventCalendar({
+							// Ajax Variables
+							/** The JSON variable that will be return on the AJAX request which will contain our entries */
+							ajaxEntriesVariable: 'entries',
+							/** The AJAX url to request for our entries */
+							ajaxEntriesUrl: './eventcalendar.json',
+							/** The JSON Object to send via POST to our AJAX request */
+							ajaxPostData: {},
+							/** Whether or not to Cache the AJAX data */
+							ajaxCache: true,
+							
+							// Data Variables
+							/* If you are not using AJAX, you can define your entries here */
+							//calendarEntries: [],
+							
 							// Customisation Variables
 							/** The CSS class which will be assigned to the Event Calendar */
 							calendarClass: 'hasEventCalendar',

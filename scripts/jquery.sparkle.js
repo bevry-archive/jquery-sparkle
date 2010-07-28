@@ -2221,7 +2221,7 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 	
 	/**
 	 * Event Calendar
-	 * @version 1.1.1
+	 * @version 1.1.2
 	 * @date July 29, 2010
 	 * @since 1.0.0, June 30, 2010
      * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
@@ -2640,6 +2640,10 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 										
 										// Done
 										return true;
+									},
+									error: function(XMLHttpRequest, textStatus, errorThrown, response_data){
+										// Error
+										window.console.warn('$.EventCalendar.calendarChangeMonthYear.ajax.error:', [this, arguments]);
 									}
 								});
 							}

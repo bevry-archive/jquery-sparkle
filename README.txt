@@ -19,7 +19,7 @@
  * - A copy of our interpretation of the license used.
  *   If not, see <http://github.com/balupton/jquery-sparkle/blob/master/COPYING.txt>.
  * 
- * @version 1.4.6-beta
+ * @version 1.4.7-beta
  * @date July 29, 2010
  * @since v0.1.0-dev, December 01, 2009
  * @category jquery-plugin
@@ -41,6 +41,10 @@ Todo:
 ----
 
 Changelog:
+
+v1.4.7-beta, July 29, 2010
+- The demo now includes a demo for using the EventCalendar with Ajax.
+- EventCalendar now will issue a warning (via window.console.warn) if the Ajax request fails.
 
 v1.4.6-beta, July 29, 2010
 - The demo now uses the minified version again. Forgot to change it back. Minor change.

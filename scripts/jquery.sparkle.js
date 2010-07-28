@@ -884,9 +884,10 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 	 * @version 1.1.0
 	 * @date July 23, 2010
 	 * @since 1.0.0, June 30, 2010
+     * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
 	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
 	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
-	 * @license GNU Affero General Public License version 3 - {@link http://www.gnu.org/licenses/agpl-3.0.html}
+	 * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
 	 */
 	$.appendScript = $.appendScript || function(url, overwrite){
 		// Check
@@ -2220,8 +2221,8 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 	
 	/**
 	 * Event Calendar
-	 * @version 1.1.0
-	 * @date July 12, 2010
+	 * @version 1.1.1
+	 * @date July 29, 2010
 	 * @since 1.0.0, June 30, 2010
      * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
 	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
@@ -2282,7 +2283,7 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 					}
 					
 					// Prepare
-					var Me = $.Bespin;
+					var Me = $.EventCalendar;
 					var config = Me.getConfigWithDefault(mode,options);
 					
 					// Initialise

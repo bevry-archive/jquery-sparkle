@@ -19,9 +19,9 @@
  * - A copy of our interpretation of the license used.
  *   If not, see <http://github.com/balupton/jquery-sparkle/blob/master/COPYING.txt>.
  * 
- * @version 1.4.4-beta
- * @date July 28, 2010
- * @since 0.1.0-dev, December 01, 2009
+ * @version 1.4.5-beta
+ * @date July 29, 2010
+ * @since v0.1.0-dev, December 01, 2009
  * @category jquery-plugin
  * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
  * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
@@ -42,20 +42,24 @@ Todo:
 
 Changelog:
 
-1.4.4-beta, July 28, 2010
+v1.4.5-beta, July 29, 2010
+- Fixed incorrect docs in jquery.appendscriptstyle.js
+- Fixed issue with EventCalendar not grabbing it's config properly.
+
+v1.4.4-beta, July 28, 2010
 - Updated licensing information. Still using the same license, as it is the best there is, but just provided some more information on it to make life simpler.
 
-1.4.3-beta, July 23, 2010
+v1.4.3-beta, July 23, 2010
 - $.appendScript and $.appendStylesheet now setTimeout if body has not yet loaded.
 
-1.4.2-beta, July 22, 2010
+v1.4.2-beta, July 22, 2010
 - core.string strip functions now still work if even if they weren't passed anything
 
-1.4.1-beta, July 22, 2010
+v1.4.1-beta, July 22, 2010
 - Converted all console. to window.console.
 - core.string strip functions now escape by default, and regex with a optional param (possible b/c break)
 
-1.4.0-beta, July 16, 2010
+v1.4.0-beta, July 16, 2010
 - Added firstclick and lastclick events.
 - Fixed singleclick event
 - Fixed escape and enter events
@@ -69,35 +73,35 @@ Changelog:
 - Known Issue: Demo page is including the yoursite example stylesheet in Google Chrome. This is due to either Bespin or Syntax Highlighter. Only a minor issue which only applies to the demo. So no worries.
 - Tested in Chrome 5 OSX, Safari 5.0, Firefox 3.6 OSX, Opera 10.60 OSX } Opera does not support the cancel event, or bespin.
 
-1.3.0-beta, July 12, 2010
+v1.3.0-beta, July 12, 2010
 - Added length checks to all sparkle extensions (to prevent never-ending loops)
 - Improved demo dramatically: Now includes Bespin and EventCalendar
 - Moved $.ajaxCalendar to $.BalClass.EventCalendar now of production quality and works very well
 - Fixed bespin init issue (if bespin already loaded, would not initialise).
 - Tested in Chrome 5 OSX, Safari 5.0, Firefox 3.6 OSX, Opera 10.60 OSX
 
-1.2.1-beta, July 11, 2010
+v1.2.1-beta, July 11, 2010
 - Fixed typo in demo.
 - Added $.fn.opacityFix and applied to subtle sparkle.
 - Subtle sparkle now merges css and outCss for initial set.
 
-1.2.1-beta, July 11, 2010
+v1.2.1-beta, July 11, 2010
 - Added $.BalClass.create and $.BalClass.clone - updated BalClass extensions to use these - is it better? we have to wait to find out
 - Added demo sparkle extension
 - Added demo page, which covers installation, usage, and writing a BalClass plugin and Sparkle extension.
 - Updated Makefile to include build-update to prevent having to fetch builders all the time
 
-1.1.0-dev, July 09, 2010
+v1.1.0-dev, July 09, 2010
 - Fixed up console if condition
 - Restructured to now use resources folder
 - Updated some doc tags; name, package, category, author, copyright
 - Fixed example tag link
 - Fixed some typos in CHECKLIST
 
-1.0.0-dev, July 01, 2010
+v1.0.0-dev, July 01, 2010
 - Split and cleaned Sparkle into multiple files, added Makefile
 
-0.1.0-dev, December 01, 2009
+v0.1.0-dev, December 01, 2009
 - Initial release
 
 ----

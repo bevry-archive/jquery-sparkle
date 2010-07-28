@@ -11,8 +11,8 @@
 	
 	/**
 	 * Event Calendar
-	 * @version 1.1.0
-	 * @date July 12, 2010
+	 * @version 1.1.1
+	 * @date July 29, 2010
 	 * @since 1.0.0, June 30, 2010
      * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
 	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
@@ -73,7 +73,7 @@
 					}
 					
 					// Prepare
-					var Me = $.Bespin;
+					var Me = $.EventCalendar;
 					var config = Me.getConfigWithDefault(mode,options);
 					
 					// Initialise

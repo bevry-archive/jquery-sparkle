@@ -8,17 +8,29 @@
 		<!-- Include jQuery (Sparkle Requirement) -->
 		<script type="text/javascript" src="../scripts/jquery-1.4.2.min.js"></script>
 		<!-- Include Sparkle (Production) -->
-		<script type="text/javascript" src="../scripts/jquery.sparkle.min.js"></script>
+		<script type="text/javascript" src="../scripts/jquery.sparkle.js"></script>
 		<link href="../styles/jquery.sparkle.min.css" media="screen" rel="stylesheet" type="text/css" /> 
 		
 		<!-- Include The Demo's Requirements -->
 		<link type="text/css" rel="stylesheet" media="screen" href="./styles/style.css" />
     </head>
     <body>
+		<!-- Include this demo's requirements -->
 		<!-- JSON -->
 		<script type="text/javascript"> 
 		if ( typeof JSON === "undefined" ) $.appendScript("./scripts/json2.min.js");
 		</script>
+		
+		<!-- Include jQuery Syntax Highlighter -->
+		<script type="text/javascript" src="http://github.com/balupton/jQuery-SyntaxHighlighter/raw/master/scripts/jquery.syntaxhighlighter.min.js"></script>
+		<!-- Initialise jQuery Syntax Highlighter -->
+		<script type="text/javascript">/*<![CDATA[*/
+			$.SyntaxHighlighter.init({
+				'defaults': {
+					'toolbar':false
+				}
+			});
+		/*]]>*/</script>
 		
 		<!-- Bespin -->
 		<link id="bespin_base" href="./scripts/bespin-0.9a1-custom" rel="" />
@@ -34,15 +46,6 @@
 		
 		<!-- Autogrow -->
 		<script type="text/javascript" src="./scripts/jquery.autogrow.min.js"></script> 
-		
-		<!-- Syntax Highlighting -->
-		<script type="text/javascript" src="./scripts/jquery.beautyOfCode.min.js"></script>
-		<script type="text/javascript">/*<![CDATA[*/
-			$.beautyOfCode.init({
-				defaults: { gutter: true },
-				brushes: ["Xml", "JScript", "Css"]
-			}); 
-		/*]]>*/</script> 
 		
 		<!-- GetSatisfaction -->
 		<script type="text/javascript" src="http://s3.amazonaws.com/getsatisfaction.com/javascripts/feedback-v2.js"></script> 

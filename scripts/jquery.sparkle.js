@@ -353,6 +353,65 @@ Array.prototype.has = Array.prototype.has || function(value){
 };
 /**
  * @depends nothing
+ * @name core.console
+ * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
+ */
+
+/**
+ * Console Emulator
+ * We have to convert arguments into arrays, and do this explicitly as webkit (chrome) hates function references, and arguments cannot be passed as is
+ * @version 1.0.1
+ * @date July 09, 2010
+ * @since 0.1.0-dev, December 01, 2009
+ * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
+ * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+ * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
+ */
+if ( typeof window.console !== 'object' || typeof window.console.emulated === 'undefined' ) {
+	// Check to see if console exists
+	if ( typeof window.console !== 'object' || typeof window.console.log !== 'function' ) {
+		// Console does not exist
+		window.console = {};
+		window.console.log = window.console.debug = window.console.warn = window.console.trace = function(){};
+		window.console.error = function(){
+			alert("An error has occured. Please use another browser to obtain more detailed information.");
+		};
+	}
+	else {
+		// Console is object, and log does exist
+		// Check Debug
+		if ( typeof window.console.debug === 'undefined' ) {
+			window.console.debug = function(){
+				var arr = ['console.debug:']; for(var i = 0; i < arguments.length; i++) { arr.push(arguments[i]); };
+			    window.console.log.apply(window.console, arr);
+			};
+		}
+		// Check Warn
+		if ( typeof window.console.warn === 'undefined' ) {
+			window.console.warn = function(){
+				var arr = ['console.warn:']; for(var i = 0; i < arguments.length; i++) { arr.push(arguments[i]); };
+			    window.console.log.apply(window.console, arr);
+			};
+		} 
+		// Check Error
+		if ( typeof window.console.error === 'undefined' ) {
+			window.console.error = function(){
+				var arr = ['console.error']; for(var i = 0; i < arguments.length; i++) { arr.push(arguments[i]); };
+			    window.console.log.apply(window.console, arr);
+			};
+		}
+		// Check Trace
+		if ( typeof window.console.trace === 'undefined' ) {
+			window.console.trace = function(){
+			    window.console.error.apply(window.console, ['console.trace does not exist']);
+			};
+		}
+	}
+	// We have been emulated
+	window.console.emulated = true;
+}/**
+ * @depends nothing
  * @name core.date
  * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
  */
@@ -1165,7 +1224,7 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
 	 * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
 	 */
-	$.fn.inDOM = function(){
+	$.fn.inDOM = $.fn.inDOM || function(){
 		var $ancestor = $(this).parent().parent();
 		return $ancestor.size() && ($ancestor.height()||$ancestor.width());
 	};
@@ -1179,7 +1238,7 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
 	 * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
 	 */
-	$.fn.valWrap = function(start,end){
+	$.fn.valWrap = $.fn.valWrap || function(start,end){
 		// Wrap a value
 		var $field = $(this);
 		return $field.val($field.val().wrap(start,end));
@@ -1194,7 +1253,7 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
 	 * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
 	 */
-	$.fn.valWrapSelection = function(start,end,a,z){
+	$.fn.valWrapSelection = $.fn.valWrapSelection || function(start,end,a,z){
 		// Wrap the selected text
 		var $field = $(this);
 		var field = $field.get(0);
@@ -1232,7 +1291,7 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
 	 * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
 	 */
-	$.fn.giveFocus = function(){
+	$.fn.giveFocus = $.fn.giveFocus || function(){
 		// Give focus to the current element
 		var $this = $(this);
 		var selector = ':input:visible:first';
@@ -1249,7 +1308,7 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
 	 * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
 	 */
-	$.fn.highlight = function(duration){
+	$.fn.highlight = $.fn.highlight || function(duration){
 		// Perform the Highlight Effect
 		return $(this).effect('highlight', {}, duration||3000);
 	};
@@ -1576,6 +1635,156 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 			// Fire
 			check.apply(this,[event]);
 		}
+	};
+	
+
+})(jQuery);/**
+ * @depends jquery
+ * @name jquery.utilities
+ * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
+ */
+
+/**
+ * jQuery Aliaser
+ */
+(function($){
+	
+	/**
+	 * Creates a new object, which uses baseObject's structure, and userObject's values when applicable
+	 * @params {Object} baseObject
+	 * @params {Object} userObject
+	 * @params {Object} ...
+	 * @return {Object} newObject
+	 * @version 1.0.0
+	 * @date August 01, 2010
+	 * @since 1.0.0
+     * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
+	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+	 * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
+	 */
+	$.prepareObject = $.prepareObject || function(baseObject,userObject) {
+		var newObject = {};
+		var skipValue = '$.prepareObject.skipValue';
+		
+		// Extend newObject
+		$.extend(newObject,baseObject||{});
+		
+		// Intercept with the userObject
+		$.intercept(true,newObject,userObject);
+		
+		// Handle additional params
+		var objects = arguments;
+		objects[0] = objects[1] = skipValue;
+		
+		// Cycle through additional objects
+		$.each(objects,function(i,object){
+			// Check if we want to skip
+			if ( object === skipValue ) return true; // continue
+			// Intercept with the object
+			$.intercept(true,newObject,object);
+		});
+		
+		// Return the newObject
+		return newObject;
+	};
+	
+	/**
+	 * Intercept two objects
+	 * @params [deep], &object1, object2, ...
+	 * @version 1.0.0
+	 * @date August 01, 2010
+	 * @since 1.0.0
+     * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
+	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+	 * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
+	 */
+	$.intercept = $.intercept || function() {
+		// Prepare
+		var objects = arguments,
+			object,
+			deep = false,
+			copy = false;
+		var skipValue = '$.intercept.skipValue';
+		
+		// Check Deep
+		if ( typeof objects[0] === 'boolean' ) {
+			deep = objects[0];
+			objects[0] = skipValue;
+			// Check Copy
+			if ( typeof objects[1] === 'boolean' ) {
+				copy = objects[1];
+				objects[1] = skipValue;
+				// Handle Copy
+				if ( copy ) {
+					object = {};
+				}
+				else {
+					object = objects[2];
+					objects[2] = skipValue;
+				}
+			}
+			else {
+				object = objects[1];
+				objects[1] = skipValue;
+			}
+		}
+		else {
+			object = objects[0];
+			objects[0] = skipValue;
+		}
+		
+		// Grab Keys
+		var keys = {};
+		$.each(object,function(key){
+			keys[key] = true;
+		});
+		
+		// Intercept Objects
+		if ( deep ) {
+			// Cycle through objects
+			$.each(objects, function(i,v){
+				// Check if we want to skip
+				if ( v === skipValue ) return true; // continue
+				// Cycle through arguments
+				$.each(v, function(key,value){
+					// Check if the key exists so we can intercept
+					if ( typeof keys[key] === 'undefined' ) return true; // continue
+					// It exists, check value type
+					if ( typeof value === 'object' && !(value.test||false && value.exec||false) ) {
+						// Extend this object
+						$.extend(object[key],value||{});
+					}
+					else {
+						// Copy value over
+						object[key] = value;
+					}
+				});
+			})
+		}
+		else {
+			// Cycle through objects
+			$.each(objects, function(i,v){
+				// Cycle through arguments
+				$.each(v, function(key,value){
+					// Check if the key exists so we can intercept
+					if ( typeof keys[key] === 'undefined' ) return true; // continue
+					// It exists, check value type
+					if ( typeof value === 'object' && !(value.test||false && value.exec||false) ) {
+						// Intercept this object
+						$.intercept(true,object[key],value);
+					}
+					else {
+						// Copy value over
+						object[key] = value;
+					}
+				});
+			})
+		}
+		
+		// Return object
+		return object;
 	};
 	
 

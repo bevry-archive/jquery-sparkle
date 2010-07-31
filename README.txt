@@ -19,8 +19,8 @@
  * - A copy of our interpretation of the license used.
  *   If not, see <http://github.com/balupton/jquery-sparkle/blob/master/COPYING.txt>.
  * 
- * @version 1.4.7-beta
- * @date July 29, 2010
+ * @version 1.4.8-beta
+ * @date August 01, 2010
  * @since v0.1.0-dev, December 01, 2009
  * @category jquery-plugin
  * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
@@ -41,6 +41,10 @@ Todo:
 ----
 
 Changelog:
+
+v1.4.8-beta, August 01, 2010
+- Added core.console to build, amazed that this wasn't included. This should fix any console errors people were experiencing in IE (if anyone was).
+- Added new jquery.utilities
 
 v1.4.7-beta, July 29, 2010
 - The demo now includes a demo for using the EventCalendar with Ajax.

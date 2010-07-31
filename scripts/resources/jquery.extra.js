@@ -233,7 +233,7 @@
 	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
 	 * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
 	 */
-	$.fn.inDOM = function(){
+	$.fn.inDOM = $.fn.inDOM || function(){
 		var $ancestor = $(this).parent().parent();
 		return $ancestor.size() && ($ancestor.height()||$ancestor.width());
 	};
@@ -247,7 +247,7 @@
 	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
 	 * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
 	 */
-	$.fn.valWrap = function(start,end){
+	$.fn.valWrap = $.fn.valWrap || function(start,end){
 		// Wrap a value
 		var $field = $(this);
 		return $field.val($field.val().wrap(start,end));
@@ -262,7 +262,7 @@
 	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
 	 * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
 	 */
-	$.fn.valWrapSelection = function(start,end,a,z){
+	$.fn.valWrapSelection = $.fn.valWrapSelection || function(start,end,a,z){
 		// Wrap the selected text
 		var $field = $(this);
 		var field = $field.get(0);
@@ -300,7 +300,7 @@
 	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
 	 * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
 	 */
-	$.fn.giveFocus = function(){
+	$.fn.giveFocus = $.fn.giveFocus || function(){
 		// Give focus to the current element
 		var $this = $(this);
 		var selector = ':input:visible:first';
@@ -317,7 +317,7 @@
 	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
 	 * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
 	 */
-	$.fn.highlight = function(duration){
+	$.fn.highlight = $.fn.highlight || function(duration){
 		// Perform the Highlight Effect
 		return $(this).effect('highlight', {}, duration||3000);
 	};

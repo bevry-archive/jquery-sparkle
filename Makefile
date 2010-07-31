@@ -34,12 +34,14 @@ edithooks:
 pack:
 	cat \
 		./scripts/resources/core.array.js \
+		./scripts/resources/core.console.js \
 		./scripts/resources/core.date.js \
 		./scripts/resources/core.number.js \
 		./scripts/resources/core.string.js \
 		./scripts/resources/jquery.appendscriptstyle.js \
 		./scripts/resources/jquery.extra.js \
 		./scripts/resources/jquery.events.js \
+		./scripts/resources/jquery.utilities.js \
 		./scripts/resources/jquery.passwordstrength.js \
 		./scripts/resources/jquery.balclass.js \
 		./scripts/resources/jquery.balclass.bespin.js \

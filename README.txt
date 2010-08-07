@@ -19,7 +19,7 @@
  * - A copy of our interpretation of the license used.
  *   If not, see <http://github.com/balupton/jquery-sparkle/blob/master/COPYING.txt>.
  * 
- * @version 1.4.9-beta
+ * @version 1.4.10-beta
  * @date August 07, 2010
  * @since v0.1.0-dev, December 01, 2009
  * @category jquery-plugin
@@ -42,8 +42,11 @@ Todo:
 
 Changelog:
 
+v1.4.10-beta, August 07, 2010
+- Fixed $.fn.htmlAndSelf
+
 v1.4.9-beta, August 07, 2010
-- Changed balClass create to extend the prototype without deep. As otherwise it would go too deep! When that is not needed.
+- Changed BalClass create to extend the prototype without deep. As otherwise it would go too deep! When that is not needed.
 - Added $.fn.htmlAndSelf to fetch the outerHTML of an element.
 - Removed deprecated json2.min.js from demo. It was not being used.
 - Updated demo to include production and development includes (production commented out).

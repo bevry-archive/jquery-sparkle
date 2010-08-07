@@ -325,7 +325,7 @@
 
 	/**
 	 * Get a elements html including it's own tag
-	 * @version 1.0.0
+	 * @version 1.0.1
 	 * @date August 07, 2010
 	 * @since 1.0.0, August 07, 2010
      * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
@@ -333,9 +333,9 @@
 	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
 	 * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
 	 */
-	$.fn.htmlAndSelf = $.fn.htmlAndSelf || function(el){
+	$.fn.htmlAndSelf = $.fn.htmlAndSelf || function(){
 		// Get a elements html including it's own tag
-		return $(el).attr('outerHTML');
+		return $(this).attr('outerHTML');
 	};
 	
 })(jQuery);

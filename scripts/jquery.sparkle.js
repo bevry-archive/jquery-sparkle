@@ -1314,6 +1314,21 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 	};
 	
 
+	/**
+	 * Get a elements html including it's own tag
+	 * @version 1.0.0
+	 * @date August 07, 2010
+	 * @since 1.0.0, August 07, 2010
+     * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
+	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+	 * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
+	 */
+	$.fn.htmlAndSelf = $.fn.htmlAndSelf || function(el){
+		// Get a elements html including it's own tag
+		return $(el).attr('outerHTML');
+	};
+	
 })(jQuery);/**
  * @depends jquery
  * @name jquery.events
@@ -2004,12 +2019,12 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 			clone: function(extend){
 				// Clone a BalClass (Creates a new BalClass type)
 				var Me = this;
-				var clone = function(config){
-					this.construct(config);
+				var clone = function(config,extend){
+					this.construct(config,extend);
 				};
-				$.extend(true, clone.prototype, Me.prototype, extend||{});
-				clone.clone = Me.prototype.clone;
-				clone.create = Me.prototype.create;
+				$.extend(clone.prototype, Me.prototype, extend||{});
+				clone.clone = clone.prototype.clone;
+				clone.create = clone.prototype.create;
 				return clone;
 			},
 			create: function(config,extend){

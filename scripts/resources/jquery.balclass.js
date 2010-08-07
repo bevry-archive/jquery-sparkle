@@ -46,12 +46,12 @@
 			clone: function(extend){
 				// Clone a BalClass (Creates a new BalClass type)
 				var Me = this;
-				var clone = function(config){
-					this.construct(config);
+				var clone = function(config,extend){
+					this.construct(config,extend);
 				};
-				$.extend(true, clone.prototype, Me.prototype, extend||{});
-				clone.clone = Me.prototype.clone;
-				clone.create = Me.prototype.create;
+				$.extend(clone.prototype, Me.prototype, extend||{});
+				clone.clone = clone.prototype.clone;
+				clone.create = clone.prototype.create;
 				return clone;
 			},
 			create: function(config,extend){

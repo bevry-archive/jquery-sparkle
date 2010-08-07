@@ -46,6 +46,7 @@ v1.4.9-beta, August 07, 2010
 - Changed balClass create to extend the prototype without deep. As otherwise it would go too deep! When that is not needed.
 - Added $.fn.htmlAndSelf to fetch the outerHTML of an element.
 - Removed deprecated json2.min.js from demo. It was not being used.
+- Updated demo to include production and development includes (production commented out).
 
 v1.4.8-beta, August 01, 2010
 - Added core.console to build, amazed that this wasn't included. This should fix any console errors people were experiencing in IE (if anyone was).

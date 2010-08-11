@@ -19,8 +19,8 @@
  * - A copy of our interpretation of the license used.
  *   If not, see <http://github.com/balupton/jquery-sparkle/blob/master/COPYING.txt>.
  * 
- * @version 1.4.10-beta
- * @date August 07, 2010
+ * @version 1.4.11-beta
+ * @date August 11, 2010
  * @since v0.1.0-dev, December 01, 2009
  * @category jquery-plugin
  * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
@@ -41,6 +41,11 @@ Todo:
 ----
 
 Changelog:
+
+v1.4.11-beta, August 11, 2010
+- Updated the EventCalendar to v1.2.0
+- EventCalendar domEvents arguments are now: domEvent and details. Details contains: year, month, day, date, dayEntries, monthEntries, datepicker.
+- This is backwards incompatible realise for the EventCalendar, besides the above change it remains compatible.
 
 v1.4.10-beta, August 07, 2010
 - Fixed $.fn.htmlAndSelf

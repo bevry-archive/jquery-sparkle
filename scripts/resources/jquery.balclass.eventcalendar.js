@@ -11,8 +11,8 @@
 	
 	/**
 	 * Event Calendar
-	 * @version 1.1.2
-	 * @date July 29, 2010
+	 * @version 1.2.0
+	 * @date August 11, 2010
 	 * @since 1.0.0, June 30, 2010
      * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
 	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
@@ -293,8 +293,8 @@
 							$datepicker = $(datepicker);
 						
 						// Reset the Render
-						var $days_tds = $datepicker.find('tbody td');
-						var $days = $days_tds.find('a');
+						var $days_tds = $datepicker.find('tbody td'),
+							$days = $days_tds.find('a');
 		
 						// Disable Click
 						if ( config.disableClick ) {
@@ -332,9 +332,9 @@
 							// Add the Entry to These Days
 							$entryDays.addClass(config.dayEventClass).each(function(dayIndex,dayElement){
 								// Fetch
-								var $day = $(dayElement);
-								var day = $day.text().trim();
-								var dayEntriesIds = $day.data('dayEntriesIds');
+								var $day = $(dayElement),
+									day = $day.text().trim(),
+									dayEntriesIds = $day.data('dayEntriesIds');
 				
 								// Handle
 								if ( typeof dayEntriesIds === 'undefined' ) {
@@ -352,9 +352,10 @@
 								$.each(config.domEvents,function(domEventName,domEventHandler){
 									$day.unbind(domEventName).bind(domEventName,function(domEvent){
 										// Prepare
-										var $day = $(this);
-										var day = $day.text().trim();
-										var dayEntriesIds = String($day.data('dayEntriesIds')).split(/,/g);
+										var $day = $(this),
+											day = $day.text().trim(),
+											dayEntriesIds = String($day.data('dayEntriesIds')).split(/,/g),
+											date = new Date(); date.setDatestr(year+'-'+month+'-'+day);
 										
 										// Entries
 										var dayEntries = []
@@ -364,8 +365,16 @@
 										});
 										
 										// Fire
-										domEventHandler.apply(this, [domEvent, day, dayEntries, monthEntries]);
-						
+										domEventHandler.apply(this, [domEvent, {
+											"year":year,
+											"month":month,
+											"day":day,
+											"date":date,
+											"dayEntries":dayEntries,
+											"monthEntries":monthEntries,
+											"datepicker":datepicker
+										}]);
+										
 										// Done
 										return true;
 									});

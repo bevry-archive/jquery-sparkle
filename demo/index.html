@@ -668,24 +668,37 @@
 							/** Whether or not to disable the datepicker date selection click */
 							disableClick: true,
 							/**
-							 * Whatever events you would like to assign to a $day
-							 * You will recieve the arguments: domEvent, day, dayEvents, monthEvents
+							 * The domEvents option contains all the events which you would like to assign to a $day
+							 * 
+							 * It will send the following arguments back to you:
+							 * - domEvent
+							 * - details
+							 * 
+							 * The details of the details argument contains the following:
+							 * - {Number} year
+							 * - {Number} month
+							 * - {Number} day
+							 * - {String} date
+							 * - {Array} dayEntries
+							 * - {Array} monthEntries
+							 * - {Element} datepicker
 							 */
 							domEvents: {
-								mouseenter: function(domEvent, day, dayEvents, monthEvents) {
+								mouseenter: function(domEvent, details) {
 									// Prepare
-									var $day = $(this);
+									var $day = $(this),
+										dayEntries = details.dayEntries;
 									// Output
-									$.each(dayEvents,function(i,event){
+									$.each(dayEntries,function(i,entry){
 										$eventsInfo.append(
 											'&lt;p&gt;'+
-												'&lt;strong&gt;'+event.title+'&lt;/strong&gt; ~'+event.user.name+'&lt;br/&gt;'+
-												'&lt;em&gt;'+event.start.toLocaleDateString()+'&lt;/em&gt; to &lt;em&gt;'+event.finish.toLocaleDateString()+'&lt;/em&gt;'+
+												'&lt;strong&gt;'+entry.title+'&lt;/strong&gt; ~'+entry.user.name+'&lt;br/&gt;'+
+												'&lt;em&gt;'+entry.start.toLocaleDateString()+'&lt;/em&gt; to &lt;em&gt;'+entry.finish.toLocaleDateString()+'&lt;/em&gt;'+
 											'&lt;/p&gt;'
 										);
 									});
 								},
-								mouseleave: function(domEvent, day, dayEvents, monthEvents) {
+								mouseleave: function(domEvent, details) {
 									// Clear
 									$eventsInfo.empty();
 								}
@@ -766,24 +779,37 @@
 							/** Whether or not to disable the datepicker date selection click */
 							disableClick: true,
 							/**
-							 * Whatever events you would like to assign to a $day
-							 * You will recieve the arguments: domEvent, day, dayEvents, monthEvents
+							 * The domEvents option contains all the events which you would like to assign to a $day
+							 * 
+							 * It will send the following arguments back to you:
+							 * - domEvent
+							 * - details
+							 * 
+							 * The details of the details argument contains the following:
+							 * - {Number} year
+							 * - {Number} month
+							 * - {Number} day
+							 * - {String} date
+							 * - {Array} dayEntries
+							 * - {Array} monthEntries
+							 * - {Element} datepicker
 							 */
 							domEvents: {
-								mouseenter: function(domEvent, day, dayEvents, monthEvents) {
+								mouseenter: function(domEvent, details) {
 									// Prepare
-									var $day = $(this);
+									var $day = $(this),
+										dayEntries = details.dayEntries;
 									// Output
-									$.each(dayEvents,function(i,event){
+									$.each(dayEntries,function(i,entry){
 										$eventsInfo.append(
 											'<p>'+
-												'<strong>'+event.title+'</strong> ~'+event.user.name+'<br/>'+
-												'<em>'+event.start.toLocaleDateString()+'</em> to <em>'+event.finish.toLocaleDateString()+'</em>'+
+												'<strong>'+entry.title+'</strong> ~'+entry.user.name+'<br/>'+
+												'<em>'+entry.start.toLocaleDateString()+'</em> to <em>'+entry.finish.toLocaleDateString()+'</em>'+
 											'</p>'
 										);
 									});
 								},
-								mouseleave: function(domEvent, day, dayEvents, monthEvents) {
+								mouseleave: function(domEvent, details) {
 									// Clear
 									$eventsInfo.empty();
 								}
@@ -878,24 +904,37 @@
 							/** Whether or not to disable the datepicker date selection click */
 							disableClick: true,
 							/**
-							 * Whatever events you would like to assign to a $day
-							 * You will recieve the arguments: domEvent, day, dayEvents, monthEvents
+							 * The domEvents option contains all the events which you would like to assign to a $day
+							 * 
+							 * It will send the following arguments back to you:
+							 * - domEvent
+							 * - details
+							 * 
+							 * The details of the details argument contains the following:
+							 * - {Number} year
+							 * - {Number} month
+							 * - {Number} day
+							 * - {String} date
+							 * - {Array} dayEntries
+							 * - {Array} monthEntries
+							 * - {Element} datepicker
 							 */
 							domEvents: {
-								mouseenter: function(domEvent, day, dayEvents, monthEvents) {
+								mouseenter: function(domEvent, details) {
 									// Prepare
-									var $day = $(this);
+									var $day = $(this),
+										dayEntries = details.dayEntries;
 									// Output
-									$.each(dayEvents,function(i,event){
+									$.each(dayEntries,function(i,entry){
 										$eventsInfo.append(
 											'&lt;p&gt;'+
-												'&lt;strong&gt;'+event.title+'&lt;/strong&gt; ~'+event.user.name+'&lt;br/&gt;'+
-												'&lt;em&gt;'+event.start.toLocaleDateString()+'&lt;/em&gt; to &lt;em&gt;'+event.finish.toLocaleDateString()+'&lt;/em&gt;'+
+												'&lt;strong&gt;'+entry.title+'&lt;/strong&gt; ~'+entry.user.name+'&lt;br/&gt;'+
+												'&lt;em&gt;'+entry.start.toLocaleDateString()+'&lt;/em&gt; to &lt;em&gt;'+entry.finish.toLocaleDateString()+'&lt;/em&gt;'+
 											'&lt;/p&gt;'
 										);
 									});
 								},
-								mouseleave: function(domEvent, day, dayEvents, monthEvents) {
+								mouseleave: function(domEvent, details) {
 									// Clear
 									$eventsInfo.empty();
 								}

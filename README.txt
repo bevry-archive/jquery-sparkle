@@ -19,7 +19,7 @@
  * - A copy of our interpretation of the license used.
  *   If not, see <http://github.com/balupton/jquery-sparkle/blob/master/COPYING.txt>.
  * 
- * @version 1.4.11-beta
+ * @version 1.4.12-beta
  * @date August 11, 2010
  * @since v0.1.0-dev, December 01, 2009
  * @category jquery-plugin
@@ -41,6 +41,9 @@ Todo:
 ----
 
 Changelog:
+
+v1.4.12-beta, August 11, 2010
+- Fixed documentation for v1.4.11-beta changes
 
 v1.4.11-beta, August 11, 2010
 - Updated the EventCalendar to v1.2.0

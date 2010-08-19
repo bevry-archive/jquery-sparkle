@@ -19,7 +19,7 @@
  * - A copy of our interpretation of the license used.
  *   If not, see <http://github.com/balupton/jquery-sparkle/blob/master/COPYING.txt>.
  * 
- * @version 1.4.13-beta
+ * @version 1.4.14-beta
  * @date August 19, 2010
  * @since v0.1.0-dev, December 01, 2009
  * @category jquery-plugin
@@ -42,13 +42,16 @@ Todo:
 
 Changelog:
 
+v1.4.14-final, August 20, 2010
+- Added $.fn.preventDefault to prevent the default action for a click.
+
 v1.4.13-final, August 19, 2010
 - Fixed issue with enter special event if it has been defined included twice.
 - Updated Syntax Highlighter include and initialisation. We use http://www.balupton.com/projects/jquery-syntaxhighlighter
 - Code blocks within the demo are now using PRE instead of CODE elements due to a IE bug.
-- Sparkle Demo Extension now uses PRE instead of CODE element due to a IE bug.
+- Sparkle Demo Extension now uses PRE instead of CODE element due to an IE bug.
 - Bespin is not included for IE as it results in an alert error.
-- Updated installation instructions to make more clear.
+- Improved installation instructions to make more clear.
 - Fixed issue with datetimepicker if loaded before help.
 - Added Datepicker, renamed timepicker and datetimepicker to Timepicker and Datetimepicker.
 - Added HTML5 wrappers to Datetimepicker, Timepicker and Datepicker.

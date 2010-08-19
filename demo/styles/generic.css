@@ -3,17 +3,17 @@
 h1 {
 	font-size: 2.5em;
 	font-weight: bold;
-	margin: 0.67em 0px;
+	margin: 0.67em 0px 0.5em;
 }
 h2 {
 	font-size: 2em;
 	font-weight: bold;
-	margin: 0.83em 0px;
+	margin: 0.83em 0px 0.4em;
 }
 h3 {
 	font-size: 1.5em;
 	font-weight: bold;
-	margin: 0.83em 0px;
+	margin: 0.83em 0px 0.3em;
 }
 
 code.code, pre.code {
@@ -45,13 +45,17 @@ body {
     color: #000000;
 }
 
-p {
+
+p,
+.section div {
     padding: 0px;
-    margin: 0px;
-}
-p, .section.about p {
 	margin:1em 0;
 }
+.section.install p,
+.section.install div {
+	margin:0.2em 0 1em;
+}
+
 
 textarea {
 	width: 100%;
@@ -101,9 +105,6 @@ a.help:visited {
 	border-bottom:1px dotted #551A8B;
 }
 
-.section.install h3 {
-	margin: 0.83em 0px 0.2em;
-}
 .section ul.features {
 	display: block;
 	list-style: disc;
@@ -119,7 +120,6 @@ a.help:visited {
 	list-style:disc outside none;
 }
 .section ul.install {
-	margin-top:-0.5em;
 	margin-left:2em;
 }
 .section ul.install li {

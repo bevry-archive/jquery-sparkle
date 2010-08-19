@@ -338,6 +338,23 @@
 	};
 	
 	/**
+	 * Prevent the default action when a click is performed
+	 * @version 1.0.0
+	 * @date August 19, 2010
+	 * @since 1.0.0, August 19, 2010
+     * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
+	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+	 * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
+	 */
+	$.fn.preventDefault = $.fn.preventDefault || function(){
+		return $(this).click(function(event){
+			event.preventDefault();
+			return false;
+		});
+	};
+	
+	/**
 	 * Attempts to change the element type to {$type}
 	 * @version 1.0.1
 	 * @date August 07, 2010
@@ -348,7 +365,7 @@
 	 * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
 	 */
 	$.fn.attemptTypeChangeTo = $.fn.attemptTypeChangeTo || function(type){
-		// Get a elements html including it's own tag
+		// Prepare
 		var	$input = $(this),
 			result = false,
 			el = $input.get(0),

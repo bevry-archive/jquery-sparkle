@@ -19,7 +19,7 @@
  * - A copy of our interpretation of the license used.
  *   If not, see <http://github.com/balupton/jquery-sparkle/blob/master/COPYING.txt>.
  * 
- * @version 1.4.14-beta
+ * @version 1.4.14-final
  * @date August 19, 2010
  * @since v0.1.0-dev, December 01, 2009
  * @category jquery-plugin

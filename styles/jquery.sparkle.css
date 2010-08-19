@@ -36,17 +36,12 @@
 		border-top:1px solid #CCC;
 		margin:1em 0;
 		padding:0 0 0.5em;
-		font-size:14px;
 	}
 	.sparkle-demo-section h3 {
-		font-size:22px;
-		font-weight:bold;
 		margin:1em 0;
 		background: #EEE;
 	}
 	.sparkle-demo-section h4 {
-		font-size:16px;
-		font-weight:bold;
 		margin:1em 0;
 	}
 	.sparkle-demo-section .spakle-demo-result,
@@ -119,7 +114,10 @@
 
 /* Bespin */
 	
-	div.bespin-wrap .bespin {
+	div.bespin-wrap .bespin,
+	div.bespin-wrap .bespin div {
+		margin:0;
+		padding:0;
 	}
 	div.bespin-wrap .bespin-toolbar {
 		width:100%;
@@ -127,6 +125,8 @@
 		background:#4C4A41;
 		color:#D3B339;
 		position:relative;
+		margin:0;
+		padding:0;
 	}
 	div.bespin-wrap .bespin-toolbar-fullscreen {
 		cursor:pointer;

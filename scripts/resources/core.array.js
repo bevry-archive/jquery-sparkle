@@ -52,18 +52,23 @@ Array.prototype.get = function(index, current) {
 };
 
 /**
- * Apply the function [fn] to each element in the array
- * @version 1.0.0
- * @date June 30, 2010
+ * Apply the function {handler} to each element in the array
+ * Return false in the {handler} to break the cycle.
+ * @param {Function} handler
+ * @version 1.0.1
+ * @date August 20, 2010
+ * @since June 30, 2010
  * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
  * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
  * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
  * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
  */
-Array.prototype.each = function(fn){
+Array.prototype.each = function(handler){
 	for (var i = 0; i < this.length; ++i) {
-		if (fn(i, this[i], this) === false) 
+		var value = this[i];
+		if ( handler.apply(value,[i,value]) === false ) {
 			break;
+		}
 	}
 	return this;
 }

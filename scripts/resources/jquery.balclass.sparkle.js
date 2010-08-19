@@ -16,8 +16,8 @@
 
 	/**
 	 * jQuery Sparkle - jQuery's DRY Effect Library
-	 * @version 1.2.1
-	 * @date August 18, 2010
+	 * @version 1.3.0
+	 * @date August 20, 2010
 	 * @since 1.0.0, June 30, 2010
      * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
 	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
@@ -31,72 +31,137 @@
 		$.SparkleClass = $.BalClass.clone(
 			// Class Extensions
 			{
-				addExtension: function(name, func, config) {
-					var Sparkle = $.Sparkle;
-					if ( name === 'object' ) {
-						// Series
-						for ( var i in name ) {
-							Sparkle.addExtension(i, name[i]);
-						}
-					} else {
-						// Individual
-						var Extension = {
-							config: {},
-							extension: false
-						};
-						// Discover
-						if ( typeof func === 'object' && typeof func.config !== 'undefined' ) {
-							Extension.config = func.config;
-							Extension.extension = func.extension;
-						} else {
-							Extension.extension = func;
-						}
-						// Apply
-						Sparkle.addConfig(name, Extension);
+				addExtension: function() {
+					var Sparkle = $.Sparkle,
+						Extension = {};
+					
+					// Determine
+					switch ( true ) {
+						case arguments[2]||false:
+							// name, config, extension
+							// name, extension, config
+							if ( typeof arguments[0] === 'string' && typeof arguments[2] === 'function' && typeof arguments[1] === 'object' ) {
+								Extension.extension = arguments[2];
+								Extension.config = arguments[1];
+								Extension.name = arguments[0];
+							}
+							if ( typeof arguments[0] === 'string' && typeof arguments[1] === 'function' && typeof arguments[2] === 'object' ) {
+								Extension.extension = arguments[1];
+								Extension.config = arguments[2];
+								Extension.name = arguments[0];
+							}
+							else {
+								throw new Exception('Sparkle.addExtension: Invalid Input');
+							}
+							break;
+							
+						case arguments[1]||false:
+							// name, Extension
+							// name, extension
+							if ( typeof arguments[0] === 'string' && typeof arguments[1] === 'function' ) {
+								Extension.extension = arguments[1];
+								Extension.name = arguments[0];
+							}
+							else if ( typeof arguments[0] === 'string' && Sparkle.isExtension(arguments[1]) ){
+								Extension = arguments[1];
+								Extension.name = arguments[0];
+							}
+							else {
+								throw new Exception('Sparkle.addExtension: Invalid Input');
+							}
+							break;
+							
+						case arguments[0]||false:
+							// Extension
+							// Series
+							if ( Sparkle.isExtension(arguments[0]) ) {
+								Extension = arguments[0];
+							}
+							else if ( typeof arguments[0] === 'object' || typeof arguments[0] === 'array' ) {
+								// Series
+								$.each(arguments[0],function(key,value){
+									Sparkle.addExtension(key,value);
+								});
+							}
+							else {
+								throw new Exception('Sparkle.addExtension: Invalid Input');
+							}
+							break;
 					}
+					
+					// Ensure
+					Extension.config = Extension.config||{};
+					Extension.extension = Extension.extension||{};
+					
+					// Done
 					return true;
 				},
 				cycleExtensions: function(){
-					var $this = $(this); var Sparkle = $.Sparkle;
+					var Sparkle = $.Sparkle;
 					var Extensions = Sparkle.getExtensions();
-					for ( var extension in Extensions ) {
-						Sparkle.triggerExtension.apply($this, [extension]);
-					}
-					return $this;
+					$.each(Extensions,function(extension,Extension){
+						Sparkle.triggerExtension(Extension);
+					});
+					return true;
 				},
 	
+				hasExtension: function (extension) {
+					var Sparkle = $.Sparkle;
+					var Extension = Sparkle.getExtension(extension);
+					return Extension !== 'undefined';
+				},
+				isExtension: function (extension) {
+					var Sparkle = $.Sparkle;
+					return Boolean(extension.extension||false);
+				},
 				getExtensions: function ( ) {
-					var $this = $(this); var Sparkle = $.Sparkle;
-					var Extensions = Sparkle.getConfig();
+					var	Sparkle = $.Sparkle,
+						Config = Sparkle.getConfig(),
+						Extensions = {};
+					$.each(Config,function(key,value){
+						if ( Sparkle.isExtension(value) ) {
+							Extensions[key] = value;
+						}
+					});
 					return Extensions;
 				},
 				getExtension: function(extension) {
-					var $this = $(this); var Sparkle = $.Sparkle;
-					var Extension = Sparkle.getConfigWithDefault(extension);
+					var Sparkle = $.Sparkle;
+					var Extension = undefined;
+					if ( Sparkle.isExtension(extension) ) {
+						Extension = extension;
+					}
+					else {
+						var fetched = Sparkle.getConfigWithDefault(extension);
+						if ( Sparkle.isExtension(fetched) ) {
+							Extension = fetched;
+						}
+					}
 					return Extension;
 				},
 				getExtensionConfig: function(extension) {
-					var $this = $(this); var Sparkle = $.Sparkle;
+					var Sparkle = $.Sparkle;
 					var Extension = Sparkle.getExtension(extension);
 					return Extension.config||{};
 				},
 				applyExtensionConfig: function(extension, config) {
-					var $this = $(this); var Sparkle = $.Sparkle;
+					var Sparkle = $.Sparkle;
 					Sparkle.applyConfig(extension, {'config':config});
-					return this; // chain
+					return true;
 				},
 				
 				triggerExtension: function(extension){
-					var $this = $(this); var Sparkle = $.Sparkle;
+					var Sparkle = $.Sparkle;
 					var Extension = Sparkle.getExtension(extension);
-					if ( typeof Extension.extension !== 'undefined' ) {
-						// We are not just a config object but an actual extension
-						return Extension.extension.apply($this, [Sparkle, Extension.config, Extension]);
+					var el = this instanceof jQuery ? this : $('body');
+					if ( Extension ) {
+						return Extension.extension.apply(el, [Sparkle, Extension.config, Extension]);
 					}
 					return false;
 				},
 				fn: function(extension){
-					var $this = $(this); var Sparkle = $.Sparkle;
+					var Sparkle = $.Sparkle;
+					var $this = $(this); 
 					if ( extension ) {
 						// Individual
 						Sparkle.triggerExtension.apply($this, [extension]);
@@ -127,9 +192,8 @@
 		/**
 		 * $.Sparkle
 		 */
-		$.Sparkle = $.SparkleClass.create(
-			// Instance Configuration
-			{
+		$.Sparkle = $.SparkleClass.create({
+			config: {
 				'date': {
 					config: {
 						selector: '.sparkle-date',
@@ -668,20 +732,16 @@
 						// Fetch
 						var Extensions = Sparkle.getExtensions();
 						// Cycle
-						for ( var extension in Extensions ) {
-							var Extension = Sparkle.getExtension(extension);
-							if ( !Extension ) {
-								continue;
-							}
+						$.each(Extensions,function(extension,Extension){
 							var demo = Extension.config.demo||'';
 							var demoText = Extension.config.demoText||'';
 							if ( !demo && !demoText ) {
-								continue;
+								return true; // continue
 							}
 							var $demo = $(
-								'<div class="sparkle-demo-section" id="sparkle-demo-'+extension+'">'+
-									'<h3>'+extension+'<h3>'+
-								'</div>'
+								'<div class="sparkle-demo-section" id="sparkle-demo-'+extension+'">\
+									<h3>'+extension+'</h3>\
+								</div>'
 							);
 							if ( demoText ) {
 								$demo.append('<div class="sparkle-demo-text">'+demoText+'</div>');
@@ -689,20 +749,22 @@
 							if ( demo ) {
 								var demoCode = demo.replace(/</g,'&lt;').replace(/>/g,'&gt;');
 								$demo.append(
-									'<h4>Example Code:</h4>'+
-										'<pre class="code language-html sparkle-demo-code">'+demoCode+'</pre>'+
-									'<h4>Example Result:</h4>'+
-										'<div class="sparkle-demo-result">'+demo+'</div>'
+									'<h4>Example Code:</h4>\
+									<pre class="code language-html sparkle-demo-code">'+demoCode+'</pre>\
+									<h4>Example Result:</h4>\
+									<div class="sparkle-demo-result">'+demo+'</div>'
 								);
 							}
-							$container.append($demo).sparkle();
-						}
+							$demo.appendTo($container);
+						});
+						// Sparkle
+						$container.sparkle();
 						// Done
-						return true;
+						return $this;
 					}
 				}
 			}
-		);
+		});
 	}
 	else {
 		window.console.warn('$.Sparkle has already been defined...');

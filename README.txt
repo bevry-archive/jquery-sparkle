@@ -19,8 +19,8 @@
  * - A copy of our interpretation of the license used.
  *   If not, see <http://github.com/balupton/jquery-sparkle/blob/master/COPYING.txt>.
  * 
- * @version 1.4.14-final
- * @date August 19, 2010
+ * @version 1.4.15-final
+ * @date August 20, 2010
  * @since v0.1.0-dev, December 01, 2009
  * @category jquery-plugin
  * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
@@ -41,6 +41,14 @@ Todo:
 ----
 
 Changelog:
+
+v1.4.15-final, August 20, 2010
+- Updated styling for demo.
+- Fixed Sparkle Demo Extension render issue in IE
+- Fixed missing JSON issue in IE6 and IE7 for demo page
+- Added a dev.js resource (which is not included in the compiled jquery.sparkle.js) for concept functions
+- Updated Sparkle to v1.3.0, as we now support Sparkle.addExtension(Extension)
+- Updated BalClass to v1.3.0, as we now support BalClass.create(Class) and BalClass.clone(Class) instead of having functions and config separate.
 
 v1.4.14-final, August 19, 2010
 - Added $.fn.preventDefault to prevent the default action for a click.

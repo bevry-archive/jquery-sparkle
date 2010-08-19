@@ -6,7 +6,7 @@
 	</title>
 
 	<!-- Include jQuery (Sparkle Requirement) -->
-	<script type="text/javascript" src="../scripts/jquery-1.4.2.min.js"></script>
+	<script type="text/javascript" src="../scripts/jquery-1.4.2.js"></script>
 	<!-- Include Sparkle (Production) -->
 	<!-- <script type="text/javascript" src="../scripts/jquery.sparkle.min.js"></script> -->
 	<!-- <link href="../styles/jquery.sparkle.min.css" media="screen" rel="stylesheet" type="text/css" />  -->
@@ -19,18 +19,18 @@
 </head>
 <body>
 	<!-- Include jQuery Syntax Highlighter -->
-	<script type="text/javascript" src="http://github.com/balupton/jquery-syntaxhighlighter/raw/master/scripts/jquery.syntaxhighlighter.min.js"></script>
+	<script type="text/javascript" src="http://github.com/balupton/jquery-syntaxhighlighter/raw/master/scripts/jquery.syntaxhighlighter.js"></script>
 	<!-- Initialise jQuery Syntax Highlighter -->
 	<script type="text/javascript">/*<![CDATA[*/
 		$.SyntaxHighlighter.init();
 	/*]]>*/</script>
 	
 	<!-- Bespin -->
-	<!--[if !IE]-->
+	<![if !IE]>
 	<link id="bespin_base" href="./scripts/bespin-0.9a1-custom" rel="" />
 	<link href="./scripts/bespin-0.9a1-custom/BespinEmbedded.css" media="screen" rel="stylesheet" type="text/css" />
 	<script type="text/javascript" src="./scripts/bespin-0.9a1-custom/BespinEmbedded.js"></script> 
-	<!--[endif]-->
+	<![endif]>
 	
 	<!-- Modernizr -->
 	<script type="text/javascript" src="./scripts/modernizr-1.5.min.js"></script> 
@@ -41,6 +41,11 @@
 	
 	<!-- Autogrow -->
 	<script type="text/javascript" src="./scripts/jquery.autogrow.min.js"></script> 
+	
+	<!-- JSON -->
+	<script type="text/javascript">/*<![CDATA[*/
+		if ( typeof JSON === "undefined" ) $.appendScript("./scripts/json2.min.js");
+	/*]]>*/</script>
 	
 	<!-- GetSatisfaction -->
 	<script type="text/javascript" src="http://s3.amazonaws.com/getsatisfaction.com/javascripts/feedback-v2.js"></script> 
@@ -430,9 +435,9 @@
 		<p>The major benefits of using BalClass is that you can easily work with multiple configurations for your plugin, as well as making it easily extensible by other developers. For example we can do this to have our plugin easily translatable:</p>
 		<pre class="code language-javascript">
 			if ( !($.HiBye||false) ) {
-				$.HiBye = $.HiBye.create(
+				$.HiBye = $.HiBye.create({
 					// Configuration
-					{
+					config: {
 						"default": {
 							"hi": "Hello",
 							"bye": "Goodbye"
@@ -446,31 +451,29 @@
 						}
 					},
 					// Functions
-					{
-						fn: function(mode, options) {
-							// Prepare
-							var Me = $.HiBye; // where you have placed your instantiated/created class
-							var config = Me.getConfigWithDefault(mode,options);
-							var $this = $(this);
-				
-							// Say Hi then Bye
-							$this.hide().html(config.hi).fadeIn('slow',function(){
-								$this.html(config.bye).fadeOut('slow');
-							});
-				
-							// Chain
-							return this;
-						},
-						built: function(){
-							// Prepare
-							var Me = this;
-							// Attach
-							$.fn.hibye = Me.fn;
-							// Return true
-							return true;
-						}
+					fn: function(mode, options) {
+						// Prepare
+						var Me = $.HiBye; // where you have placed your instantiated/created class
+						var config = Me.getConfigWithDefault(mode,options);
+						var $this = $(this);
+			
+						// Say Hi then Bye
+						$this.hide().html(config.hi).fadeIn('slow',function(){
+							$this.html(config.bye).fadeOut('slow');
+						});
+			
+						// Chain
+						return this;
+					},
+					built: function(){
+						// Prepare
+						var Me = this;
+						// Attach
+						$.fn.hibye = Me.fn;
+						// Return true
+						return true;
 					}
-				);
+				});
 			}
 			else {
 				console.warn("$.HiBye has already been defined...");
@@ -535,20 +538,20 @@
 		</pre>
 		<p>You don't need to prefix the CSS classname with <code>sparkle-</code> but we like to as it has become a kinda convention and standard with other sparkle extensions. So now that that's done, all we need to do is add our sparkle extension. We can do this with:</p>
 		<pre class="code language-javascript">
-			$.Sparkle.addExtension(
+			$.Sparkle.addExtension({
 				// Extension Name
-				"hibye",
-				// Extension Function
-				function(Sparkle, config){
-					var $this = $(this);
-					var $item = $this.findAndSelf(config.selector);
-					return $item.hibye(config.hibyeMode, config.hibyeConfig);
-				},
+				name: "hibye",
 				// Extension Configuration
-				{
+				config: {
 					selector: '.sparkle-hibye', // the selector which will be used
 					hibyeMode: 'default', // the mode to be used for hibye
 					hibyeConfig: {} // the configuration to be used for hibye
+				}
+				// Extension Function
+				extension: function(Sparkle, config){
+					var $this = $(this);
+					var $item = $this.findAndSelf(config.selector);
+					return $item.hibye(config.hibyeMode, config.hibyeConfig);
 				}
 			});
 		</pre>
@@ -570,23 +573,32 @@
 			<h3>jQuery.BalClass.Bespin</h3>
 			<h4>Example Code</h4>
 			<pre class="code language-html sparkle-demo-code">
-				&lt;textarea id="myBespin" style="height:200px"&gt;
-					&lt;!-- Include Sparkle (Production) --&gt;
-					&lt;script type="text/javascript" src="http://www.yoursite.com/somewhere/on/your/webserver/jquery-sparkle/scripts/jquery.sparkle.min.js"&gt;&lt;/script&gt;
-					&lt;link href="http://www.yoursite.com/somewhere/on/your/webserver/jquery-sparkle/styles/jquery.sparkle.min.css" media="screen" rel="stylesheet" type="text/css" &gt; 
-				&lt;/textarea&gt;
-				&lt;script type="text/javascript"&gt;
-					$(function(){
-						$('#myBespin').Bespin('rich');
-					});
-				&lt;/script&gt;
+				// Define our Function
+				function checkMeaningOfLife ( decimal, success ) {
+					if ( parseInt(decimal,10) === 42 ) {
+						window.console.log(success);
+					}
+				};
+				// Define our Variables
+				var	str = 'The meaning of life is true',
+					decimal = 42.00;
+				// Fire our Function
+				checkMeaningOfLife(decimal,success);
 			</pre>
 			<h4>Example Result</h4>
 			<div class="sparkle-demo-result">
 				<textarea id="myBespin" style="height:200px">
-					&lt;!-- Include Sparkle (Production) --&gt;
-					&lt;script type="text/javascript" src="http://www.yoursite.com/somewhere/on/your/webserver/jquery-sparkle/scripts/jquery.sparkle.min.js"&gt;&lt;/script&gt;
-					&lt;link href="http://www.yoursite.com/somewhere/on/your/webserver/jquery-sparkle/styles/jquery.sparkle.min.css" media="screen" rel="stylesheet" type="text/css" &gt; 
+					// Define our Function
+					function checkMeaningOfLife ( decimal, success ) {
+						if ( parseInt(decimal,10) === 42 ) {
+							window.console.log(success);
+						}
+					};
+					// Define our Variables
+					var	str = 'The meaning of life is true',
+						decimal = 42.00;
+					// Fire our Function
+					checkMeaningOfLife(decimal,success);
 				</textarea>
 				<script type="text/javascript">
 					$(function(){

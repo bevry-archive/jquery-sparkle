@@ -1,5 +1,23 @@
 /* CSS */
 
+body {	
+    font-size: 1em;
+	font-weight:normal;
+    font-family: Arial, Helvetica, sans-serif;
+    padding-left: 0px;
+    padding-right: 0px;
+    color: #000000;
+}
+strong {
+	font-weight:bold;
+}
+em {
+	font-style:italic;
+}
+body.loading {
+	cursor:wait;
+}
+
 h1 {
 	font-size: 2.5em;
 	font-weight: bold;
@@ -14,6 +32,15 @@ h3 {
 	font-size: 1.5em;
 	font-weight: bold;
 	margin: 0.83em 0px 0.3em;
+}
+h4 {
+	font-size: 1.2em;
+	font-weight: bold;
+	margin: 0.83em 0px 0.3em;
+}
+.section .title {
+    font-size: 1.2em;
+    font-weight: bold;
 }
 
 code.code, pre.code {
@@ -30,21 +57,6 @@ body code.prettyprint, body pre.prettyprint {
 	border: 5px solid #DDD;
 	padding: 7px 0 5px;
 }
-
-strong {
-	font-weight:bold;
-}
-em {
-	font-style:italic;
-}
-
-body {
-    padding-left: 0px;
-    padding-right: 0px;
-    font-family: Arial, Helvetica, sans-serif;
-    color: #000000;
-}
-
 
 p,
 .section div {
@@ -130,12 +142,12 @@ a.help:visited {
     font-family: "Courier New", Courier, monospace;
     margin-left: 10px;
     padding-left: 10px;
-    font-size: 11px;
+    font-size: 0.8em;
     border-left: 1px solid #000;
 }
 
 .section .link {
-    font-size: 12px;
+    font-size: 0.8em;
     font-style: italic;
     padding-left: 10px;
     margin-left: 10px;
@@ -145,28 +157,15 @@ a.help:visited {
     text-decoration: underline;
 }
 
-.section .title {
-    font-weight: bold;
-    font-size: 16px;
-}
-
 .clear {
     clear: left;
 }
 
-.section.header {
-    text-align: center;
-    font-size: 12px;
-    padding-top: 10px;
-    border-top: none;
-}
-
+.section.header,
 .section.footer {
     text-align: center;
-    font-size: 12px;
     padding-top: 10px;
 }
-
-body.loading {
-	cursor:wait;
+.section.header {
+    border-top: none;
 }

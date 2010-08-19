@@ -11,8 +11,8 @@
 	
 	/**
 	 * BalClass
-	 * @version 1.2.0
-	 * @date July 11, 2010
+	 * @version 1.3.0
+	 * @date August 20, 2010
 	 * @since 1.0.0, June 30, 2010
      * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
 	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
@@ -21,20 +21,40 @@
 	 */
 	if ( !($.BalClass||false) ) {
 		// Constructor
-		$.BalClass = function(config,extend){
-			this.construct(config,extend);
+		$.BalClass = function(extend){
+			this.construct(extend);
 		};
 		// Prototype
 		$.extend($.BalClass.prototype, {
 			config: {
 			},
-			construct: function(config,extend){
-				var Me = this;
-				Me.configure(config);
-				$.extend(Me,extend||{});
+			construct: function(){
+				var Me = this,
+					extend = {};
+				// Handle
+				if ( typeof arguments[0] === 'object' && typeof arguments[1] === 'object'  ) {
+					// config, extend
+					extend = arguments[1];
+					extend.config = arguments[0]||{};
+				}
+				else if ( typeof arguments[0] === 'object' ) {
+					// extend
+					extend = arguments[0];
+					extend.config = extend.config||{};
+				}
+				else {
+					throw new Exception('BalClass.construct: Invalid Input');
+				}
+				// Configure
+				Me.configure(extend.config);
+				delete extend.config;
+				// Extend
+				$.extend(Me,extend);
+				// Build
 				if ( typeof Me.built === 'function' ) {
 					return Me.built();
 				}
+				// Return true
 				return true;
 			},
 			configure: function(config){
@@ -46,18 +66,18 @@
 			clone: function(extend){
 				// Clone a BalClass (Creates a new BalClass type)
 				var Me = this;
-				var clone = function(config,extend){
-					this.construct(config,extend);
+				var clone = function(extend){
+					this.construct(extend);
 				};
 				$.extend(clone.prototype, Me.prototype, extend||{});
 				clone.clone = clone.prototype.clone;
 				clone.create = clone.prototype.create;
 				return clone;
 			},
-			create: function(config,extend){
+			create: function(Extension){
 				// Create a BalClass (Creates a new instance of a BalClass)
 				var Me = this;
-				var Obj = new Me(config,extend);
+				var Obj = new Me(Extension);
 				return Obj;
 			},
 			addConfig: function(name, config){
@@ -65,9 +85,9 @@
 				if ( typeof config === 'undefined' ) {
 					if ( typeof name === 'object' ) {
 						// Series
-						for ( var i in name ) {
-							Me.applyConfig(i, name[i]);
-						}
+						$.each(name,function(key,value){
+							Me.applyConfig(key, value);
+						});
 					}
 					return false;
 				} else if ( typeof config === 'object' ) {
@@ -86,6 +106,10 @@
 				var Me = this;
 				Me.config[name] = config||{};
 				return Me;
+			},
+			hasConfig: function(name){
+				var Me = this;
+				return typeof Me.config[name] !== 'undefined';
 			},
 			getConfig: function(name){
 				var Me = this;

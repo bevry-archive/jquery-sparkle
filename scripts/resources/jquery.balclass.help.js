@@ -11,8 +11,8 @@
 	
 	/**
 	 * jQuery Help
-	 * @version 1.2.0
-	 * @date July 11, 2010
+	 * @version 1.2.1
+	 * @date August 20, 2010
 	 * @since 1.0.0, June 30, 2010
      * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
 	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
@@ -20,9 +20,9 @@
 	 * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
 	 */
 	if ( !($.Help||false) ) {
-		$.Help = $.BalClass.create(
+		$.Help = $.BalClass.create({
 			// Configuration
-			{
+			config: {
 				'default': {
 					// Elements
 					wrap: '<span class="sparkle-help-wrap"/>',
@@ -32,43 +32,41 @@
 					title: ''
 				}
 			},
-			// Extensions
-			{
-				fn: function(options){
-					var Me = $.Help;
-					if ( typeof options === 'string' ) {
-						options = {
-							title: options
-						};
-					}
-					var config = Me.getConfigWithDefault('default',options);
-					// Fetch
-					var $this = $(this);
-					var $wrap = $(config.wrap);
-					var $icon = $(config.icon);
-					var $text = $(config.text);
-					var $parent = $this.parent().addClass(config.parentClass);
-					// Build
-					var $contents = $this.contents();
-					$this.append($wrap.append($text).append($icon));
-					$contents.appendTo($text);
-					$this.attr('title', config.title);
-					// Done
-					return $this;
-				},
-				built: function(){
-					// Prepare
-					var Me = this;
-					// Attach
-					$.fn.help = function(mode,options) {
-						// Alias
-						return Me.fn.apply(this,[mode,options]);
+			// Functions
+			fn: function(options){
+				var Me = $.Help;
+				if ( typeof options === 'string' ) {
+					options = {
+						title: options
 					};
-					// Return true
-					return true;
 				}
+				var config = Me.getConfigWithDefault('default',options);
+				// Fetch
+				var $this = $(this);
+				var $wrap = $(config.wrap);
+				var $icon = $(config.icon);
+				var $text = $(config.text);
+				var $parent = $this.parent().addClass(config.parentClass);
+				// Build
+				var $contents = $this.contents();
+				$this.append($wrap.append($text).append($icon));
+				$contents.appendTo($text);
+				$this.attr('title', config.title);
+				// Done
+				return $this;
+			},
+			built: function(){
+				// Prepare
+				var Me = this;
+				// Attach
+				$.fn.help = function(mode,options) {
+					// Alias
+					return Me.fn.apply(this,[mode,options]);
+				};
+				// Return true
+				return true;
 			}
-		);	
+		});	
 	}
 	else {
 		window.console.warn("$.Help has already been defined...");

@@ -11,8 +11,8 @@
 	
 	/**
 	 * jQuery TinyMCE Extender
-	 * @version 1.2.0
-	 * @date July 11, 2010
+	 * @version 1.2.1
+	 * @date August 20, 2010
 	 * @since 1.0.0, June 30, 2010
      * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
 	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
@@ -20,9 +20,9 @@
 	 * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
 	 */
 	if ( !($.Tinymce||false) ) {
-		$.Tinymce = $.BalClass.create(
+		$.Tinymce = $.BalClass.create({
 			// Configuration
-			{
+			config: {
 				'default': {
 					// Location of TinyMCE script
 					script_url: '/scripts/tiny_mce/tiny_mce.js',
@@ -61,28 +61,26 @@
 					theme_advanced_buttons3: ""
 				}
 			},
-			// Extensions
-			{
-				fn: function(mode,options) {
-					var Me = $.Tinymce;
-					var config = Me.getConfigWithDefault(mode,options);
-					var $this = $(this);
-					// Apply + Return
-					return $this.tinymce(config);
-				},
-				built: function(){
-					// Prepare
-					var Me = this;
-					// Attach
-					$.fn.Tinymce = function(mode,options) {
-						// Alias
-						return Me.fn.apply(this,[mode,options]);
-					};
-					// Return true
-					return true;
-				}
+			// Functions
+			fn: function(mode,options) {
+				var Me = $.Tinymce;
+				var config = Me.getConfigWithDefault(mode,options);
+				var $this = $(this);
+				// Apply + Return
+				return $this.tinymce(config);
+			},
+			built: function(){
+				// Prepare
+				var Me = this;
+				// Attach
+				$.fn.Tinymce = function(mode,options) {
+					// Alias
+					return Me.fn.apply(this,[mode,options]);
+				};
+				// Return true
+				return true;
 			}
-		);
+		});
 	}
 	else {
 		window.console.warn("$.Tinymce has already been defined...");

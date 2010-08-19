@@ -45,6 +45,7 @@ pack:
 		./scripts/resources/jquery.passwordstrength.js \
 		./scripts/resources/jquery.balclass.js \
 		./scripts/resources/jquery.balclass.bespin.js \
+		./scripts/resources/jquery.balclass.datepicker.js \
 		./scripts/resources/jquery.balclass.datetimepicker.js \
 		./scripts/resources/jquery.balclass.eventcalendar.js \
 		./scripts/resources/jquery.balclass.help.js \

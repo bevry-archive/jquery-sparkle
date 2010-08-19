@@ -11,23 +11,24 @@
 	
 	/**
 	 * jQuery Time Picker
-	 * @version 1.2.0
-	 * @date July 11, 2010
+	 * @version 1.3.0
+	 * @date August 18, 2010
 	 * @since 1.0.0, June 30, 2010
      * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
 	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
 	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
 	 * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
 	 */
-	if ( !($.timepicker||false) ) {
+	if ( !($.Timepicker||false) ) {
 		/**
 		 * $.timepicker
 		 */
-		$.timepicker = $.BalClass.create(
+		$.Timepicker = $.BalClass.create(
 			// Configuration
 			{
 				'default': {
-					timeConvention: 24
+					useHtml5: false,
+					timeConvention: 12
 				},
 				'12hr': {
 					timeConvention: 12
@@ -40,63 +41,124 @@
 			{
 				fn: function(mode,options){
 					// Prepare
-					var Me = $.timepicker;
+					var Me = $.Timepicker;
 					var config = Me.getConfigWithDefault(mode,options);
 					// Handle
 					return $(this).each(function(){
 						var $input = $(this);
-						$input.hide();
 		
 						// Prepare
-						if ( $input.hasClass('sparkle-time-has') ) return $input; // already done
+						if ( $input.hasClass('sparkle-time-has') ) {
+							// Already done
+							return this;
+						}
 						$input.addClass('sparkle-time').addClass('sparkle-time-has');
-		
-						// Generate
-						var $hours = $('<select class="sparkle-time-hours" />');
-						for ( var hours=12,hour=1; hour<=hours; ++hour ) {
-							$hours.append('<option value="'+hour+'">'+hour.padLeft('0',2)+'</option>');
+						
+						// HTML5
+						if ( config.useHtml5 && Modernizr && Modernizr.inputtypes.date && $input.attemptTypeChangeTo('time') ) {
+							// Chain
+							return this;
 						}
-						var $minutes = $('<select class="sparkle-time-minutes" />');
-						for ( var mins=55,min=0; min<=mins; min+=5) {
-							$minutes.append('<option value="'+min+'">'+min.padLeft('0',2)+'</option>');
-						}
-						var $meridian = $('<select class="sparkle-time-meridian" />');
-						$meridian.append('<option>am</option>');
-						$meridian.append('<option>pm</option>');
-		
+						
+						// --------------------------
+						
 						// Defaults
 						var value = $input.val(),
 							date = new Date(),
-							hours = '12',
-							minutes = '0',
+							timeConvention = config.timeConvention,
+							hours = 12,
+							minutes = 0,
 							meridian = 'am';
+						
+						// Assign
 						if ( value ) {
 							date.setTimestr(value);
 							hours = date.getUTCHours();
 							minutes = date.getUTCMinutes();
-							if ( hours > 12 ) {
-								hours -= 12; meridian = 'pm';
+						}
+						
+						// Adjust
+						if ( timeConvention === 12 && hours > 12 ) {
+							meridian = 'pm';
+							hours -= 12;
+						}
+						minutes = minutes.roundTo(5);
+						
+						// Check
+						if ( timeConvention === 12 ) {
+							if ( hours > 12 || hours < 1 ) {
+								hours = 1;
+								window.console.warn('timepicker.fn: Invalid Hours.', [this,arguments]);
 							}
 						}
-		
-						// Append
-						$meridian.insertAfter($input);
-						$minutes.insertAfter($input);
-						$hours.insertAfter($input);
-		
-						// Apply
-						if ( hours > 12 && meridian == 'pm' ) hours -= 12;
-						$hours.val(hours);
-						$minutes.val(minutes.roundTo(5));
-						$meridian.val(meridian);
-		
+						else {
+							if ( hours > 23 || hours < 0 ) {
+								hours = 1;
+								window.console.warn('timepicker.fn: Invalid Hours.', [this,arguments]);
+							}
+						}
+						if ( minutes > 60 || minutes < 0 ) {
+							minutes = 0;
+							window.console.warn('timepicker.fn: Invalid Minutes.', [this,arguments]);
+						}
+						
+						// --------------------------
+						// DOM Manipulation
+						
+						// Hide
+						$input.hide();
+						
+						// Meridian
+						if ( timeConvention === 12 ) {
+							var $meridian = $('<select class="sparkle-time-meridian" />');
+							$meridian.append('<option>am</option>');
+							$meridian.append('<option>pm</option>');
+							$meridian.val(meridian).insertAfter($input);
+						}
+						
+						// Minutes
+						var $minutes = $('<select class="sparkle-time-minutes" />');
+						for ( var mins=55,min=0; min<=mins; min+=5) {
+							$minutes.append('<option value="'+min+'">'+min.padLeft('0',2)+'</option>');
+						}
+						$minutes.val(minutes).insertAfter($input);
+						
+						// Hours
+						var $hours = $('<select class="sparkle-time-hours" />');
+						if ( timeConvention === 12 ) {
+							for ( var hours=timeConvention,hour=1; hour<=hours; ++hour ) {
+								$hours.append('<option value="'+hour+'">'+hour.padLeft('0',2)+'</option>');
+							}
+							$hours.val(hours-1).insertAfter($input);
+						}
+						else {
+							for ( var hours=timeConvention,hour=0; hour<hours; ++hour ) {
+								$hours.append('<option value="'+hour+'">'+hour.padLeft('0',2)+'</option>');
+							}
+							$hours.val(hours).insertAfter($input);
+						}
+						
+						// --------------------------
+						
 						// Bind
 						var updateFunction = function(){
 							var hours = parseInt($hours.val(),10);
 							var minutes = $minutes.val();
-							var meridian = $meridian.val();
-							if ( meridian == 'pm' ) hours += 12;
-							if ( hours >= 24 ) hours = 0;
+							if ( timeConvention === 12 ) {
+								var meridian = $meridian.val();
+								
+								// PM Adjustment
+								if ( hours !== 12 && meridian === 'pm' ) {
+									hours += 12;
+								}
+								
+								// AM Adjustment
+								if ( hours === 12 && meridian === 'am' ) {
+									hours = 0;
+								}
+							}
+							
+							// Apply
 							var value = hours.padLeft(0,2)+':'+minutes.padLeft(0,2)+':00';
 							$input.val(value).trigger('change');
 						};
@@ -111,7 +173,7 @@
 					// Prepare
 					var Me = this;
 					// Attach
-					$.fn.timepicker = function(mode,options) {
+					$.fn.timepicker = $.fn.Timepicker = function(mode,options) {
 						// Alias
 						return Me.fn.apply(this,[mode,options]);
 					};
@@ -122,7 +184,7 @@
 		);
 	}
 	else {
-		window.console.warn("$.timepicker has already been defined...");
+		window.console.warn("$.Timepicker has already been defined...");
 	}
 
 	

@@ -16,8 +16,8 @@
 
 	/**
 	 * jQuery Sparkle - jQuery's DRY Effect Library
-	 * @version 1.2.0
-	 * @date July 11, 2010
+	 * @version 1.2.1
+	 * @date August 18, 2010
 	 * @since 1.0.0, June 30, 2010
      * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
 	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
@@ -135,7 +135,8 @@
 						selector: '.sparkle-date',
 						datepickerOptions: {
 						},
-						demo: '<input type="text" class="sparkle-date" />'
+						demoText: 'Date format must use the international standard: [year-month-day]. This due to other formats being ambigious eg. day/month/year or month/day/year.',
+						demo: '<input type="text" class="sparkle-date" value="2010-08-05" />'
 					},
 					extension: function(Sparkle, config){
 						var $this = $(this);
@@ -147,13 +148,13 @@
 						}
 						
 						// Check
-						if ( typeof $elements.timepicker === 'undefined' ) {
-							window.console.warn('datepicker not loaded. Did you forget to include it?');
+						if ( typeof $elements.Datepicker === 'undefined' ) {
+							window.console.warn('Datepicker not loaded. Did you forget to include it?');
 							return false;
 						}
 						
 						// Apply
-						$elements.datepicker(config.datepickerOptions);
+						$elements.Datepicker(config.datepickerOptions);
 						
 						// Done
 						return true;
@@ -164,7 +165,8 @@
 						selector: '.sparkle-time',
 						timepickerOptions: {
 						},
-						demo: '<input type="text" class="sparkle-time" />'
+						demoText: 'Time format must be either [hour:minute:second] or [hour:minute], with hours being between 0-23.',
+						demo: '<input type="text" class="sparkle-time" value="23:11" />'
 					},
 					extension: function(Sparkle, config){
 						var $this = $(this);
@@ -176,13 +178,13 @@
 						}
 						
 						// Check
-						if ( typeof $elements.timepicker === 'undefined' ) {
-							window.console.warn('timepicker not loaded. Did you forget to include it?');
+						if ( typeof $elements.Timepicker === 'undefined' ) {
+							window.console.warn('Timepicker not loaded. Did you forget to include it?');
 							return false;
 						}
 						
 						// Apply
-						$elements.timepicker(config.timepickerOptions);
+						$elements.Timepicker(config.timepickerOptions);
 						
 						// Done
 						return true;
@@ -195,7 +197,9 @@
 						},
 						timepickerOptions: {
 						},
-						demo: '<input type="text" class="sparkle-datetime" />'
+						demoText: 'Date format must use the international standard: [year-month-day]. This due to other formats being ambigious eg. day/month/year or month/day/year.<br/>\
+							Time format must be either [hour:minute:second] or [hour:minute], with hours being between 0-23.',
+						demo: '<input type="text" class="sparkle-datetime" value="2010-08-05 23:10:09" />'
 					},
 					extension: function(Sparkle, config){
 						var $this = $(this);
@@ -207,13 +211,13 @@
 						}
 						
 						// Check
-						if ( typeof $elements.datetimepicker === 'undefined' ) {
-							window.console.warn('datetimepicker not loaded. Did you forget to include it?');
+						if ( typeof $elements.Datetimepicker === 'undefined' ) {
+							window.console.warn('Datetimepicker not loaded. Did you forget to include it?');
 							return false;
 						}
 						
 						// Apply
-						$elements.datetimepicker({
+						$elements.Datetimepicker({
 							datepickerOptions: Sparkle.getExtensionConfig('date').datepickerOptions,
 							timepickerOptions: Sparkle.getExtensionConfig('time').timepickerOptions
 						});
@@ -686,7 +690,7 @@
 								var demoCode = demo.replace(/</g,'&lt;').replace(/>/g,'&gt;');
 								$demo.append(
 									'<h4>Example Code:</h4>'+
-										'<code class="code language-html sparkle-demo-code">'+demoCode+'</code>'+
+										'<pre class="code language-html sparkle-demo-code">'+demoCode+'</pre>'+
 									'<h4>Example Result:</h4>'+
 										'<div class="sparkle-demo-result">'+demo+'</div>'
 								);

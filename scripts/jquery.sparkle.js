@@ -1313,7 +1313,6 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 		return $(this).effect('highlight', {}, duration||3000);
 	};
 	
-
 	/**
 	 * Get a elements html including it's own tag
 	 * @version 1.0.1
@@ -1327,6 +1326,44 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 	$.fn.htmlAndSelf = $.fn.htmlAndSelf || function(){
 		// Get a elements html including it's own tag
 		return $(this).attr('outerHTML');
+	};
+	
+	/**
+	 * Attempts to change the element type to {$type}
+	 * @version 1.0.1
+	 * @date August 07, 2010
+	 * @since 1.0.0, August 07, 2010
+     * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
+	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+	 * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
+	 */
+	$.fn.attemptTypeChangeTo = $.fn.attemptTypeChangeTo || function(type){
+		// Get a elements html including it's own tag
+		var	$input = $(this),
+			result = false,
+			el = $input.get(0),
+			oldType = el.type;
+			
+		// Handle
+		if ( type === oldType ) {
+			// Setting to the same
+			result = true;
+		}
+		else if ( $input.is('input') ) {
+			// We are in fact an input
+			if ( !$.browser.msie ) {
+				// We are not IE, this is due to bug mentioned here: http://stackoverflow.com/questions/1544317/jquery-change-type-of-input-field
+				el.type = type;
+				if ( el.type !== oldType ) {
+					// It stuck, so we successfully applied the type
+					result = true;
+				}
+			}
+		}
+		
+		// Return result
+		return result;
 	};
 	
 })(jQuery);/**
@@ -1401,7 +1438,7 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 	$.fn.enter = $.fn.enter || function(data,callback){
 		return $(this).binder('enter',data,callback);
 	};
-	$.event.special.enter = $.event.special.cancel || {
+	$.event.special.enter = $.event.special.enter || {
 		setup: function( data, namespaces ) {
 			$(this).bind('keypress', $.event.special.enter.handler);
 		},
@@ -2317,6 +2354,84 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 
 })(jQuery);/**
  * @depends jquery, core.console, jquery.balclass
+ * @name jquery.balclass.datepicker
+ * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
+ */
+
+/**
+ * jQuery Aliaser
+ */
+(function($){
+	
+	/**
+	 * jQuery Date Picker
+	 * @version 1.0.0
+	 * @date August 18, 2010
+	 * @since 1.0.0, August 18, 2010
+     * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
+	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
+	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+	 * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
+	 */
+	if ( !($.Datepicker||false) ) {
+		$.Datepicker = $.BalClass.create(
+			// Configuration
+			{
+				'default': {
+					useHtml5: false
+				}
+			},
+			// Extensions
+			{
+				fn: function(mode,options){
+					// Prepare
+					var Me = $.Datepicker;
+					var config = Me.getConfigWithDefault(mode,options);
+					// Handle
+					return $(this).each(function(){
+						var $input = $(this);
+		
+						// Prepare
+						if ( $input.hasClass('sparkle-date-has') ) {
+							// Already done
+							return this;
+						}
+						$input.addClass('sparkle-date').addClass('sparkle-date-has');
+						
+						// HTML5
+						if ( config.useHtml5 && Modernizr && Modernizr.inputtypes.date && $input.attemptTypeChangeTo('date') ) {
+							// Chain
+							return this;
+						}
+						
+						// Instantiate
+						$input.datepicker(config);
+						
+						// Chain
+						return this;
+					});
+				},
+				built: function(){
+					// Prepare
+					var Me = this;
+					// Attach
+					$.fn.Datepicker = function(mode,options) {
+						// Alias
+						return Me.fn.apply(this,[mode,options]);
+					};
+					// Return true
+					return true;
+				}
+			}
+		);
+	}
+	else {
+		window.console.warn("$.Datepicker has already been defined...");
+	}
+
+	
+})(jQuery);/**
+ * @depends jquery, core.console, jquery.balclass
  * @name jquery.balclass.datetimepicker
  * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
  */
@@ -2327,20 +2442,21 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 (function($){
 	
 	/**
-	 * jQuery Time Picker
-	 * @version 1.2.0
-	 * @date July 11, 2010
+	 * jQuery Date Time Picker
+	 * @version 1.3.0
+	 * @date August 18, 2010
 	 * @since 1.0.0, June 30, 2010
      * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
 	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
 	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
 	 * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
 	 */
-	if ( !($.Help||false) ) {
-		$.datetimepicker = $.BalClass.create(
+	if ( !($.Datetimepicker||false) ) {
+		$.Datetimepicker = $.BalClass.create(
 			// Configuration
 			{
 				'default': {
+					useHtml5: false,
 					datepickerOptions: {
 					},
 					timepickerOptions: {
@@ -2361,23 +2477,27 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 			{
 				fn: function(mode,options){
 					// Prepare
-					var Me = $.datetimepicker;
+					var Me = $.Datetimepicker;
 					var config = Me.getConfigWithDefault(mode,options);
 					// Handle
 					return $(this).each(function(){
 						var $input = $(this);
-						$input.hide();
 		
 						// Prepare
-						if ( $input.hasClass('sparkle-datetime-has') ) return $input; // already done
+						if ( $input.hasClass('sparkle-datetime-has') ) {
+							// Already done
+							return this;
+						}
 						$input.addClass('sparkle-datetime').addClass('sparkle-datetime-has');
-	
-						// Create date part
-						var $date = $('<input type="text" class="sparkle-date"/>');
-						var $sep = $('<span class="sparkle-datetime-sep"> @ </span>');
-						var $time = $('<input type="text" class="sparkle-time"/>');
-						//var $empty = $('<label class="form-empty">or <input type="checkbox" value="true"/> empty</label>');
-	
+						
+						// HTML5
+						if ( config.useHtml5 && Modernizr && Modernizr.inputtypes.datetime && $input.attemptTypeChangeTo('datetime') ) {
+							// Chain
+							return this;
+						}
+						
+						// --------------------------
+						
 						// Defaults
 						var value = $input.val();
 						var date = new Date();
@@ -2387,9 +2507,19 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 							datestr = date.getDatestr();
 							timestr = date.getTimestr();
 						}
-		
+						
+						// --------------------------
+						// DOM Manipulation
+						
+						// Hide
+						$input.hide();
+						
+						// Create date part
+						var $date = $('<input type="text" class="sparkle-date"/>');
+						var $sep = $('<span class="sparkle-datetime-sep"> @ </span>');
+						var $time = $('<input type="text" class="sparkle-time"/>');
+						
 						// Append
-						//$empty.insertAfter($input);
 						$time.insertAfter($input);
 						$sep.insertAfter($input);
 						$date.insertAfter($input);
@@ -2398,6 +2528,8 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 						$date.val(datestr);
 						$time.val(timestr);
 		
+						// --------------------------
+						
 						// Bind
 						var updateFunction = function(){
 							var value = $date.val()+' '+$time.val();
@@ -2406,8 +2538,8 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 						$date.add($time).change(updateFunction);
 		
 						// Instantiate
-						$date.datepicker(config.datepickerOptions);
-						$time.timepicker(config.timepickerOptions);
+						$date.Datepicker(config.datepickerOptions);
+						$time.Timepicker(config.timepickerOptions);
 		
 						// Chain
 						return $input;
@@ -2417,7 +2549,7 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 					// Prepare
 					var Me = this;
 					// Attach
-					$.fn.datetimepicker = function(mode,options) {
+					$.fn.datetimepicker = $.fn.Datetimepicker = function(mode,options) {
 						// Alias
 						return Me.fn.apply(this,[mode,options]);
 					};
@@ -2428,7 +2560,7 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 		);
 	}
 	else {
-		window.console.warn("$.datetimepicker has already been defined...");
+		window.console.warn("$.Datetimepicker has already been defined...");
 	}
 
 	
@@ -3048,23 +3180,24 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 	
 	/**
 	 * jQuery Time Picker
-	 * @version 1.2.0
-	 * @date July 11, 2010
+	 * @version 1.3.0
+	 * @date August 18, 2010
 	 * @since 1.0.0, June 30, 2010
      * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
 	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
 	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
 	 * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
 	 */
-	if ( !($.timepicker||false) ) {
+	if ( !($.Timepicker||false) ) {
 		/**
 		 * $.timepicker
 		 */
-		$.timepicker = $.BalClass.create(
+		$.Timepicker = $.BalClass.create(
 			// Configuration
 			{
 				'default': {
-					timeConvention: 24
+					useHtml5: false,
+					timeConvention: 12
 				},
 				'12hr': {
 					timeConvention: 12
@@ -3077,63 +3210,124 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 			{
 				fn: function(mode,options){
 					// Prepare
-					var Me = $.timepicker;
+					var Me = $.Timepicker;
 					var config = Me.getConfigWithDefault(mode,options);
 					// Handle
 					return $(this).each(function(){
 						var $input = $(this);
-						$input.hide();
 		
 						// Prepare
-						if ( $input.hasClass('sparkle-time-has') ) return $input; // already done
+						if ( $input.hasClass('sparkle-time-has') ) {
+							// Already done
+							return this;
+						}
 						$input.addClass('sparkle-time').addClass('sparkle-time-has');
-		
-						// Generate
-						var $hours = $('<select class="sparkle-time-hours" />');
-						for ( var hours=12,hour=1; hour<=hours; ++hour ) {
-							$hours.append('<option value="'+hour+'">'+hour.padLeft('0',2)+'</option>');
+						
+						// HTML5
+						if ( config.useHtml5 && Modernizr && Modernizr.inputtypes.date && $input.attemptTypeChangeTo('time') ) {
+							// Chain
+							return this;
 						}
-						var $minutes = $('<select class="sparkle-time-minutes" />');
-						for ( var mins=55,min=0; min<=mins; min+=5) {
-							$minutes.append('<option value="'+min+'">'+min.padLeft('0',2)+'</option>');
-						}
-						var $meridian = $('<select class="sparkle-time-meridian" />');
-						$meridian.append('<option>am</option>');
-						$meridian.append('<option>pm</option>');
-		
+						
+						// --------------------------
+						
 						// Defaults
 						var value = $input.val(),
 							date = new Date(),
-							hours = '12',
-							minutes = '0',
+							timeConvention = config.timeConvention,
+							hours = 12,
+							minutes = 0,
 							meridian = 'am';
+						
+						// Assign
 						if ( value ) {
 							date.setTimestr(value);
 							hours = date.getUTCHours();
 							minutes = date.getUTCMinutes();
-							if ( hours > 12 ) {
-								hours -= 12; meridian = 'pm';
+						}
+						
+						// Adjust
+						if ( timeConvention === 12 && hours > 12 ) {
+							meridian = 'pm';
+							hours -= 12;
+						}
+						minutes = minutes.roundTo(5);
+						
+						// Check
+						if ( timeConvention === 12 ) {
+							if ( hours > 12 || hours < 1 ) {
+								hours = 1;
+								window.console.warn('timepicker.fn: Invalid Hours.', [this,arguments]);
 							}
 						}
-		
-						// Append
-						$meridian.insertAfter($input);
-						$minutes.insertAfter($input);
-						$hours.insertAfter($input);
-		
-						// Apply
-						if ( hours > 12 && meridian == 'pm' ) hours -= 12;
-						$hours.val(hours);
-						$minutes.val(minutes.roundTo(5));
-						$meridian.val(meridian);
-		
+						else {
+							if ( hours > 23 || hours < 0 ) {
+								hours = 1;
+								window.console.warn('timepicker.fn: Invalid Hours.', [this,arguments]);
+							}
+						}
+						if ( minutes > 60 || minutes < 0 ) {
+							minutes = 0;
+							window.console.warn('timepicker.fn: Invalid Minutes.', [this,arguments]);
+						}
+						
+						// --------------------------
+						// DOM Manipulation
+						
+						// Hide
+						$input.hide();
+						
+						// Meridian
+						if ( timeConvention === 12 ) {
+							var $meridian = $('<select class="sparkle-time-meridian" />');
+							$meridian.append('<option>am</option>');
+							$meridian.append('<option>pm</option>');
+							$meridian.val(meridian).insertAfter($input);
+						}
+						
+						// Minutes
+						var $minutes = $('<select class="sparkle-time-minutes" />');
+						for ( var mins=55,min=0; min<=mins; min+=5) {
+							$minutes.append('<option value="'+min+'">'+min.padLeft('0',2)+'</option>');
+						}
+						$minutes.val(minutes).insertAfter($input);
+						
+						// Hours
+						var $hours = $('<select class="sparkle-time-hours" />');
+						if ( timeConvention === 12 ) {
+							for ( var hours=timeConvention,hour=1; hour<=hours; ++hour ) {
+								$hours.append('<option value="'+hour+'">'+hour.padLeft('0',2)+'</option>');
+							}
+							$hours.val(hours-1).insertAfter($input);
+						}
+						else {
+							for ( var hours=timeConvention,hour=0; hour<hours; ++hour ) {
+								$hours.append('<option value="'+hour+'">'+hour.padLeft('0',2)+'</option>');
+							}
+							$hours.val(hours).insertAfter($input);
+						}
+						
+						// --------------------------
+						
 						// Bind
 						var updateFunction = function(){
 							var hours = parseInt($hours.val(),10);
 							var minutes = $minutes.val();
-							var meridian = $meridian.val();
-							if ( meridian == 'pm' ) hours += 12;
-							if ( hours >= 24 ) hours = 0;
+							if ( timeConvention === 12 ) {
+								var meridian = $meridian.val();
+								
+								// PM Adjustment
+								if ( hours !== 12 && meridian === 'pm' ) {
+									hours += 12;
+								}
+								
+								// AM Adjustment
+								if ( hours === 12 && meridian === 'am' ) {
+									hours = 0;
+								}
+							}
+							
+							// Apply
 							var value = hours.padLeft(0,2)+':'+minutes.padLeft(0,2)+':00';
 							$input.val(value).trigger('change');
 						};
@@ -3148,7 +3342,7 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 					// Prepare
 					var Me = this;
 					// Attach
-					$.fn.timepicker = function(mode,options) {
+					$.fn.timepicker = $.fn.Timepicker = function(mode,options) {
 						// Alias
 						return Me.fn.apply(this,[mode,options]);
 					};
@@ -3159,7 +3353,7 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 		);
 	}
 	else {
-		window.console.warn("$.timepicker has already been defined...");
+		window.console.warn("$.Timepicker has already been defined...");
 	}
 
 	
@@ -3271,8 +3465,8 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 
 	/**
 	 * jQuery Sparkle - jQuery's DRY Effect Library
-	 * @version 1.2.0
-	 * @date July 11, 2010
+	 * @version 1.2.1
+	 * @date August 18, 2010
 	 * @since 1.0.0, June 30, 2010
      * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
 	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
@@ -3390,7 +3584,8 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 						selector: '.sparkle-date',
 						datepickerOptions: {
 						},
-						demo: '<input type="text" class="sparkle-date" />'
+						demoText: 'Date format must use the international standard: [year-month-day]. This due to other formats being ambigious eg. day/month/year or month/day/year.',
+						demo: '<input type="text" class="sparkle-date" value="2010-08-05" />'
 					},
 					extension: function(Sparkle, config){
 						var $this = $(this);
@@ -3402,13 +3597,13 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 						}
 						
 						// Check
-						if ( typeof $elements.timepicker === 'undefined' ) {
-							window.console.warn('datepicker not loaded. Did you forget to include it?');
+						if ( typeof $elements.Datepicker === 'undefined' ) {
+							window.console.warn('Datepicker not loaded. Did you forget to include it?');
 							return false;
 						}
 						
 						// Apply
-						$elements.datepicker(config.datepickerOptions);
+						$elements.Datepicker(config.datepickerOptions);
 						
 						// Done
 						return true;
@@ -3419,7 +3614,8 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 						selector: '.sparkle-time',
 						timepickerOptions: {
 						},
-						demo: '<input type="text" class="sparkle-time" />'
+						demoText: 'Time format must be either [hour:minute:second] or [hour:minute], with hours being between 0-23.',
+						demo: '<input type="text" class="sparkle-time" value="23:11" />'
 					},
 					extension: function(Sparkle, config){
 						var $this = $(this);
@@ -3431,13 +3627,13 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 						}
 						
 						// Check
-						if ( typeof $elements.timepicker === 'undefined' ) {
-							window.console.warn('timepicker not loaded. Did you forget to include it?');
+						if ( typeof $elements.Timepicker === 'undefined' ) {
+							window.console.warn('Timepicker not loaded. Did you forget to include it?');
 							return false;
 						}
 						
 						// Apply
-						$elements.timepicker(config.timepickerOptions);
+						$elements.Timepicker(config.timepickerOptions);
 						
 						// Done
 						return true;
@@ -3450,7 +3646,9 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 						},
 						timepickerOptions: {
 						},
-						demo: '<input type="text" class="sparkle-datetime" />'
+						demoText: 'Date format must use the international standard: [year-month-day]. This due to other formats being ambigious eg. day/month/year or month/day/year.<br/>\
+							Time format must be either [hour:minute:second] or [hour:minute], with hours being between 0-23.',
+						demo: '<input type="text" class="sparkle-datetime" value="2010-08-05 23:10:09" />'
 					},
 					extension: function(Sparkle, config){
 						var $this = $(this);
@@ -3462,13 +3660,13 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 						}
 						
 						// Check
-						if ( typeof $elements.datetimepicker === 'undefined' ) {
-							window.console.warn('datetimepicker not loaded. Did you forget to include it?');
+						if ( typeof $elements.Datetimepicker === 'undefined' ) {
+							window.console.warn('Datetimepicker not loaded. Did you forget to include it?');
 							return false;
 						}
 						
 						// Apply
-						$elements.datetimepicker({
+						$elements.Datetimepicker({
 							datepickerOptions: Sparkle.getExtensionConfig('date').datepickerOptions,
 							timepickerOptions: Sparkle.getExtensionConfig('time').timepickerOptions
 						});
@@ -3941,7 +4139,7 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 								var demoCode = demo.replace(/</g,'&lt;').replace(/>/g,'&gt;');
 								$demo.append(
 									'<h4>Example Code:</h4>'+
-										'<code class="code language-html sparkle-demo-code">'+demoCode+'</code>'+
+										'<pre class="code language-html sparkle-demo-code">'+demoCode+'</pre>'+
 									'<h4>Example Result:</h4>'+
 										'<div class="sparkle-demo-result">'+demo+'</div>'
 								);

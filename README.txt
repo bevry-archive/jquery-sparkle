@@ -42,7 +42,7 @@ Todo:
 
 Changelog:
 
-v1.4.14-final, August 20, 2010
+v1.4.14-final, August 19, 2010
 - Added $.fn.preventDefault to prevent the default action for a click.
 
 v1.4.13-final, August 19, 2010

@@ -16,8 +16,8 @@
 
 	/**
 	 * jQuery Sparkle - jQuery's DRY Effect Library
-	 * @version 1.3.0
-	 * @date August 20, 2010
+	 * @version 1.3.1
+	 * @date August 21, 2010
 	 * @since 1.0.0, June 30, 2010
      * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
 	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
@@ -37,7 +37,7 @@
 					
 					// Determine
 					switch ( true ) {
-						case arguments[2]||false:
+						case Boolean(arguments[2]||false):
 							// name, config, extension
 							// name, extension, config
 							if ( typeof arguments[0] === 'string' && typeof arguments[2] === 'function' && typeof arguments[1] === 'object' ) {
@@ -51,11 +51,11 @@
 								Extension.name = arguments[0];
 							}
 							else {
-								throw new Exception('Sparkle.addExtension: Invalid Input');
+								throw new Error('Sparkle.addExtension: Invalid Input');
 							}
 							break;
 							
-						case arguments[1]||false:
+						case Boolean(arguments[1]||false):
 							// name, Extension
 							// name, extension
 							if ( typeof arguments[0] === 'string' && typeof arguments[1] === 'function' ) {
@@ -67,11 +67,11 @@
 								Extension.name = arguments[0];
 							}
 							else {
-								throw new Exception('Sparkle.addExtension: Invalid Input');
+								throw new Error('Sparkle.addExtension: Invalid Input');
 							}
 							break;
 							
-						case arguments[0]||false:
+						case Boolean(arguments[0]||false):
 							// Extension
 							// Series
 							if ( Sparkle.isExtension(arguments[0]) ) {
@@ -84,7 +84,7 @@
 								});
 							}
 							else {
-								throw new Exception('Sparkle.addExtension: Invalid Input');
+								throw new Error('Sparkle.addExtension: Invalid Input');
 							}
 							break;
 					}
@@ -92,6 +92,9 @@
 					// Ensure
 					Extension.config = Extension.config||{};
 					Extension.extension = Extension.extension||{};
+					
+					// Add Extension
+					Sparkle.addConfig(Extension.name, Extension);
 					
 					// Done
 					return true;

@@ -11,8 +11,8 @@
 	
 	/**
 	 * BalClass
-	 * @version 1.3.0
-	 * @date August 20, 2010
+	 * @version 1.3.1
+	 * @date August 21, 2010
 	 * @since 1.0.0, June 30, 2010
      * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
 	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
@@ -43,7 +43,7 @@
 					extend.config = extend.config||{};
 				}
 				else {
-					throw new Exception('BalClass.construct: Invalid Input');
+					throw new Error('BalClass.construct: Invalid Input');
 				}
 				// Configure
 				Me.configure(extend.config);

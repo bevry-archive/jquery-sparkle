@@ -19,8 +19,8 @@
  * - A copy of our interpretation of the license used.
  *   If not, see <http://github.com/balupton/jquery-sparkle/blob/master/COPYING.txt>.
  * 
- * @version 1.4.15-final
- * @date August 20, 2010
+ * @version 1.4.16-final
+ * @date August 21, 2010
  * @since v0.1.0-dev, December 01, 2009
  * @category jquery-plugin
  * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
@@ -41,6 +41,10 @@ Todo:
 ----
 
 Changelog:
+
+v1.4.16-final, August 21, 2010
+- Fixed an issue with triggering errors with BalClass and Sparkle
+- Fixed an issue with adding extensions to Sparkle.
 
 v1.4.15-final, August 20, 2010
 - Updated styling for demo.

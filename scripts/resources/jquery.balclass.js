@@ -43,7 +43,7 @@
 					extend.config = extend.config||{};
 				}
 				else {
-					throw new Error('BalClass.construct: Invalid Input');
+					window.console.error('BalClass.construct: Invalid Input');
 				}
 				// Configure
 				Me.configure(extend.config);

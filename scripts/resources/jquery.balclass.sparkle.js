@@ -51,7 +51,7 @@
 								Extension.name = arguments[0];
 							}
 							else {
-								throw new Error('Sparkle.addExtension: Invalid Input');
+								window.console.error('Sparkle.addExtension: Invalid Input');
 							}
 							break;
 							
@@ -67,7 +67,7 @@
 								Extension.name = arguments[0];
 							}
 							else {
-								throw new Error('Sparkle.addExtension: Invalid Input');
+								window.console.error('Sparkle.addExtension: Invalid Input');
 							}
 							break;
 							
@@ -84,7 +84,7 @@
 								});
 							}
 							else {
-								throw new Error('Sparkle.addExtension: Invalid Input');
+								window.console.error('Sparkle.addExtension: Invalid Input');
 							}
 							break;
 					}

@@ -127,7 +127,7 @@
 					},
 					function(error){
 						// Error
-						throw new Error("Bespin Launch Failed: " + error);
+						window.console.error("Bespin Launch Failed: " + error);
 					}
 				);
 

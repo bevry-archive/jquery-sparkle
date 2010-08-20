@@ -19,7 +19,7 @@
  * - A copy of our interpretation of the license used.
  *   If not, see <http://github.com/balupton/jquery-sparkle/blob/master/COPYING.txt>.
  * 
- * @version 1.4.16-final
+ * @version 1.4.17-final
  * @date August 21, 2010
  * @since v0.1.0-dev, December 01, 2009
  * @category jquery-plugin
@@ -41,6 +41,10 @@ Todo:
 ----
 
 Changelog:
+
+v1.4.17-final, August 21, 2010
+- Updated core.console.js to now use throw instead of alert.
+- Updated BalClass, Bespin and Sparkle to use window.console.error now instead of throw new Error - whether this is the right move time will tell.
 
 v1.4.16-final, August 21, 2010
 - Fixed an issue with triggering errors with BalClass and Sparkle

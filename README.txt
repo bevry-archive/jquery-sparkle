@@ -19,8 +19,8 @@
  * - A copy of our interpretation of the license used.
  *   If not, see <http://github.com/balupton/jquery-sparkle/blob/master/COPYING.txt>.
  * 
- * @version 1.4.18-final
- * @date August 23, 2010
+ * @version 1.5.0-beta
+ * @date August 31, 2010
  * @since v0.1.0-dev, December 01, 2009
  * @category jquery-plugin
  * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
@@ -36,11 +36,19 @@ Installation & Usage:
 
 Todo:
 1. Make passwordstrength use BalClass
-2. Add a opt-in email catcher so people can be notified of new releases
 
 ----
 
 Changelog:
+
+v1.5.0-beta, August 31, 2010
+- Sparkle.addExtension will now fire the extensions on Sparkle.onReady
+- Added $.promise in jquery.utilities
+- Added Sparkle.onReady, Sparkle.onDocumentReady and Sparkle.onConfigured promises
+- Added Sparkle.addExtensions
+- Sparkle is no longer a singleton
+- BalClass.create now works without any arguments
+- This is a backwards incompatible release for those who have been using Sparkle.triggerExtension(Extension), you must now do Sparkle.triggerExtension(element,Extension);
 
 v1.4.18-final, August 23, 2010
 - Added $.fn.giveTarget

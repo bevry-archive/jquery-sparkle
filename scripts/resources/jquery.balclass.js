@@ -11,8 +11,8 @@
 	
 	/**
 	 * BalClass
-	 * @version 1.3.1
-	 * @date August 21, 2010
+	 * @version 1.5.0
+	 * @date August 28, 2010
 	 * @since 1.0.0, June 30, 2010
      * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
 	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
@@ -42,18 +42,29 @@
 					extend = arguments[0];
 					extend.config = extend.config||{};
 				}
+				else if ( typeof arguments[0] === 'undefined' ) {
+					// No arguments were passed
+					extend = false;
+				}
 				else {
 					window.console.error('BalClass.construct: Invalid Input');
 				}
-				// Configure
-				Me.configure(extend.config);
-				delete extend.config;
-				// Extend
-				$.extend(Me,extend);
+				
+				// Check
+				if ( extend !== false ) {
+					// Configure
+					Me.configure(extend.config);
+					delete extend.config;
+				
+					// Extend
+					$.extend(Me,extend);
+				}
+				
 				// Build
 				if ( typeof Me.built === 'function' ) {
 					return Me.built();
 				}
+				
 				// Return true
 				return true;
 			},

@@ -19,7 +19,7 @@
  * - A copy of our interpretation of the license used.
  *   If not, see <http://github.com/balupton/jquery-sparkle/blob/master/COPYING.txt>.
  * 
- * @version 1.5.2-dev
+ * @version 1.5.2-beta
  * @date August 31, 2010
  * @since v0.1.0-dev, December 01, 2009
  * @category jquery-plugin
@@ -41,7 +41,7 @@ Todo:
 
 Changelog:
 
-v1.5.2-dev, August 31, 2010
+v1.5.2-beta, August 31, 2010
 - $.fn.preventDefault is now called $.fn.preventDefaultOnClick to prevent jQuery UI issues.
 
 v1.5.1-beta, August 31, 2010

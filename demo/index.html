@@ -579,6 +579,8 @@
 						window.console.log(success);
 					}
 				};
+			</pre>
+			<pre class="code language-html sparkle-demo-code">
 				// Define our Variables
 				var	str = 'The meaning of life is true',
 					decimal = 42.00;
@@ -587,13 +589,15 @@
 			</pre>
 			<h4>Example Result</h4>
 			<div class="sparkle-demo-result">
-				<textarea id="myBespin" style="height:200px">
+				<textarea id="myBespin1" style="height:200px">
 					// Define our Function
 					function checkMeaningOfLife ( decimal, success ) {
 						if ( parseInt(decimal,10) === 42 ) {
 							window.console.log(success);
 						}
 					};
+				</textarea>
+				<textarea id="myBespin2" style="height:200px">
 					// Define our Variables
 					var	str = 'The meaning of life is true',
 						decimal = 42.00;
@@ -602,7 +606,8 @@
 				</textarea>
 				<script type="text/javascript">
 					$(function(){
-						$('#myBespin').Bespin('rich');
+						$('#myBespin1').Bespin('rich');
+						$('#myBespin2').Bespin('rich');
 					});
 				</script>
 			</div>

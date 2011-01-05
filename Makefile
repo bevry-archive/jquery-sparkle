@@ -26,7 +26,7 @@ add:
 
 push:
 	git push --all ; git push --tags ;
-	
+
 edithooks:
 	mate .git/hooks/pre-commit
 
@@ -53,7 +53,7 @@ pack:
 		./scripts/resources/jquery.balclass.tinymce.js \
 		./scripts/resources/jquery.balclass.sparkle.js \
 		> ./scripts/jquery.sparkle.js;
-		
+
 compress:
 	java -jar $(CLOSUREFILE) --create_source_map ./scripts/closure.map --js_output_file=./scripts/jquery.sparkle.min.js --js=./scripts/jquery.sparkle.js;
 	java -jar $(YUIFILE) ./styles/jquery.sparkle.css -o ./styles/jquery.sparkle.min.css
@@ -61,13 +61,12 @@ compress:
 build:
 	$(MAKE) pack;
 	$(MAKE) compress;
-	
+
 build-update:
 	$(MAKE) clean;
 	mkdir $(BUILDDIR) $(CLOSUREDIR) $(YUIDIR);
-	cd $(CLOSUREDIR); wget -q $(CLOSUREURL) -O file.zip; tar -xf file.zip;
-	cd $(YUIDIR); wget -q $(YUIURL) -O file.zip; tar -xf file.zip;
-	
+	cd $(CLOSUREDIR); curl -L $(CLOSUREURL) -o file.zip; tar -xf file.zip;
+	cd $(YUIDIR); curl -L $(YUIURL) -o file.zip; tar -xf file.zip;
+
 clean:
 	rm -Rf $(BUILDDIR);
-	

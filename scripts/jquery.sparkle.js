@@ -2410,6 +2410,7 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 				var onBespinLoad = function(){
 					// Use Bespin
 					Me.useBespin(element, config);
+					$(window).unbind('onBespinLoad', onBespinLoad);
 				};
 				$(window).bind('onBespinLoad', onBespinLoad);
 				
@@ -2515,7 +2516,7 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 				}
 
 				// Toolbar
-				if ( config.toolbar||false ) {
+				if ( config.toolbar&&false ) {
 					var $toolbar = $('<div class="bespin-toolbar" />');
 					$toolbar.insertBefore($bespin);
 	

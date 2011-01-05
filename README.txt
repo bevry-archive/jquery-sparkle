@@ -19,13 +19,13 @@
  * - A copy of our interpretation of the license used.
  *   If not, see <http://github.com/balupton/jquery-sparkle/blob/master/COPYING.txt>.
  * 
- * @version 1.5.2-beta
- * @date August 31, 2010
+ * @version 1.5.3-dev
+ * @date January 05, 2011
  * @since v0.1.0-dev, December 01, 2009
  * @category jquery-plugin
  * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
  * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
- * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
+ * @copyright (c) 2009-2011 Benjamin Arthur Lupton {@link http://www.balupton.com}
  * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
  * @example Visit {@link http://www.balupton.com/projects/jquery-sparkle} for more information.
  */
@@ -40,6 +40,10 @@ Todo:
 ----
 
 Changelog:
+
+v1.5.3-dev, January 05, 2011
+- Fixed bespin plugin.
+- Makefile now uses curl, instead of wget.
 
 v1.5.2-beta, August 31, 2010
 - $.fn.preventDefault is now called $.fn.preventDefaultOnClick to prevent jQuery UI issues.

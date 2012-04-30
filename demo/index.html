@@ -5,6 +5,13 @@
 		jQuery Sparkle - jQuery's DRY Plugin/Effect Framework
 	</title>
 
+	<!-- Bespin -->
+	<![if !IE]>
+	<link id="bespin_base" href="./scripts/bespin-0.9a1-custom" rel="" />
+	<link href="./scripts/bespin-0.9a1-custom/BespinEmbedded.css" media="screen" rel="stylesheet" type="text/css" />
+	<script type="text/javascript" src="./scripts/bespin-0.9a1-custom/BespinEmbedded.js"></script>
+	<![endif]>
+
 	<!-- Include jQuery (Sparkle Requirement) -->
 	<script type="text/javascript" src="../scripts/jquery-1.4.2.min.js"></script>
 	<!-- Include Sparkle (Production) -->
@@ -12,8 +19,8 @@
 	<!-- <link href="../styles/jquery.sparkle.min.css" media="screen" rel="stylesheet" type="text/css" />  -->
 	<!-- Include Sparkle (Development) -->
 	<script type="text/javascript" src="../scripts/jquery.sparkle.js"></script>
-	<link href="../styles/jquery.sparkle.css" media="screen" rel="stylesheet" type="text/css" /> 
-	
+	<link href="../styles/jquery.sparkle.css" media="screen" rel="stylesheet" type="text/css" />
+
 	<!-- Include The Demo's Requirements -->
 	<link type="text/css" rel="stylesheet" media="screen" href="./styles/style.css" />
 </head>
@@ -24,35 +31,28 @@
 	<script type="text/javascript">/*<![CDATA[*/
 		$.SyntaxHighlighter.init();
 	/*]]>*/</script>
-	
-	<!-- Bespin -->
-	<![if !IE]>
-	<link id="bespin_base" href="./scripts/bespin-0.9a1-custom" rel="" />
-	<link href="./scripts/bespin-0.9a1-custom/BespinEmbedded.css" media="screen" rel="stylesheet" type="text/css" />
-	<script type="text/javascript" src="./scripts/bespin-0.9a1-custom/BespinEmbedded.js"></script> 
-	<![endif]>
-	
+
 	<!-- Modernizr -->
-	<script type="text/javascript" src="./scripts/modernizr-1.5.min.js"></script> 
-	
+	<script type="text/javascript" src="./scripts/modernizr-1.5.min.js"></script>
+
 	<!-- jQuery UI -->
-	<link href="./scripts/jquery-ui-1.8.2/css/cupertino/jquery-ui-1.8.2.custom.css" media="screen" rel="stylesheet" type="text/css" /> 
-	<script type="text/javascript" src="./scripts/jquery-ui-1.8.2/js/jquery-ui-1.8.2.custom.min.js"></script> 
-	
+	<link href="./scripts/jquery-ui-1.8.2/css/cupertino/jquery-ui-1.8.2.custom.css" media="screen" rel="stylesheet" type="text/css" />
+	<script type="text/javascript" src="./scripts/jquery-ui-1.8.2/js/jquery-ui-1.8.2.custom.min.js"></script>
+
 	<!-- Autogrow -->
-	<script type="text/javascript" src="./scripts/jquery.autogrow.min.js"></script> 
-	
+	<script type="text/javascript" src="./scripts/jquery.autogrow.min.js"></script>
+
 	<!-- JSON -->
 	<script type="text/javascript">/*<![CDATA[*/
 		if ( typeof JSON === "undefined" ) $.appendScript("./scripts/json2.min.js");
 	/*]]>*/</script>
-	
+
 	<!-- GetSatisfaction -->
-	<script type="text/javascript" src="http://s3.amazonaws.com/getsatisfaction.com/javascripts/feedback-v2.js"></script> 
+	<script type="text/javascript" src="http://s3.amazonaws.com/getsatisfaction.com/javascripts/feedback-v2.js"></script>
 	<script type="text/javascript">/*<![CDATA[*/
 	var GSFN_feedback_widget = new GSFN.feedback_widget({ display: 'overlay', company: 'balupton', placement: 'right', color: '#222', style: 'question' });
-	/*]]>*/</script> 
-	
+	/*]]>*/</script>
+
 	<div class="section links" id="links">
 		<h1>jQuery Sparkle - jQuery's DRY Plugin/Effect Framework</h1>
 		<h2><a href="http://github.com/balupton/jquery-sparkle/downloads" title="Download" id="download">Download</a></h2>
@@ -61,10 +61,10 @@
 		<h2><a href="http://getsatisfaction.com/balupton/products/balupton_jquery_sparkle" title="Support Page" class="gsfnwidget">Get Support</a></h2>
 		<h2><a href="http://github.com/balupton/jquery-sparkle/tree/master" title="Source Code">Source Code</a></h2>
 	</div>
-	
+
 	<div class="section about" id="about">
 		<h2>About</h2>
-		
+
 		<p><strong>jQuery Sparkle</strong> is a simple but powerful DRY Plugin/Effect Framework aimed to simplify your jQuery development such that you no longer have to repeat yourself.</p>
 
 		<p>It already includes such extensions as:</p>
@@ -82,14 +82,14 @@
 			<li>A <a href="#event-singleclick" title="View the SingleClick event Demo">SingleClick Event</a> to easily capture a single click. Unlike the builtin click which fires for each and every click.</li>
 			<li>A PasswordStrength indicator.</li>
 		</ul>
-		
+
 		<p>But at it's core it is mostly just a framework to allow you to develop faster, utilising the <a href="http://en.wikipedia.org/wiki/Don't_repeat_yourself" title="Learn more about DRY ideology" target="_blank" class="help extern">Don't-Repeat-Yourself</a> ideology.</p>
 		<p>This demo shows it in action, as well as providing you with tutorials and examples on how YOU can write great jQuery plugins which are configurable, extensible and translatable in minutes instead of hours.</p>
 	</div>
-	
+
 	<div class="section install" id="install">
 		<h2>Installation</h2>
-		
+
 		<h3>Step 1. <a href="http://github.com/balupton/jquery-sparkle/downloads" title="Download">Download</a> jQuery Sparkle, and extract it to your hard drive</h3>
 		<div>
 			As everyones extraction process is a little bit different be sure of the following:
@@ -99,34 +99,34 @@
 				<li>If the archive was extracted and you have only one directory and it is not called <code>jquery-sparkle</code> then you must rename it to <code>jquery-sparkle</code> to continue.</li>
 			</ul>
 		</div>
-		
+
 		<h3>Step 2. Move the <code>jquery-sparkle</code> directory to somewhere on your webserver</h3>
 		<p>Be sure to always keep the entire <code>jquery-sparkle</code> directory intact; this means if you were to only move some of the files instead of moving the entire directory, then you would run into problems due to the cross directory references would no longer be working.</p>
-		
+
 		<h3>Step 3. Include jQuery (insert into your page's head tag)</h3>
 		<p>If your page already has already included jQuery then you should skip this step.</p>
 		<pre class="code language-html">
 			&lt;!-- Include jQuery (Sparkle Requirement) --&gt;
 			&lt;script type="text/javascript" src="http://www.yoursite.com/somewhere/on/your/webserver/jquery-sparkle/scripts/jquery-1.4.2.min.js"&gt;&lt;/script&gt;
 		</pre>
-		
+
 		<h3>Step 4. Include jQuery Sparkle (insert into your page's head tag)</h3>
 		<pre class="code language-html">
 			&lt;!-- Include Sparkle (Production) --&gt;
 			&lt;script type="text/javascript" src="http://www.yoursite.com/somewhere/on/your/webserver/jquery-sparkle/scripts/jquery.sparkle.min.js"&gt;&lt;/script&gt;
-			&lt;link href="http://www.yoursite.com/somewhere/on/your/webserver/jquery-sparkle/styles/jquery.sparkle.min.css" media="screen" rel="stylesheet" type="text/css" &gt; 
+			&lt;link href="http://www.yoursite.com/somewhere/on/your/webserver/jquery-sparkle/styles/jquery.sparkle.min.css" media="screen" rel="stylesheet" type="text/css" &gt;
 		</pre>
 	</div>
-	
+
 	<div class="section demo" id="demo">
 		<h2>Using Sparkle Extensions</h2>
-		
+
 		<div class="sparkle-demo"></div>
 	</div>
-	
+
 	<div class="section protoypes" id="prototypes">
 		<h2>Using Included Prototype Functions</h2>
-		
+
 		<div class="sparkle-demo-section" id="prototype-queryStringToJSON">
 			<h3>String.prototype.queryStringToJSON</h3>
 			<h4>Example Code</h4>
@@ -164,7 +164,7 @@
 				</script>
 			</div>
 		</div>
-		
+
 		<div class="sparkle-demo-section" id="prototype-toSlug">
 			<h3>String.prototype.toSlug</h3>
 			<h4>Example Code</h4>
@@ -203,10 +203,10 @@
 			</div>
 		</div>
 	</div>
-		
+
 	<div class="section events" id="events">
 		<h2>Using Included Custom Events</h2>
-		
+
 		<div class="sparkle-demo-section" id="event-enter">
 			<h3>enter</h3>
 			<h4>Example Code</h4>
@@ -250,7 +250,7 @@
 				</script>
 			</div>
 		</div>
-		
+
 		<div class="sparkle-demo-section" id="event-cancel">
 			<h3>cancel</h3>
 			<h4>Example Code</h4>
@@ -294,7 +294,7 @@
 				</script>
 			</div>
 		</div>
-		
+
 		<div class="sparkle-demo-section" id="event-lastclick">
 			<h3>lastclick</h3>
 			<h4>Example Code</h4>
@@ -338,7 +338,7 @@
 				</script>
 			</div>
 		</div>
-		
+
 		<div class="sparkle-demo-section" id="event-firstclick">
 			<h3>firstclick</h3>
 			<h4>Example Code</h4>
@@ -382,7 +382,7 @@
 				</script>
 			</div>
 		</div>
-		
+
 		<div class="sparkle-demo-section" id="event-singleclick">
 			<h3>singleclick</h3>
 			<h4>Example Code</h4>
@@ -427,10 +427,10 @@
 			</div>
 		</div>
 	</div>
-	
+
 	<div class="section using" id="using">
 		<h2>Using BalClass</h2>
-		
+
 		<h3>The Benefits of BalClass</h3>
 		<p>The major benefits of using BalClass is that you can easily work with multiple configurations for your plugin, as well as making it easily extensible by other developers. For example we can do this to have our plugin easily translatable:</p>
 		<pre class="code language-javascript">
@@ -456,12 +456,12 @@
 						var Me = $.HiBye; // where you have placed your instantiated/created class
 						var config = Me.getConfigWithDefault(mode,options);
 						var $this = $(this);
-			
+
 						// Say Hi then Bye
 						$this.hide().html(config.hi).fadeIn('slow',function(){
 							$this.html(config.bye).fadeOut('slow');
 						});
-			
+
 						// Chain
 						return this;
 					},
@@ -528,7 +528,7 @@
 			$('#hibye-example2').hibye("italian");
 		</pre>
 		<p>Now isn't that sweet and tastes like honey. Mmmm. honey...</p>
-		
+
 		<h3>The Benefits of Sparkle</h3>
 		<p>For our HiBye example, what could make it even better is if we use sparkle! Sparkle really saves us a lot of time, instead of having to do all those lengthy jQuery fn calls whenever we want to instantiate something, we can just add a CSS class and Sparkle will handle it automagically! Wow!</p>
 		<p>This has huge benefits especially for AJAX loaded in content, as say datepickers and timepickers for example will be instantiated automatically for their AJAX content without us having to instantiate each and every one manually! This is a serious life saver at times!</p>
@@ -563,12 +563,12 @@
 			});
 		</pre>
 		<p>And bang, just like that, all the sparkle instantiated HiBye's are now in french! As well as any future sparkled content!</p>
-		
+
 	</div>
-	
+
 	<div class="section plugins" id="plugins">
 		<h2>Using BalClass Plugins</h2>
-		
+
 		<div class="sparkle-demo-section" id="bespin">
 			<h3>jQuery.BalClass.Bespin</h3>
 			<h4>Example Code</h4>
@@ -607,7 +607,7 @@
 				</script>
 			</div>
 		</div>
-		
+
 		<div class="sparkle-demo-section" id="eventcalendar">
 			<h3>jQuery.BalClass.EventCalendar: Passing Events Directly</h3>
 			<h4>Example Code</h4>
@@ -632,7 +632,7 @@
 						//ajaxPostData: {},
 						/** Whether or not to Cache the AJAX data */
 						//ajaxCache: true,
-		
+
 						// Data Variables
 						/* If you are not using AJAX, you can define your entries here */
 						calendarEntries: &#91;
@@ -673,7 +673,7 @@
 								}
 							}
 						&#93;,
-		
+
 						// Customisation Variables
 						/** The CSS class which will be assigned to the Event Calendar */
 						calendarClass: 'hasEventCalendar',
@@ -687,11 +687,11 @@
 						disableClick: true,
 						/**
 						 * The domEvents option contains all the events which you would like to assign to a $day
-						 * 
+						 *
 						 * It will send the following arguments back to you:
 						 * - domEvent
 						 * - details
-						 * 
+						 *
 						 * The details of the details argument contains the following:
 						 * - {Number} year
 						 * - {Number} month
@@ -743,7 +743,7 @@
 						ajaxPostData: {},
 						/** Whether or not to Cache the AJAX data */
 						ajaxCache: true,
-		
+
 						// Data Variables
 						/* If you are not using AJAX, you can define your entries here */
 						calendarEntries: [
@@ -784,7 +784,7 @@
 								}
 							}
 						],
-		
+
 						// Customisation Variables
 						/** The CSS class which will be assigned to the Event Calendar */
 						calendarClass: 'hasEventCalendar',
@@ -798,11 +798,11 @@
 						disableClick: true,
 						/**
 						 * The domEvents option contains all the events which you would like to assign to a $day
-						 * 
+						 *
 						 * It will send the following arguments back to you:
 						 * - domEvent
 						 * - details
-						 * 
+						 *
 						 * The details of the details argument contains the following:
 						 * - {Number} year
 						 * - {Number} month
@@ -905,11 +905,11 @@
 						ajaxPostData: {},
 						/** Whether or not to Cache the AJAX data */
 						ajaxCache: true,
-						
+
 						// Data Variables
 						/* If you are not using AJAX, you can define your entries here */
 						//calendarEntries: [],
-						
+
 						// Customisation Variables
 						/** The CSS class which will be assigned to the Event Calendar */
 						calendarClass: 'hasEventCalendar',
@@ -923,11 +923,11 @@
 						disableClick: true,
 						/**
 						 * The domEvents option contains all the events which you would like to assign to a $day
-						 * 
+						 *
 						 * It will send the following arguments back to you:
 						 * - domEvent
 						 * - details
-						 * 
+						 *
 						 * The details of the details argument contains the following:
 						 * - {Number} year
 						 * - {Number} month
@@ -979,11 +979,11 @@
 						ajaxPostData: {},
 						/** Whether or not to Cache the AJAX data */
 						ajaxCache: true,
-						
+
 						// Data Variables
 						/* If you are not using AJAX, you can define your entries here */
 						//calendarEntries: [],
-						
+
 						// Customisation Variables
 						/** The CSS class which will be assigned to the Event Calendar */
 						calendarClass: 'hasEventCalendar',
@@ -997,11 +997,11 @@
 						disableClick: true,
 						/**
 						 * The domEvents option contains all the events which you would like to assign to a $day
-						 * 
+						 *
 						 * It will send the following arguments back to you:
 						 * - domEvent
 						 * - details
-						 * 
+						 *
 						 * The details of the details argument contains the following:
 						 * - {Number} year
 						 * - {Number} month
@@ -1036,9 +1036,9 @@
 				</script>
 			</div>
 		</div>
-		
+
 	</div>
-	
+
 	<div class="section">
 		<h2>Enjoy!!!</h2>
 		<p>
@@ -1059,20 +1059,20 @@
 				<input id="paypal-submit" type="image" src="https://www.paypal.com/en_AU/i/btn/btn_donate_SM.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online.">
 			</p>
 		</form>
-		<p> 
+		<p>
 			This work is licensed under a <a rel="license" href="http://www.gnu.org/licenses/agpl.html">GNU Affero General Public License</a>.
 		</p>
 		<br />
 	</div>
-	
-	<!-- Google Analytics --> 
-	<script type="text/javascript"> 
+
+	<!-- Google Analytics -->
+	<script type="text/javascript">
 		//<![CDATA[
 		var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
 		document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
 		//]]>
-	</script> 
-	<script type="text/javascript"> 
+	</script>
+	<script type="text/javascript">
 		//<![CDATA[
 		try {
 			var pageTracker = _gat._getTracker("UA-4446117-1");
@@ -1086,6 +1086,6 @@
 		} catch(err) {}
 		//]]>
 	</script>
-	
+
 </body>
 </html>

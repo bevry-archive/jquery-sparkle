@@ -1,23 +1,23 @@
 /**
  * @depends jquery, core.console, jquery.balclass, tinymce
  * @name jquery.balclass.tinymce
- * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
+ * @package jquery-sparkle {@link http://balupton.com/projects/jquery-sparkle}
  */
 
 /**
  * jQuery Aliaser
  */
 (function($){
-	
+
 	/**
 	 * jQuery TinyMCE Extender
 	 * @version 1.2.1
 	 * @date August 20, 2010
 	 * @since 1.0.0, June 30, 2010
-     * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
-	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
-	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
-	 * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
+     * @package jquery-sparkle {@link http://balupton.com/projects/jquery-sparkle}
+	 * @author Benjamin "balupton" Lupton {@link http://balupton.com}
+	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://balupton.com}
+	 * @license MIT License {@link http://creativecommons.org/licenses/MIT/}
 	 */
 	if ( !($.Tinymce||false) ) {
 		$.Tinymce = $.BalClass.create({
@@ -26,7 +26,7 @@
 				'default': {
 					// Location of TinyMCE script
 					script_url: '/scripts/tiny_mce/tiny_mce.js',
-		
+
 					// General options
 					theme: "advanced",
 					plugins: "autoresize,safari,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template",
@@ -41,17 +41,17 @@
 					theme_advanced_path: false,
 					theme_advanced_resizing: false,
 					width: "100%",
-		
+
 					// Compat
 					//add_form_submit_trigger: false,
 					//submit_patch: false,
-		
+
 					// Example content CSS (should be your site CSS)
 					// content_css : "css/content.css",
-		
+
 					// Replace values for the template plugin
 					template_replace_values: {
-			
+
 					}
 				},
 				'rich': {

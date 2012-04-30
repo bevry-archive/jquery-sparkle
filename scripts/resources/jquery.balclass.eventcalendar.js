@@ -1,23 +1,23 @@
 /**
  * @depends jquery, core.console, jquery.balclass
  * @name jquery.balclass.eventcalendar
- * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
+ * @package jquery-sparkle {@link http://balupton.com/projects/jquery-sparkle}
  */
 
 /**
  * jQuery Aliaser
  */
 (function($){
-	
+
 	/**
 	 * Event Calendar
 	 * @version 1.2.1
 	 * @date August 20, 2010
 	 * @since 1.0.0, June 30, 2010
-     * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
-	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
-	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
-	 * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
+     * @package jquery-sparkle {@link http://balupton.com/projects/jquery-sparkle}
+	 * @author Benjamin "balupton" Lupton {@link http://balupton.com}
+	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://balupton.com}
+	 * @license MIT License {@link http://creativecommons.org/licenses/MIT/}
 	 */
 	if ( !($.EventCalendar||false) ) {
 		$.EventCalendar = $.BalClass.create({
@@ -34,11 +34,11 @@
 					ajaxPostData: {},
 					/** Whether or not to Cache the AJAX data */
 					ajaxCache: true,
-				
+
 					// Data Variables
 					/* If you are not using AJAX, you can define your entries here */
 					calendarEntries: [],
-				
+
 					// Customisation Variables
 					/** The CSS class which will be assigned to the Event Calendar */
 					calendarClass: 'hasEventCalendar',
@@ -61,7 +61,7 @@
 			 */
 			fn: function(mode,options){
 				var EventCalendar = $.EventCalendar;
-				
+
 				// Group?
 				var $calendar = $(this);
 				if ( $calendar.length > 1 ) {
@@ -70,51 +70,51 @@
 					});
 					return this;
 				}
-				
+
 				// Prepare
 				var Me = $.EventCalendar;
 				var config = Me.getConfigWithDefault(mode,options);
-				
+
 				// Initialise
 				var Entries = {
 					/**
 					 * Calendar Entries Stored by {entryId:entry}
 					 */
 					entriesById: {},
-					
+
 					/**
 					 * Calendar Entries Stored by {"year-month":[entry,entry]}
 					 */
 					entriesByYearMonth: {},
-					
+
 					/**
 					 * Whether or not the "year-month" is cacheable
 					 */
 					cacheableByYearMonth: {},
-					
+
 					/**
 					 * Get whether or not a "year-month" is cacheable
 					 */
 					isCacheable: function(year,month,value){
 						return (this.cacheableByYearMonth[year+'-'+month]||false) ? true : false;
 					},
-					
+
 					/**
 					 * Set whether or not a "year-month" is cacheable
 					 */
 					setCacheable: function(year,month,value){
-						if ( typeof value === 'undefined' ) value = 
+						if ( typeof value === 'undefined' ) value =
 						this.cacheableByYearMonth[year+'-'+month] = value;
 						return this;
 					},
-					
+
 					/**
 					 * Calendar Entries Undefined
 					 */
 					isYearMonthSet: function(year,month) {
 						return typeof this.entriesByYearMonth[year+'-'+month] !== 'undefined';
 					},
-					
+
 					/**
 					 * Calendar Entries Empty
 					 */
@@ -125,21 +125,21 @@
 						;
 						return !notempty;
 					},
-					
+
 					/**
 					 * Calendar Entries Getter
 					 */
 					getEntriesByYearMonth: function(year,month) {
 						return this.entriesByYearMonth[year+'-'+month]||[];
 					},
-					
+
 					/**
 					 * Calendar Entries Getter
 					 */
 					getEntryById: function(id) {
 						return this.entriesById[id]||undefined;
 					},
-					
+
 					/**
 					 * Get Days in a Month by passing a date
 					 */
@@ -147,7 +147,7 @@
 						// http://snippets.dzone.com/posts/show/2099
 						return 32 - new Date(date.getFullYear(), date.getMonth(), 32).getDate();
 					},
-					
+
 					/**
 					 * Get Date
 					 */
@@ -168,13 +168,13 @@
 						else {
 							throw Error("Unknown date format.");
 						}
-						
+
 						// Fix for Firefox
 						if ( isNaN(date) || date.toString() === "Invalid Date" ) {
 							date = new Date();
 							date.setDatetimestr(timestamp);
 						}
-						
+
 						// Return date
 						return date;
 					},
@@ -185,20 +185,20 @@
 					addEntries: function(entries) {
 						// Prepare
 						var Me = this;
-						
+
 						// Add
 						$.each(entries,function(index,entry){
 							// Prepare
 							entry.id = entry.id||index;
-							
+
 							// Add Entry
 							Me.addEntry(entry);
 						});
-						
+
 						// Chain
 						return true;
 					},
-					
+
 					/**
 					 * Calendar Entries Setter
 					 */
@@ -206,7 +206,7 @@
 						// Prepare entry
 						entry.start = this.getDate(entry.start);
 						entry.finish = this.getDate(entry.finish);
-						
+
 						// Cycle through years and months
 						var currentDate = this.getDate(entry.start);
 						currentDate.setDate(1); currentDate.setHours(0); currentDate.setMinutes(0); currentDate.setSeconds(0); currentDate.setMilliseconds(0);
@@ -216,13 +216,13 @@
 							// Fetch
 							var year = currentDate.getFullYear(),
 								month = currentDate.getMonth()+1;
-							
+
 							/*
 							// Add
 							entry.span = entry.span||{};
 							entry.span[year] = entry.span[year]||{};
 							entry.span[year][month] = entry.span[year][month]||{};
-							
+
 							// Cycle through days
 							// Determine span
 							var firstMonth = (year === entry.start.getFullYear() && month === entry.start.getMonth()+1),
@@ -257,13 +257,13 @@
 								entry.span[year][month][day] = true;
 							}
 							*/
-							
+
 							// Add to Year-Month Indexed
 							if ( typeof this.entriesByYearMonth[year+'-'+month] === 'undefined' ) {
 								this.entriesByYearMonth[year+'-'+month] = {};
 							}
 							this.entriesByYearMonth[year+'-'+month][entry.id] = entry;
-							
+
 							// Increment date by one month
 							if ( month === 11 ) {
 								currentDate.setMonth(0);
@@ -273,34 +273,34 @@
 								currentDate.setMonth(month+1);
 							}
 						}
-						
+
 						// Add to ID Indexed
 						this.entriesById[entry.id] = entry;
-						
+
 						// Return entry
 						return entry;
 					}
 				};
-				
+
 				// Add the passed entries (if any)
 				Entries.addEntries(config.calendarEntries);
-				
+
 				// Our Extender Event
 				var calendarEntriesRender = function(datepicker, year, month) {
 					// Fetch the Entries
 					var monthEntries = Entries.getEntriesByYearMonth(year,month),
 						$datepicker = $(datepicker);
-					
+
 					// Reset the Render
 					var $days_tds = $datepicker.find('tbody td'),
 						$days = $days_tds.find('a');
-	
+
 					// Disable Click
 					if ( config.disableClick ) {
 						$days_tds.unbind('click').removeAttr('onclick');
 						$days.removeAttr('href').css('cursor','default');
 					}
-	
+
 					// Cycle Through Entries
 					$.each(monthEntries, function(entryIndex,entry){
 						// Fetch stat and finish days
@@ -308,16 +308,16 @@
 						 	finishMonth = entry.finish.getMonth()+1,
 							startDay = entry.start.getDate(),
 							finishDay = entry.finish.getDate();
-						
+
 						// Determine start and finish days in the rendered calendar
 						var $startDay = startMonth == month ? $days.filter(':contains('+startDay+'):first') : $days.filter(':first'),
 							$finishDay = finishMonth == month ? $days.filter(':contains('+finishDay+'):first') : $days.filter(':last');
-						
+
 						// Determine the indexes
 						var start = startMonth == month ? $days.index($startDay) : 0,
 							finish = finishMonth == month ? $days.index($finishDay) : $days.length-1,
 							duration = finish-start+1; // +1 to be inclusive
-						
+
 						// Betweens
 						var $entryDays = [];
 						if ( start == finish ) {
@@ -327,14 +327,14 @@
 						} else {
 							$entryDays = $startDay.add($days.filter(':lt('+(finish)+')').filter(':gt('+(start)+')')).add($finishDay);
 						}
-						
+
 						// Add the Entry to These Days
 						$entryDays.addClass(config.dayEventClass).each(function(dayIndex,dayElement){
 							// Fetch
 							var $day = $(dayElement),
 								day = $day.text().trim(),
 								dayEntriesIds = $day.data('dayEntriesIds');
-			
+
 							// Handle
 							if ( typeof dayEntriesIds === 'undefined' ) {
 								dayEntriesIds = entry.id;
@@ -343,10 +343,10 @@
 								dayEntriesIds.push(entry.id);
 								dayEntriesIds = dayEntriesIds.join(',');
 							}
-			
+
 							// Apply
 							$day.data('dayEntriesIds',dayEntriesIds);
-			
+
 							// Bind Entries
 							$.each(config.domEvents,function(domEventName,domEventHandler){
 								$day.unbind(domEventName).bind(domEventName,function(domEvent){
@@ -355,14 +355,14 @@
 										day = $day.text().trim(),
 										dayEntriesIds = String($day.data('dayEntriesIds')).split(/,/g),
 										date = new Date(); date.setDatestr(year+'-'+month+'-'+day);
-									
+
 									// Entries
 									var dayEntries = []
 									$.each(dayEntriesIds,function(i,entryId){
 										var dayEntry = Entries.getEntryById(entryId);
 										dayEntries.push(dayEntry);
 									});
-									
+
 									// Fire
 									domEventHandler.apply(this, [domEvent, {
 										"year":year,
@@ -373,25 +373,25 @@
 										"monthEntries":monthEntries,
 										"datepicker":datepicker
 									}]);
-									
+
 									// Done
 									return true;
 								});
 							});
-			
+
 							// Done
 						});
 					});
-	
+
 					// Done
 					return true;
 				};
-				
+
 				// Change Month Year
 				var calendarChangeMonthYear = function(year, month, inst) {
 					// Prepare
 					var datepicker = inst.dpDiv||inst;
-					
+
 					// Check
 					if ( typeof config.ajaxEntriesUrl === 'string' && config.ajaxEntriesUrl.length ) {
 						// Ajax Enabled
@@ -419,23 +419,23 @@
 								success: function(data, status){
 									// Cycle
 									var entries = data[config.ajaxEntriesVariable]||[];
-									
+
 									// Enable caching for this year month
 									Entries.setCacheable(year,month,true)
-									
+
 									// Check if we have entries
 									if ( entries.length === 0 ) {
 										return true;
 									}
-								
+
 									// Store the Entries in the Calendar Data
 									Entries.addEntries(entries);
-								
+
 									// Render the year and month, as we have new data
 									setTimeout(function(){
 										calendarEntriesRender(datepicker, year, month)
 									},50);
-									
+
 									// Done
 									return true;
 								},
@@ -453,11 +453,11 @@
 							calendarEntriesRender(datepicker, year, month)
 						},50);
 					}
-					
+
 					// Done
 					return true;
 				};
-				
+
 				// Prepare initial render
 				var calendarInitialised = false;
 				var calendarInit = function(year,month,inst){
@@ -468,7 +468,7 @@
 					$(inst).addClass(config.calendarClass);
 					calendarChangeMonthYear(year, month, inst);
 				};
-				
+
 				// Calendar Options
 				var datepickerOptions = $.extend({}, config.datepickerOptions, {
 					onChangeMonthYear: function(year, month, inst) {
@@ -491,7 +491,7 @@
 						},1000);
 					}
 				});
-				
+
 				// Apply Options so we can hook into the events
 				$calendar.datepicker(datepickerOptions);
 
@@ -500,7 +500,7 @@
 					var date = $calendar.datepicker("getDate");
 					calendarInit(date.getFullYear(), date.getMonth()+1, $calendar);
 				},2000);
-				
+
 				// Chain
 				return $calendar;
 			},

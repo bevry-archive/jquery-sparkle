@@ -1,23 +1,23 @@
 /**
  * @depends jquery, core.console, jquery.balclass, bespin
  * @name jquery.balclass.bespin
- * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
+ * @package jquery-sparkle {@link http://balupton.com/projects/jquery-sparkle}
  */
 
 /**
  * jQuery Aliaser
  */
 (function($){
-	
+
 	/**
 	 * jQuery Bespin Extender
 	 * @version 1.2.1
 	 * @date August 20, 2010
 	 * @since 1.0.0, June 30, 2010
-     * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
-	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
-	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
-	 * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
+     * @package jquery-sparkle {@link http://balupton.com/projects/jquery-sparkle}
+	 * @author Benjamin "balupton" Lupton {@link http://balupton.com}
+	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://balupton.com}
+	 * @license MIT License {@link http://creativecommons.org/licenses/MIT/}
 	 */
 	if ( !($.Bespin||false) ) {
 		$.Bespin = $.BalClass.create({
@@ -63,14 +63,14 @@
 					Me.useBespin(element, config);
 				};
 				$(window).bind('onBespinLoad', onBespinLoad);
-				
+
 				// Events
 				var events = {
 					onBespinLoad: function(){
 						$(window).trigger('onBespinLoad');
 					}
 				};
-				
+
 				// Check Loaded
 				if ( bespin.bootLoaded ) {
 					// Fire Event
@@ -83,7 +83,7 @@
 					window.onBespinLoad = events.onBespinLoad;
 				}
 				// ^ we have this check as if bespin has already loaded, then the onBespinLoad will never fire!
-				
+
 				// Chain
 				return this;
 			},
@@ -169,7 +169,7 @@
 				if ( config.toolbar||false ) {
 					var $toolbar = $('<div class="bespin-toolbar" />');
 					$toolbar.insertBefore($bespin);
-	
+
 					// Fullscreen
 					if (config.toolbar.fullscreen||false ) {
 						var $fullscreen = $('<span class="bespin-toolbar-fullscreen" title="Toggle Fullscreen"></span>');

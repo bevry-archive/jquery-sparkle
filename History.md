@@ -1,45 +1,4 @@
-----
-/**
- * This file is part of jQuery Sparkle
- * Copyright (C) 2009-2010 Benjamin Arthur Lupton
- * http://www.balupton.com/projects/jquery-sparkle
- *
- * jQuery Sparkle is free software; You can redistribute it and/or modify it under the terms of
- * the GNU Affero General Public License version 3 as published by the Free Software Foundation.
- * You don't have to do anything special to accept the license and you don’t have to notify
- * anyone which that you have made that decision.
- * 
- * jQuery Sparkle is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See your chosen license for more details.
- * 
- * You should have received along with jQuery Sparkle:
- * - A copy of the license used.
- *   If not, see <http://www.gnu.org/licenses/agpl-3.0.html>.
- * - A copy of our interpretation of the license used.
- *   If not, see <http://github.com/balupton/jquery-sparkle/blob/master/COPYING.txt>.
- * 
- * @version 1.5.2-beta
- * @date August 31, 2010
- * @since v0.1.0-dev, December 01, 2009
- * @category jquery-plugin
- * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
- * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
- * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
- * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
- * @example Visit {@link http://www.balupton.com/projects/jquery-sparkle} for more information.
- */
-----
-
-Installation & Usage:
-1. Refer to the (demo/index.html) or http://www.balupton.com/projects/jquery-sparkle if the demo is not included.
-
-Todo:
-1. Make passwordstrength use BalClass
-
-----
-
-Changelog:
+## History
 
 v1.5.2-beta, August 31, 2010
 - $.fn.preventDefault is now called $.fn.preventDefaultOnClick to prevent jQuery UI issues.
@@ -180,5 +139,3 @@ v1.0.0-dev, July 01, 2010
 
 v0.1.0-dev, December 01, 2009
 - Initial release
-
-----

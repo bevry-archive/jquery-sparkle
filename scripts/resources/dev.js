@@ -5,10 +5,10 @@
  * @version 1.0.0
  * @date August 20, 2010
  * @since August 20, 2010
- * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
- * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
- * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
- * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
+ * @package jquery-sparkle {@link http://balupton.com/projects/jquery-sparkle}
+ * @author Benjamin "balupton" Lupton {@link http://balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://balupton.com}
+ * @license MIT License {@link http://creativecommons.org/licenses/MIT/}
  */
 Object.prototype.each = function(handler){
 	// Check
@@ -37,10 +37,10 @@ Object.prototype.each = function(handler){
  * @version 1.0.0
  * @date August 20, 2010
  * @since August 20, 2010
- * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
- * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
- * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
- * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
+ * @package jquery-sparkle {@link http://balupton.com/projects/jquery-sparkle}
+ * @author Benjamin "balupton" Lupton {@link http://balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://balupton.com}
+ * @license MIT License {@link http://creativecommons.org/licenses/MIT/}
  */
 Object.prototype.extend = function(object){
 	var Me = this;
@@ -75,10 +75,10 @@ Object.prototype.extend = function(object){
  * @version 1.0.0
  * @date August 20, 2010
  * @since August 20, 2010
- * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
- * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
- * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
- * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
+ * @package jquery-sparkle {@link http://balupton.com/projects/jquery-sparkle}
+ * @author Benjamin "balupton" Lupton {@link http://balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://balupton.com}
+ * @license MIT License {@link http://creativecommons.org/licenses/MIT/}
  */
 Object.prototype.merge = function(){
 	var Me = this,
@@ -94,10 +94,10 @@ Object.prototype.merge = function(){
  * @version 1.0.0
  * @date August 20, 2010
  * @since August 20, 2010
- * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
- * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
- * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
- * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
+ * @package jquery-sparkle {@link http://balupton.com/projects/jquery-sparkle}
+ * @author Benjamin "balupton" Lupton {@link http://balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://balupton.com}
+ * @license MIT License {@link http://creativecommons.org/licenses/MIT/}
  */
 Object.prototype.get = function(key){
 	return this[key];
@@ -110,10 +110,10 @@ Object.prototype.get = function(key){
  * @version 1.0.0
  * @date August 20, 2010
  * @since August 20, 2010
- * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
- * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
- * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
- * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
+ * @package jquery-sparkle {@link http://balupton.com/projects/jquery-sparkle}
+ * @author Benjamin "balupton" Lupton {@link http://balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://balupton.com}
+ * @license MIT License {@link http://creativecommons.org/licenses/MIT/}
  */
 Object.prototype.set = function(key,value){
 	return this[key] = value;
@@ -126,10 +126,10 @@ Object.prototype.set = function(key,value){
  * @version 1.0.0
  * @date August 20, 2010
  * @since August 20, 2010
- * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
- * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
- * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
- * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
+ * @package jquery-sparkle {@link http://balupton.com/projects/jquery-sparkle}
+ * @author Benjamin "balupton" Lupton {@link http://balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://balupton.com}
+ * @license MIT License {@link http://creativecommons.org/licenses/MIT/}
  */
 Object.prototype.get = function(key){
 	return typeof this.key !== 'undefined';
@@ -145,16 +145,16 @@ Object.prototype.get = function(key){
  * @version 1.0.0
  * @date August 20, 2010
  * @since 1.0.0, August 20, 2010
- * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
- * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
- * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
- * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
+ * @package jquery-sparkle {@link http://balupton.com/projects/jquery-sparkle}
+ * @author Benjamin "balupton" Lupton {@link http://balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://balupton.com}
+ * @license MIT License {@link http://creativecommons.org/licenses/MIT/}
  */
 String.translate = function(from,to){
 	// Prepare
 	var	result = this,
 		length = arguments.length;
-	
+
 	// Check
 	if ( length === 1 && typeof from === 'object' ) {
 		// Handle object input
@@ -163,10 +163,10 @@ String.translate = function(from,to){
 		});
 		return this;
 	}
-	
+
 	// Ensure
 	from = String(from);
-	
+
 	// Apply
 	if ( arguments.length === 1 || typeof to === 'undefined' ) {
 		// Translate from
@@ -186,10 +186,10 @@ String.translate = function(from,to){
  * @version 1.0.0
  * @date August 20, 2010
  * @since 1.0.0, August 20, 2010
- * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
- * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
- * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
- * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
+ * @package jquery-sparkle {@link http://balupton.com/projects/jquery-sparkle}
+ * @author Benjamin "balupton" Lupton {@link http://balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://balupton.com}
+ * @license MIT License {@link http://creativecommons.org/licenses/MIT/}
  */
 String.prototype.translate = function(to){
 	return String.translate(this,to);

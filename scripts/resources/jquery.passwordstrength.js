@@ -1,53 +1,53 @@
 /**
  * @depends jquery
  * @name jquery.passwordstrength
- * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
+ * @package jquery-sparkle {@link http://balupton.com/projects/jquery-sparkle}
  */
 
 /**
  * jQuery Aliaser
  */
 (function($){
-	
+
 	/**
 	 * String.prototype.passwordStrength
 	 * @version 1.0.0
 	 * @date June 30, 2010
-     * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
-	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
-	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
-	 * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
+     * @package jquery-sparkle {@link http://balupton.com/projects/jquery-sparkle}
+	 * @author Benjamin "balupton" Lupton {@link http://balupton.com}
+	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://balupton.com}
+	 * @license MIT License {@link http://creativecommons.org/licenses/MIT/}
 	 */
 	String.prototype.passwordstrength = String.prototype.passwordstrength || function(confirm,username){
 		var password = this.toString(), symbolSize = 0, natLog, score;
 		confirm = confirm||'';
 		username = username||'';
-	
+
 		// Short
 	    if ( password.length < 4 ) {
 			return "short";
 		};
-	
+
 	    // Username
 	    if ( username.length && password.toLowerCase() == username.toLowerCase()) {
 			return "username";
 		}
-	
+
 	    // Confirm
 	    if ( confirm.length && password != confirm ) {
 			return "mismatch";
 		}
-	
+
 		// Strength
 		if ( password.match(/[0-9]/) ) symbolSize +=10;
 		if ( password.match(/[a-z]/) ) symbolSize +=26;
 		if ( password.match(/[A-Z]/) ) symbolSize +=26;
 		if ( password.match(/[^a-zA-Z0-9]/) ) symbolSize +=31;
-	
+
 		// Score
 		natLog = Math.log( Math.pow(symbolSize,password.length) );
 		score = natLog / Math.LN2;
-	
+
 		// Check
 		if (score < 40 ) {
 			return "low";
@@ -55,7 +55,7 @@
 		else if (score < 56 ) {
 			return "medium";
 		}
-	
+
 		// Strong
 		return "high";
 	};
@@ -64,10 +64,10 @@
 	 * jQuery Password Strength
 	 * @version 1.0.0
 	 * @date June 30, 2010
-     * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
-	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
-	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
-	 * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
+     * @package jquery-sparkle {@link http://balupton.com/projects/jquery-sparkle}
+	 * @author Benjamin "balupton" Lupton {@link http://balupton.com}
+	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://balupton.com}
+	 * @license MIT License {@link http://creativecommons.org/licenses/MIT/}
 	 */
 	if ( !($.fn.passwordstrength||false) ) {
 		$.fn.passwordstrength = function(options) {
@@ -100,21 +100,21 @@
 				}
 			};
 			var config = $.extend({}, passwordstrength.config);
-	
+
 			// Options
 			$.extend(true, config, options);
-	
+
 			// Fetch
 			var $this = $(this);
 			var $container = $this.html(config.content).hide();
-	
+
 			// Implode
 			var $result = $container.find(config.contentSelectors.result);
 			var $description = $container.find(config.contentSelectors.description).html(config.il8n.description);
 			if ( !config.il8n.description ) {
 				$description.remove();
 			}
-	
+
 			// Prepare
 			var classes = [
 				config.strengthCss["short"],
@@ -125,24 +125,24 @@
 				config.strengthCss.high,
 				config.strengthCss.empty
 			].join(' ');
-	
+
 			// Fetch
 			var $password = $(config.password),
 				$confirm = $(config.confirm||null),
 				$username = $(config.username||null);
-	
+
 			// Apply
 			var check = function(){
 				// Fetch
 				var password = $password.val(),
 					confirm  = $confirm.val(),
 					username = $username.val();
-	
+
 				// Strength
 				var strength = password ? password.passwordstrength(confirm,username) : "empty";
 				var strength_css = config.strengthCss[strength];
 				var strength_text = config.il8n[strength];
-	
+
 				// Apply
 				$result.removeClass(classes).addClass(strength_css).html(strength_text);
 			};
@@ -156,7 +156,7 @@
 				});
 			$password.add($confirm).add($username).keyup(check);
 			check();
-	
+
 			// Chain
 			return $this;
 		}
@@ -164,6 +164,6 @@
 	else {
 		window.console.warn("$.fn.passwordstrength has already been defined...");
 	}
-	
+
 
 })(jQuery);

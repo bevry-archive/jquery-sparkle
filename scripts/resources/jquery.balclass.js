@@ -1,23 +1,23 @@
 /**
  * @depends jquery, core.console
  * @name jquery.balclass
- * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
+ * @package jquery-sparkle {@link http://balupton.com/projects/jquery-sparkle}
  */
 
 /**
  * jQuery Aliaser
  */
 (function($){
-	
+
 	/**
 	 * BalClass
 	 * @version 1.5.0
 	 * @date August 28, 2010
 	 * @since 1.0.0, June 30, 2010
-     * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
-	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
-	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
-	 * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
+     * @package jquery-sparkle {@link http://balupton.com/projects/jquery-sparkle}
+	 * @author Benjamin "balupton" Lupton {@link http://balupton.com}
+	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://balupton.com}
+	 * @license MIT License {@link http://creativecommons.org/licenses/MIT/}
 	 */
 	if ( !($.BalClass||false) ) {
 		// Constructor
@@ -49,22 +49,22 @@
 				else {
 					window.console.error('BalClass.construct: Invalid Input');
 				}
-				
+
 				// Check
 				if ( extend !== false ) {
 					// Configure
 					Me.configure(extend.config);
 					delete extend.config;
-				
+
 					// Extend
 					$.extend(Me,extend);
 				}
-				
+
 				// Build
 				if ( typeof Me.built === 'function' ) {
 					return Me.built();
 				}
-				
+
 				// Return true
 				return true;
 			},

@@ -1,17 +1,17 @@
 /**
  * @depends nothing
  * @name core.number
- * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
+ * @package jquery-sparkle {@link http://balupton.com/projects/jquery-sparkle}
  */
 
 /**
  * Return a new string with zeroes added correctly to the front of the number, given the threshold
  * @version 1.0.0
  * @date June 30, 2010
- * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
- * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
- * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
- * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
+ * @package jquery-sparkle {@link http://balupton.com/projects/jquery-sparkle}
+ * @author Benjamin "balupton" Lupton {@link http://balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://balupton.com}
+ * @license MIT License {@link http://creativecommons.org/licenses/MIT/}
  */
 Number.prototype.zeroise = String.prototype.zeroise = String.prototype.zeroise ||function(threshold){
 	var number = this,
@@ -26,10 +26,10 @@ Number.prototype.zeroise = String.prototype.zeroise = String.prototype.zeroise |
  * Return a new string with the string/number padded left using [ch] of [num] length
  * @version 1.0.0
  * @date June 30, 2010
- * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
- * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
- * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
- * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
+ * @package jquery-sparkle {@link http://balupton.com/projects/jquery-sparkle}
+ * @author Benjamin "balupton" Lupton {@link http://balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://balupton.com}
+ * @license MIT License {@link http://creativecommons.org/licenses/MIT/}
  */
 Number.prototype.padLeft = String.prototype.padLeft = String.prototype.padLeft ||function(ch, num){
 	var val = String(this);
@@ -46,10 +46,10 @@ Number.prototype.padLeft = String.prototype.padLeft = String.prototype.padLeft |
  * Return a new string with the string/number padded right using [ch] of [num] length
  * @version 1.0.0
  * @date June 30, 2010
- * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
- * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
- * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
- * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
+ * @package jquery-sparkle {@link http://balupton.com/projects/jquery-sparkle}
+ * @author Benjamin "balupton" Lupton {@link http://balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://balupton.com}
+ * @license MIT License {@link http://creativecommons.org/licenses/MIT/}
  */
 Number.prototype.padRight = String.prototype.padRight = String.prototype.padRight ||function(ch, num){
 	var val = String(this);
@@ -66,10 +66,10 @@ Number.prototype.padRight = String.prototype.padRight = String.prototype.padRigh
  * Return a new number with the current number rounded to [to]
  * @version 1.0.0
  * @date June 30, 2010
- * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
- * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
- * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
- * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
+ * @package jquery-sparkle {@link http://balupton.com/projects/jquery-sparkle}
+ * @author Benjamin "balupton" Lupton {@link http://balupton.com}
+ * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://balupton.com}
+ * @license MIT License {@link http://creativecommons.org/licenses/MIT/}
  */
 Number.prototype.roundTo = String.prototype.roundTo = String.prototype.roundTo || function(to){
 	var val = String(parseInt(this,10));

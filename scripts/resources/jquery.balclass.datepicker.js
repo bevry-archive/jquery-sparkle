@@ -1,23 +1,23 @@
 /**
  * @depends jquery, core.console, jquery.balclass
  * @name jquery.balclass.datepicker
- * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
+ * @package jquery-sparkle {@link http://balupton.com/projects/jquery-sparkle}
  */
 
 /**
  * jQuery Aliaser
  */
 (function($){
-	
+
 	/**
 	 * jQuery Date Picker
 	 * @version 1.0.1
 	 * @date August 20, 2010
 	 * @since 1.0.0, August 18, 2010
-     * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
-	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
-	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
-	 * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
+     * @package jquery-sparkle {@link http://balupton.com/projects/jquery-sparkle}
+	 * @author Benjamin "balupton" Lupton {@link http://balupton.com}
+	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://balupton.com}
+	 * @license MIT License {@link http://creativecommons.org/licenses/MIT/}
 	 */
 	if ( !($.Datepicker||false) ) {
 		$.Datepicker = $.BalClass.create({
@@ -35,23 +35,23 @@
 				// Handle
 				return $(this).each(function(){
 					var $input = $(this);
-	
+
 					// Prepare
 					if ( $input.hasClass('sparkle-date-has') ) {
 						// Already done
 						return this;
 					}
 					$input.addClass('sparkle-date').addClass('sparkle-date-has');
-					
+
 					// HTML5
 					if ( config.useHtml5 && Modernizr && Modernizr.inputtypes.date && $input.attemptTypeChangeTo('date') ) {
 						// Chain
 						return this;
 					}
-					
+
 					// Instantiate
 					$input.datepicker(config);
-					
+
 					// Chain
 					return this;
 				});
@@ -73,5 +73,5 @@
 		window.console.warn("$.Datepicker has already been defined...");
 	}
 
-	
+
 })(jQuery);

@@ -8,9 +8,9 @@ BUILDDIR = ./.build
 CLOSUREURL = http://closure-compiler.googlecode.com/files/compiler-latest.zip
 CLOSUREDIR = $(BUILDDIR)/closure
 CLOSUREFILE = $(CLOSUREDIR)/compiler.jar
-YUIURL = http://yuilibrary.com/downloads/yuicompressor/yuicompressor-2.4.2.zip
+YUIURL = http://yui.zenfs.com/releases/yuicompressor/yuicompressor-2.4.7.zip
 YUIDIR = $(BUILDDIR)/yui
-YUIFILE = $(YUIDIR)/yuicompressor-2.4.2/build/yuicompressor-2.4.2.jar
+YUIFILE = $(YUIDIR)/yuicompressor-2.4.7/build/yuicompressor-2.4.7.jar
 
 
 all:
@@ -26,7 +26,7 @@ add:
 
 push:
 	git push --all ; git push --tags ;
-	
+
 edithooks:
 	mate .git/hooks/pre-commit
 
@@ -53,7 +53,7 @@ pack:
 		./scripts/resources/jquery.balclass.tinymce.js \
 		./scripts/resources/jquery.balclass.sparkle.js \
 		> ./scripts/jquery.sparkle.js;
-		
+
 compress:
 	java -jar $(CLOSUREFILE) --create_source_map ./scripts/closure.map --js_output_file=./scripts/jquery.sparkle.min.js --js=./scripts/jquery.sparkle.js;
 	java -jar $(YUIFILE) ./styles/jquery.sparkle.css -o ./styles/jquery.sparkle.min.css
@@ -61,13 +61,12 @@ compress:
 build:
 	$(MAKE) pack;
 	$(MAKE) compress;
-	
+
 build-update:
 	$(MAKE) clean;
 	mkdir $(BUILDDIR) $(CLOSUREDIR) $(YUIDIR);
-	cd $(CLOSUREDIR); wget -q $(CLOSUREURL) -O file.zip; tar -xf file.zip;
-	cd $(YUIDIR); wget -q $(YUIURL) -O file.zip; tar -xf file.zip;
-	
+	cd $(CLOSUREDIR); wget $(CLOSUREURL) -O file.zip; tar -xf file.zip;
+	cd $(YUIDIR); wget $(YUIURL) -O file.zip; tar -xf file.zip;
+
 clean:
 	rm -Rf $(BUILDDIR);
-	

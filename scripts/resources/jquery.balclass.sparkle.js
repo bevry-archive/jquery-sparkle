@@ -1,14 +1,14 @@
 /**
  * @depends jquery, core.console, jquery.extra, jquery.balclass
  * @name jquery.balclass.bespin.sparkle
- * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
+ * @package jquery-sparkle {@link http://balupton.com/projects/jquery-sparkle}
  */
 
 /**
  * jQuery Aliaser
  */
 (function($){
-	
+
 	/**
 	 * Prepare Body
 	 */
@@ -19,10 +19,10 @@
 	 * @version 1.5.0
 	 * @date August 28, 2010
 	 * @since 1.0.0, June 30, 2010
-     * @package jquery-sparkle {@link http://www.balupton/projects/jquery-sparkle}
-	 * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
-	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://www.balupton.com}
-	 * @license GNU Affero General Public License version 3 {@link http://www.gnu.org/licenses/agpl-3.0.html}
+     * @package jquery-sparkle {@link http://balupton.com/projects/jquery-sparkle}
+	 * @author Benjamin "balupton" Lupton {@link http://balupton.com}
+	 * @copyright (c) 2009-2010 Benjamin Arthur Lupton {@link http://balupton.com}
+	 * @license MIT License {@link http://creativecommons.org/licenses/MIT/}
 	 */
 	if ( !($.Sparkle||false) ) {
 		/**
@@ -35,17 +35,17 @@
 			addExtensions: function() {
 				// Prepare
 				var Sparkle = this;
-				
+
 				// Handle
 				var result = Sparkle.addExtension.apply(Sparkle,arguments);
-				
+
 				// Fire the Configured Promise
 				Sparkle.onConfigured(true);
-				
+
 				// Return result
 				return result;
 			},
-			
+
 			/**
 			 * Add an Extension
 			 */
@@ -53,7 +53,7 @@
 				// Prepare
 				var Sparkle = this,
 					Extension = {};
-				
+
 				// Determine
 				switch ( true ) {
 					case Boolean(arguments[2]||false):
@@ -73,7 +73,7 @@
 							window.console.error('Sparkle.addExtension: Invalid Input');
 						}
 						break;
-						
+
 					case Boolean(arguments[1]||false):
 						// name, Extension
 						// name, extension
@@ -89,7 +89,7 @@
 							window.console.error('Sparkle.addExtension: Invalid Input');
 						}
 						break;
-						
+
 					case Boolean(arguments[0]||false):
 						// Extension
 						// Series
@@ -109,24 +109,24 @@
 						}
 						break;
 				}
-				
+
 				// Ensure
 				Extension.config = Extension.config||{};
 				Extension.extension = Extension.extension||{};
-				
+
 				// Add Extension
 				Sparkle.addConfig(Extension.name, Extension);
-				
+
 				// Bind Ready Handler
 				Sparkle.onReady(function(){
 					// Fire Extension
 					Sparkle.triggerExtension($('body'),Extension);
 				});
-				
+
 				// Chain
 				return this;
 			},
-			
+
 			/**
 			 * Do we have that Extension
 			 */
@@ -134,11 +134,11 @@
 				// Prepare
 				var	Sparkle = this,
 					Extension = Sparkle.getExtension(extension);
-				
+
 				// Return
 				return Extension !== 'undefined';
 			},
-			
+
 			/**
 			 * Is the passed Extension an Extension
 			 */
@@ -146,7 +146,7 @@
 				// Return
 				return Boolean(extension && (extension.extension||false));
 			},
-			
+
 			/**
 			 * Get the Extensions
 			 */
@@ -155,18 +155,18 @@
 				var	Sparkle = this,
 					Config = Sparkle.getConfig(),
 					Extensions = {};
-				
+
 				// Handle
 				$.each(Config,function(key,value){
 					if ( Sparkle.isExtension(value) ) {
 						Extensions[key] = value;
 					}
 				});
-				
+
 				// Return Extensions
 				return Extensions;
 			},
-			
+
 			/**
 			 * Get an Extension
 			 */
@@ -174,7 +174,7 @@
 				// Prepare
 				var	Sparkle = this,
 					Extension = undefined;
-				
+
 				// HAndle
 				if ( Sparkle.isExtension(extension) ) {
 					Extension = extension;
@@ -185,11 +185,11 @@
 						Extension = fetched;
 					}
 				}
-				
+
 				// Return Extension
 				return Extension;
 			},
-			
+
 			/**
 			 * Get Config from an Extension
 			 */
@@ -197,25 +197,25 @@
 				// Prepare
 				var	Sparkle = this
 					Extension = Sparkle.getExtension(extension);
-				
+
 				// Return
 				return Extension.config||{};
 			},
-			
+
 			/**
 			 * Apply Config to an Extension
 			 */
 			applyExtensionConfig: function(extension, config) {
 				// Prepare
 				var Sparkle = this;
-				
+
 				// Handle
 				Sparkle.applyConfig(extension, {'config':config});
-				
+
 				// Chain
 				return this;
 			},
-			
+
 			/**
 			 * Trigger all the Extensions
 			 */
@@ -223,16 +223,16 @@
 				// Prepare
 				var	Sparkle = this,
 					Extensions = Sparkle.getExtensions();
-					
+
 				// Handle
 				$.each(Extensions,function(extension,Extension){
 					Sparkle.triggerExtension(element,Extension);
 				});
-				
+
 				// Chain
 				return this;
 			},
-			
+
 			/**
 			 * Trigger Extension
 			 */
@@ -241,7 +241,7 @@
 				var	Sparkle = this,
 					Extension = Sparkle.getExtension(extension),
 					element = element instanceof jQuery ? element : $('body');
-					
+
 				// Handle
 				if ( Extension ) {
 					return Extension.extension.apply(element, [Sparkle, Extension.config, Extension]);
@@ -249,18 +249,18 @@
 				else {
 					window.console.error('Sparkle.triggerExtension: Could not find the extension.', [this,arguments], [extension,Extension]);
 				}
-				
+
 				// Chain
 				return this;
 			},
-			
+
 			/**
 			 * Sparkle jQuery Function
 			 */
 			fn: function(Sparkle,extension){
 				// Prepare
-				var $el = $(this); 
-				
+				var $el = $(this);
+
 				// HAndle
 				if ( extension ) {
 					// Individual
@@ -269,35 +269,35 @@
 					// Series
 					Sparkle.triggerExtensions.apply(Sparkle, [$el]);
 				}
-				
+
 				// Chain
 				return this;
 			},
-			
+
 			/**
 			 * Sparkle Constructor
 			 */
 			built: function(){
 				// Prepare
 				var Sparkle = this;
-				
+
 				// --------------------------
-				
+
 				// Attach
 				$.fn.sparkle = function(extension) {
 					// Alias
 					return Sparkle.fn.apply(this,[Sparkle,extension]);
 				};
-				
+
 				// --------------------------
 				// Setup Promises
-				
+
 				// Bind DomReady Handler
 				$(function(){
 					// Fire DocumentReady Promise
 					Sparkle.onDocumentReady(true);
 				});
-				
+
 				// Bind Configured Handler
 				Sparkle.onConfigured(function(){
 					// Bind DocumentReady Handler
@@ -306,13 +306,13 @@
 						Sparkle.onReady(true);
 					});
 				});
-				
+
 				// --------------------------
-				
+
 				// Return true
 				return true;
 			},
-			
+
 			/**
 			 * Handle the Configured Promise
 			 * We use promise as the function will fire if the event was already fired as it is still true
@@ -320,7 +320,7 @@
 			 */
 			onConfigured: function(){
 				var Sparkle = this;
-				
+
 				// Handle Promise
 				return $.promise({
 					'object': Sparkle,
@@ -329,7 +329,7 @@
 					'arguments': arguments
 				});
 			},
-			
+
 			/**
 			 * Handle the DocumentReady Promise
 			 * We use promise as the function will fire if the event was already fired as it is still true
@@ -338,7 +338,7 @@
 			onDocumentReady: function(handler){
 				// Prepare
 				var Sparkle = this;
-				
+
 				// Handle Promise
 				return $.promise({
 					'object': Sparkle,
@@ -347,7 +347,7 @@
 					'arguments': arguments
 				});
 			},
-			
+
 			/**
 			 * Handle the Ready Promise
 			 * We use promise as the function will fire if the event was already fired as it is still true
@@ -356,7 +356,7 @@
 			onReady: function(handler){
 				// Prepare
 				var Sparkle = this;
-				
+
 				// Handle Promise
 				return $.promise({
 					'object': Sparkle,
@@ -365,9 +365,9 @@
 					'arguments': arguments
 				});
 			}
-			
+
 		});
-		
+
 		/**
 		 * $.Sparkle
 		 */
@@ -382,22 +382,22 @@
 				},
 				extension: function(Sparkle, config){
 					var $this = $(this);
-					
+
 					// Fetch
 					var $elements = $this.findAndSelf(config.selector);
 					if ( !$elements.length ) {
 						return true;
 					}
-					
+
 					// Check
 					if ( typeof $elements.Datepicker === 'undefined' ) {
 						window.console.warn('Datepicker not loaded. Did you forget to include it?');
 						return false;
 					}
-					
+
 					// Apply
 					$elements.Datepicker(config.datepickerOptions);
-					
+
 					// Done
 					return true;
 				}
@@ -412,22 +412,22 @@
 				},
 				extension: function(Sparkle, config){
 					var $this = $(this);
-					
+
 					// Fetch
 					var $elements = $this.findAndSelf(config.selector);
 					if ( !$elements.length ) {
 						return true;
 					}
-					
+
 					// Check
 					if ( typeof $elements.Timepicker === 'undefined' ) {
 						window.console.warn('Timepicker not loaded. Did you forget to include it?');
 						return false;
 					}
-					
+
 					// Apply
 					$elements.Timepicker(config.timepickerOptions);
-					
+
 					// Done
 					return true;
 				}
@@ -445,25 +445,25 @@
 				},
 				extension: function(Sparkle, config){
 					var $this = $(this);
-					
+
 					// Fetch
 					var $elements = $this.findAndSelf(config.selector);
 					if ( !$elements.length ) {
 						return true;
 					}
-					
+
 					// Check
 					if ( typeof $elements.Datetimepicker === 'undefined' ) {
 						window.console.warn('Datetimepicker not loaded. Did you forget to include it?');
 						return false;
 					}
-					
+
 					// Apply
 					$elements.Datetimepicker({
 						datepickerOptions: Sparkle.getExtensionConfig('date').datepickerOptions,
 						timepickerOptions: Sparkle.getExtensionConfig('time').timepickerOptions
 					});
-					
+
 					// Done
 					return true;
 				}
@@ -476,16 +476,16 @@
 				},
 				extension: function(Sparkle, config) {
 					var $this = $(this);
-					
+
 					// Fetch
 					var $elements = $this.findAndSelf(config.selector);
 					if ( !$elements.length ) {
 						return true;
 					}
-					
+
 					// Apply
 					$elements.hide();
-					
+
 					// Done
 					return true;
 				}
@@ -497,16 +497,16 @@
 				},
 				extension: function(Sparkle, config) {
 					var $this = $(this);
-					
+
 					// Fetch
 					var $elements = $this.findAndSelf(config.selector);
 					if ( !$elements.length ) {
 						return true;
 					}
-					
+
 					// Apply
 					$elements.removeClass(config.selector.replace('.','')).hide();
-					
+
 					// Done
 					return true;
 				}
@@ -518,16 +518,16 @@
 				},
 				extension: function(Sparkle, config) {
 					var $this = $(this);
-					
+
 					// Fetch
 					var $elements = $this.findAndSelf(config.selector);
 					if ( !$elements.length ) {
 						return true;
 					}
-					
+
 					// Apply
 					$elements.removeClass(config.selector.replace('.','')).show();
-					
+
 					// Done
 					return true;
 				}
@@ -549,13 +549,13 @@
 				},
 				extension: function(Sparkle, config) {
 					var $this = $(this);
-					
+
 					// Fetch
 					var $elements = $this.findAndSelf(config.selector);
 					if ( !$elements.length ) {
 						return true;
 					}
-					
+
 					// Apply
 					var css = {};
 					$.extend(css, config.outCss, config.css);
@@ -566,7 +566,7 @@
 						// Out
 						$(this).stop(true, false).animate(config.outCss, config.outSpeed);
 					});
-					
+
 					// Done
 					return true;
 				}
@@ -581,14 +581,14 @@
 				},
 				extension: function(Sparkle, config) {
 					var $this = $(this);
-					
+
 					// Fetch
 					var $switches = $this.findAndSelf(config.selectorSwitch);
 					var $panels = $this.findAndSelf(config.selectorPanel);
 					if ( !$switches.length && !$panels.length ) {
 						return true;
 					}
-					
+
 					// Events
 					var events = {
 						clickEvent: function(event) {
@@ -604,11 +604,11 @@
 							}
 						}
 					};
-					
+
 					// Apply
 					$switches.once('click',events.clickEvent);
 					$panels.hide();
-					
+
 					// Done
 					return true;
 				}
@@ -620,22 +620,22 @@
 				},
 				extension: function(Sparkle, config){
 					var $this = $(this);
-					
+
 					// Fetch
 					var $elements = $this.findAndSelf(config.selector);
 					if ( !$elements.length ) {
 						return true;
 					}
-					
+
 					// Check
 					if (typeof $.fn.autogrow === 'undefined') {
 						window.console.warn('autogrow not loaded. Did you forget to include it?');
 						return false;
 					}
-					
+
 					// Apply
 					$elements.autogrow();
-					
+
 					// Done
 					return true;
 				}
@@ -647,7 +647,7 @@
 				},
 				extension: function(Sparkle, config) {
 					var $this = $(this);
-					
+
 					// Events
 					var events = {
 						clickEvent: function(event) {
@@ -661,16 +661,16 @@
 							return false;
 						}
 					};
-					
+
 					// Fetch
 					var $elements = $this.findAndSelf(config.selector);
 					if ( !$elements.length ) {
 						return true;
 					}
-					
+
 					// Apply
 					$elements.once('click',events.clickEvent);
-					
+
 					// Done
 					return true;
 				}
@@ -686,13 +686,13 @@
 				},
 				extension: function(Sparkle, config) {
 					var $this = $(this);
-					
+
 					// Fetch
 					var $inputs = $this.findAndSelf(config.selector).addClass(config.hasClass);
 					if ( !$inputs.length ) {
 						return true;
 					}
-					
+
 					// Events
 					var events = {
 						focusEvent: function(){
@@ -721,7 +721,7 @@
 							$inputs.trigger('focus');
 						}
 					};
-					
+
 					// Apply
 					if ( typeof Modernizr !== 'undefined' && Modernizr.input.placeholder ) {
 						// We Support HTML5 Hinting
@@ -743,7 +743,7 @@
 						});
 						$this.find('form').once('submit',events.submitEvent);
 					}
-					
+
 					// Done
 					return $this;
 				}
@@ -758,16 +758,16 @@
 				},
 				extension: function(Sparkle, config) {
 					var $this = $(this);
-					
+
 					// Fetch
 					var $debug = $this.findAndSelf(config.selector);
 					if ( !$debug.length ) {
 						return true;
 					}
-					
+
 					// Apply
 					$debug.addClass(config.hasClass).find('.value:has(.var)').hide().siblings('.name,.type').addClass('link').once('singleclick',events.clickEvent).once('dblclick',events.dblclickEvent);
-					
+
 					// Events
 					var events = {
 						clickEvent: function(event){
@@ -785,7 +785,7 @@
 							$parent.find('.value').toggle(show);
 						}
 					};
-					
+
 					// Done
 					return $this;
 				}
@@ -803,7 +803,7 @@
 					if ( !$submit.length ) {
 						return true;
 					}
-					
+
 					// Events
 					var events = {
 						clickEvent: function(event){
@@ -811,10 +811,10 @@
 							return true;
 						}
 					};
-					
+
 					// Apply
 					$submit.once('singleclick',events.clickEvent);
-					
+
 					// Done
 					return $this;
 				}
@@ -826,27 +826,27 @@
 				},
 				extension: function(Sparkle, config) {
 					var $this = $(this);
-					
+
 					// Fetch
 					var $submit = $this.findAndSelf(config.selector);
 					if ( !$submit.length ) {
 						return true;
 					}
-					
+
 					// Events
 					var events = {
 						clickEvent: function(event){
 							// Fetch
 							var $submit = $(this);
-			
+
 							// Put correct value back
 							$submit.val($submit.data('sparkle-submitswap-value'));
-			
+
 							// Continue with Form Submission
 							return true;
 						}
 					};
-					
+
 					// Apply
 					$submit.once('singleclick',events.clickEvent);
 					$submit.each(function(){
@@ -855,7 +855,7 @@
 						$submit.val($submit.attr('title'));
 						$submit.removeAttr('title');
 					});
-	
+
 					// Done
 					return $this;
 				}
